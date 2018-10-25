@@ -35,7 +35,7 @@ Fetches changes from the dashboard and updates the local Applanga Database. You 
 ##### ApplangaFlutter.localizeMap(map) (recommended)
 
 ```
-Applanga.localizeMap(
+ApplangaFlutter.localizeMap(
 	{
 		"en": {
 			"hello_world": "Hello World"
@@ -50,7 +50,7 @@ Applanga.localizeMap(
 `ApplangaFlutter.localizeMap(map)` returns the same map but with the actual Applanga localizations.
 
 #### String Upload
-Strings from `Applanga.getString(String, String)` and Strings which are located in the map of `Applanga.localizeMap(map)`, will be uploaded if the app is in debug mode and fulfill one of the two points: They are non existent on the Applanga Dashboard or the target text is empty.
+Strings from `ApplangaFlutter.getString(String, String)` and Strings which are located in the map of `ApplangaFlutter.localizeMap(map)`, will be uploaded if the app is in debug mode and fulfill one of the two points: They are non existent on the Applanga Dashboard or the target text is empty.
 ##### Debug mode for iOS
 Open your ios/\*.xcodeproj or ios/\*.xcworkspace in XCode and run your app.
 
