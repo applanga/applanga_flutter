@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:applanga_flutter/applanga_flutter.dart';
-import 'package:applanga_flutter_example/localisations.dart';
+import 'localisations.dart';
 
 void main() {
   runApp(new Demo());
