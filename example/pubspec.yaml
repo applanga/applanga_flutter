@@ -1,0 +1,20 @@
+name: applanga_flutter_example
+description: Demonstrates how to use the applanga_flutter plugin.
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+  applanga_flutter:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  #assets:
+  # - assets/applanga_settings.applanga
