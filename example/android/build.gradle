@@ -17,6 +17,7 @@ allprojects {
             url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
         }
 
+        maven { url 'https://jitpack.io' }
     }
 }
 

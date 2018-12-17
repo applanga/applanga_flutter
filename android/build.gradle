@@ -37,8 +37,9 @@ repositories{
     maven {
         url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
     }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation "com.applanga.android:Applanga:2.0.98"
+    implementation "com.applanga.android:Applanga:3.0.103"
 }
