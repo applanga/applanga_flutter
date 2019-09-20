@@ -37,9 +37,16 @@ public class ApplangaFlutterPlugin implements MethodCallHandler {
     } else if (call.method.equals("update")){
       Applanga.update(new ApplangaCallback() {
         @Override
-        public void onLocalizeFinished(boolean b) {
+        public void onLocalizeFinished(final boolean b) {
           Log.d("applanga", String.format("onLocalizeFinished(%b)", b));
-          result.success(b);
+          if(registrar != null){
+           registrar.activity().runOnUiThread(new Runnable() {
+             @Override
+             public void run() {
+               result.success(b);
+             }
+           });
+          }
         }
       });
     } else if(call.method.equals("localizeMap")) {
