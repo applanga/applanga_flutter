@@ -18,6 +18,17 @@ Declare your applanga settings file in your `pubspec.yaml` as it is commented ou
 
 ##### iOS: Be aware to add the supported languages to the info.plist. [Find more here](https://flutter.io/tutorials/internationalization/).
 
+##### iOS: Add the following to your podfile located at ProjectRoot/ios/PodFile
+
+`pod 'Applanga'`
+
+##### Android: Add the following maven repos to the gradle file located at ProjectRoot/android/build.gradle
+`
+maven {
+    url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
+}
+maven { url 'https://jitpack.io' }
+`
 #### Import
 
 `import 'package:applanga_flutter/applanga_flutter.dart';`
