@@ -59,11 +59,7 @@ class DemoAppState extends State<DemoApp>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(ApplangaLocalizations.of(context).getHelloWorld()),
-            Container(height: 20.0,),
-            Text(ApplangaLocalizations.of(context).get("fallback_example")),
-            Container(height: 20.0,),
-            GestureDetector(onTap: ()=>ApplangaFlutter.showDraftModeDialog() ,child: Text(ApplangaLocalizations.of(context).get("fallback_example2")))
+            GestureDetector(onTap: ()=>ApplangaFlutter.showDraftModeDialog() ,child: Text(ApplangaLocalizations.of(context).get("hello_world")))
           ],
         ),
       ),

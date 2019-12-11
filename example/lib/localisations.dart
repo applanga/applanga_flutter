@@ -33,24 +33,22 @@ class ApplangaLocalizations {
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'title': 'Title',
-      'hello_world': 'Hello World!',
-      'fallback_example': 'This is english. Fallback1',
-      'fallback_example2': 'This is english. Fallback2'
+      'hello_world': 'Hello World!'
+
     },
     'es': {
       'title': 'Titulo',
-      'hello_world': 'Hola Mundo!',
-      'fallback_example': ''
+      'hello_world': 'Hola Mundo!'
     },
     'de': {
       'title': 'Titel',
-      'hello_world': 'Hallo Welt!',
-      'fallback_example': ''
+      'hello_world': 'Hallo Welt!'
     }
   };
 
   /// Actualises the key - string map with the strings from applanga's dashboard
   Future localizeMap() async{
+    print(this.locale.countryCode);
     print(_localizedValues);
     _localizedValues = await ApplangaFlutter.localizeMap(_localizedValues);
     print(_localizedValues);

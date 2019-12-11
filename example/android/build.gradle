@@ -1,11 +1,15 @@
 buildscript {
+    ext.kotlin_version = '1.2.71'
     repositories {
         google()
         jcenter()
+
+
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -13,11 +17,14 @@ allprojects {
     repositories {
         google()
         jcenter()
+
         maven {
             url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
         }
+        maven {
+            url 'https://jitpack.io'
+        }
 
-        maven { url 'https://jitpack.io' }
     }
 }
 
