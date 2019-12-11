@@ -19,6 +19,8 @@
       result([Applanga localizedStringForKey:call.arguments withDefaultValue:nil]);
   } else if ([@"localizeMap" isEqualToString:call.method])  {
       result([Applanga localizeMap:call.arguments]);
+  } else if ([@"showDraftModeDialog" isEqualToString:call.method])  {
+      [Applanga showDraftModeDialog];
   } else {
       result(FlutterMethodNotImplemented);
   }

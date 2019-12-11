@@ -49,4 +49,15 @@ class ApplangaFlutter {
   static Future<bool> update() async {
     return await _channel.invokeMethod('update');
   }
+  static Future<void> setScreenShotMenuVisible(bool visable) async {
+    if(visable)
+    {
+      return await _channel.invokeMethod('showScreenShotMenu');
+    }
+    else
+      {
+        return await _channel.invokeMethod('hideScreenShotMenu');
+
+      }
+  }
 }

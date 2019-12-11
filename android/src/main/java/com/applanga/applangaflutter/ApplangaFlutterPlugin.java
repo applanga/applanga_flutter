@@ -69,6 +69,12 @@ public class ApplangaFlutterPlugin implements MethodCallHandler {
       } else {
         result.error("DraftModeDialog", "Activity not found?", null);
       }
+    }else if(call.method.equals("showScreenShotMenu")){
+      Applanga.setScreenShotMenuVisible(true);
+      result.success(null);
+    }else if(call.method.equals("hideScreenShotMenu")){
+      Applanga.setScreenShotMenuVisible(false);
+      result.success(null);
     } else {
       result.notImplemented();
     }

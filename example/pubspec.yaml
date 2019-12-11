@@ -16,5 +16,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  #assets:
-  # - assets/applanga_settings.applanga
+  assets:
+    - assets/applanga_settings.applanga
