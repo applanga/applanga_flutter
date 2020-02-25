@@ -2,6 +2,7 @@
 #import "Applanga.h"
 
 @implementation ApplangaFlutterPlugin
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"applanga_flutter"
@@ -21,9 +22,20 @@
       result([Applanga localizeMap:call.arguments]);
   } else if ([@"showDraftModeDialog" isEqualToString:call.method])  {
       [Applanga showDraftModeDialog];
-  } else {
+  } else if ([@"showScreenShotMenu" isEqualToString:call.method])  {
+         [Applanga setScreenShotMenuVisible:true];
+  } else if ([@"hideScreenShotMenu" isEqualToString:call.method])  {
+             [Applanga setScreenShotMenuVisible:false];
+  }  else {
       result(FlutterMethodNotImplemented);
   }
 }
 
 @end
+
+@implementation Applanga (ApplangaFlutter)
++ (bool)isApplangaFlutter {
+    return true;
+}
+@end
+

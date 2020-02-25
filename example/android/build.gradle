@@ -25,6 +25,11 @@ allprojects {
             url 'https://jitpack.io'
         }
 
+        //for dev only
+//        def releaseRepositoryPath = file('/Users/richard/Documents/ApplangaSDK/sdk/android/sdk-android/maven/releases')
+//        maven {
+//            url "file://${releaseRepositoryPath.absolutePath}"
+//        }
     }
 }
 

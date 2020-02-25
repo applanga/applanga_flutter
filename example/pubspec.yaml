@@ -27,6 +27,7 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   applanga_flutter:
+    # for dev only path: /Users/Richard/Documents/FlutterSDK
 
 dev_dependencies:
   flutter_test:
