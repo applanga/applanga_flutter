@@ -11,8 +11,11 @@ class ApplangaFlutter {
     return version;
   }
 
-  static Future<String> getString(String s) async {
-    final String version = await _channel.invokeMethod('getString', s);
+  static Future<String> getString(String key, String defaultValue) async {
+    final String version = await _channel.invokeMethod('getString', <String, dynamic>{
+      'key': key,
+      'defaultValue': defaultValue
+    });
     return version;
   }
 

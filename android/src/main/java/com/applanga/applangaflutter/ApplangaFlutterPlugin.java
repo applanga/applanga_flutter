@@ -33,7 +33,15 @@ public class ApplangaFlutterPlugin implements MethodCallHandler {
   public void onMethodCall(MethodCall call, final Result result) {
     //Log.d("onMethodCall", "name = " + call.method);
     if (call.method.equals("getString")) {
-      result.success(Applanga.getString(call.arguments.toString(), ""));
+
+      String key = call.argument("key");
+
+      String defaultValue = call.argument("defaultValue");
+
+      Log.d("applanga", "calling get string with key: " + key + " and default value: " + defaultValue);
+
+      result.success(Applanga.getString(key, defaultValue));
+
     } else if (call.method.equals("update")){
       Applanga.update(new ApplangaCallback() {
         @Override

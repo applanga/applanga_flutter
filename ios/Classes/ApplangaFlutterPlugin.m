@@ -17,7 +17,12 @@
           result([NSNumber numberWithBool:success]);
       }];
   } else if ([@"getString" isEqualToString:call.method])  {
-      result([Applanga localizedStringForKey:call.arguments withDefaultValue:nil]);
+
+        NSString* key = call.arguments[@"key"];
+        NSString* defaultValue = call.arguments[@"defaultValue"];
+
+      result([Applanga localizedStringForKey:key withDefaultValue:defaultValue]);
+
   } else if ([@"localizeMap" isEqualToString:call.method])  {
       result([Applanga localizeMap:call.arguments]);
   } else if ([@"showDraftModeDialog" isEqualToString:call.method])  {

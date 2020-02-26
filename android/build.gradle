@@ -16,6 +16,20 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+
+        maven {
+            url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
+        }
+        maven {
+            url 'https://jitpack.io'
+        }
+
+            //for dev only
+//        def releaseRepositoryPath = file('/Users/richard/Documents/ApplangaSDK/sdk/android/sdk-android/maven/releases')
+//        maven {
+//            url "file://${releaseRepositoryPath.absolutePath}"
+//        }
+
     }
 }
 
@@ -32,6 +46,8 @@ android {
         disable 'InvalidPackage'
     }
 }
+
+
 
 dependencies {
     implementation "com.applanga.android:Applanga:3.0.103"

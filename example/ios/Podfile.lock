@@ -1,6 +1,7 @@
 PODS:
   - Applanga (2.0.129)
   - applanga_flutter (0.0.1):
+    - Applanga
     - Flutter
   - Flutter (1.0.0)
 

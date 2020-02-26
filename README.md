@@ -25,13 +25,6 @@ To use this plugin, add `applanga_flutter` as a [dependency in your pubspec.yaml
 
 `pod 'Applanga'`
 
-##### Android: Add the following maven repos to the gradle file located at ProjectRoot/android/build.gradle
-`
-maven {
-    url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
-}
-maven { url 'https://jitpack.io' }
-`
 #### Import
 
 `import 'package:applanga_flutter/applanga_flutter.dart';`

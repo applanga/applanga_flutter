@@ -35,8 +35,8 @@ class DemoApp extends StatefulWidget {
 }
 class DemoAppState extends State<DemoApp>{
 
-  void _applangaUpdate() async{
 
+  void _applangaUpdate() async{
     await ApplangaFlutter.update();
     await ApplangaLocalizations.of(context).localizeMap();
     setState(() {
@@ -54,7 +54,7 @@ class DemoAppState extends State<DemoApp>{
     return new Scaffold(
       appBar: new AppBar(
         //title: new Text(DemoLocalizations.of(context).title),
-        title: new Text(ApplangaLocalizations.of(context).get("text_1")),
+        title: new Text(ApplangaLocalizations.of(context).get("hello_world")),
       ),
       body: Center(
         child: Column(
@@ -65,7 +65,7 @@ class DemoAppState extends State<DemoApp>{
                     ApplangaFlutter.showDraftModeDialog();
               },
               child: Text(
-                "Show Draft Mode",
+                ApplangaLocalizations.of(context).get("draftModeLabel")
               ),
 
             ),
@@ -74,7 +74,7 @@ class DemoAppState extends State<DemoApp>{
                 ApplangaFlutter.setScreenShotMenuVisible(true);
               },
               child: Text(
-                "Show Screenshot Menu",
+                  ApplangaLocalizations.of(context).get("showScreenShotMenu")
               ),
 
             ),
@@ -83,7 +83,7 @@ class DemoAppState extends State<DemoApp>{
                 ApplangaFlutter.setScreenShotMenuVisible(false);
               },
               child: Text(
-                "Hide Screenshot menu",
+                  ApplangaLocalizations.of(context).get("hideScreenShotMenu")
               ),
 
             )

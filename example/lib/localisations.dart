@@ -33,8 +33,10 @@ class ApplangaLocalizations {
   static Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'title': 'Title',
-      'hello_world': 'Hello World!'
-
+      'hello_world': 'Hello World!',
+      'showScreenShotMenu': 'Not Working',
+      'hideScreenShotMenu': 'Not Working',
+      'draftModeLabel': 'Not Working'
     },
     'es': {
       'title': 'Titulo',
