@@ -63,3 +63,11 @@ Open your ios/\*.xcodeproj or ios/\*.xcworkspace in XCode and run your app.
 
 ##### Debug mode for Android
 Open Android Studio, File - Open. android/ directory. Run "Debug 'app'".
+
+#### Draft Mode and screeshot menu
+
+To trigger the draft mode activation dialog you can call `ApplangaFlutter.showDraftModeDialog();`
+
+Once in draft mode you can show or hide the screenshot menu like so `ApplangaFlutter.setScreenShotMenuVisible(bool);`
+
+##### NOTE: Screenshots collect the values of strings on screen using server side OCR, so will not be 100% accurate in some cases. 

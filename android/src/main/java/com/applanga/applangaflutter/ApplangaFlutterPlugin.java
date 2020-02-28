@@ -31,23 +31,13 @@ import java.util.HashMap;
 /**
  * ApplangaFlutterPlugin
  */
-public class ApplangaFlutterPlugin implements MethodCallHandler , FlutterPlugin, ActivityAware {
+public class ApplangaFlutterPlugin implements MethodCallHandler  {
   
   private static Registrar registrar = null;
 
   private static Object renderer;
 
-  // Condensed logic to initiliaze the plugin
-  private void initPlugin(Context context, BinaryMessenger messenger, Activity activity, Object renderer) {
-    Log.i("APPLANGA","renderer should be set");
-    renderer = renderer;
-  }
-
-  /**
-   * Plugin registration.
-   */
   public static void registerWith(Registrar registrar) {
-    Log.println(Log.INFO, "APPLANGA", "registerWith PLUGIN REGISTERED");
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "applanga_flutter");
     channel.setMethodCallHandler(new ApplangaFlutterPlugin());
     ApplangaFlutterPlugin.registrar = registrar;
@@ -57,27 +47,20 @@ public class ApplangaFlutterPlugin implements MethodCallHandler , FlutterPlugin,
 
   private Bitmap getTheScreenshot()
   {
-
     try {
       View view = registrar.activity().getWindow().getDecorView().getRootView();
-
       view.setDrawingCacheEnabled(true);
-
       Bitmap bitmap = null;
       if( renderer.getClass().getSimpleName().equals("FlutterView") ) {
         bitmap = ( (FlutterView) renderer ).getBitmap();
       } else if( renderer.getClass().getSimpleName().equals("FlutterRenderer") ) {
         bitmap = ( (FlutterRenderer) renderer ).getBitmap();
       }
-
       view.setDrawingCacheEnabled(false);
-
       return bitmap;
-
     } catch (Exception ex) {
       Log.println(Log.INFO, "APPLANGA", "Error taking screenshot: " + ex.getMessage());
     }
-
     return null;
   }
 
@@ -147,60 +130,5 @@ public class ApplangaFlutterPlugin implements MethodCallHandler , FlutterPlugin,
       result.notImplemented();
     }
   }
-
-
-
-
-
-
-  // New v2 listener methods
-  @Override
-  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-   // this.context = null;
-  } // onDetachedFromEngine()
-
-  @Override
-  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-
-    initPlugin(
-            flutterPluginBinding.getApplicationContext(),
-            flutterPluginBinding.getBinaryMessenger(),
-            null,
-            flutterPluginBinding.getFlutterEngine().getRenderer()
-    ); // initPlugin()
-  } // onAttachedToEngine()
-
-
-  // Activity condensed methods
-  private void attachActivity(ActivityPluginBinding binding) {
-    //this.activity = binding.getActivity();
-  } // attachActivity()
-
-  private void detachActivity() {
-   // this.activity = null;
-  } // attachActivity()
-
-
-  // Activity listener methods
-  @Override
-  public void onAttachedToActivity(ActivityPluginBinding binding) {
-    attachActivity(binding);
-  } // onAttachedToActivity()
-
-  @Override
-  public void onDetachedFromActivityForConfigChanges() {
-    detachActivity();
-  } // onDetachedFromActivityForConfigChanges()
-
-  @Override
-  public void onReattachedToActivityForConfigChanges(ActivityPluginBinding binding) {
-    attachActivity(binding);
-  } // onReattachedToActivityForConfigChanges()
-
-  @Override
-  public void onDetachedFromActivity() {
-    detachActivity();
-  } // onDetachedFromActivity()
-
 
 }
