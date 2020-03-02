@@ -50,5 +50,5 @@ android {
 
 
 dependencies {
-    implementation "com.applanga.android:Applanga:3.0.103"
+    implementation "com.applanga.android:Applanga:3.0.124"
 }
