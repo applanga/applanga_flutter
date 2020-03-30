@@ -1,30 +1,30 @@
 PODS:
-  - Applanga (2.0.129)
+  - Applanga (2.0.133)
   - applanga_flutter (0.0.1):
     - Applanga
     - Flutter
   - Flutter (1.0.0)
 
 DEPENDENCIES:
-  - Applanga
+  - Applanga (= 2.0.133)
   - applanga_flutter (from `.symlinks/plugins/applanga_flutter/ios`)
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `Flutter`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Applanga
 
 EXTERNAL SOURCES:
   applanga_flutter:
     :path: ".symlinks/plugins/applanga_flutter/ios"
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
 
 SPEC CHECKSUMS:
-  Applanga: 1f6ca35f40242ef8aeff486c8d90260ec41cf232
-  applanga_flutter: 70abcec6adc7dea59a372ea0d7c1418fdf11b8e2
+  Applanga: 0329c44eaaa5718f4c2acabcbc81d464af360fa0
+  applanga_flutter: 629fd072a143f2a68b418c959b12bf88775c05f7
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
 
-PODFILE CHECKSUM: db2eb4ee6bd6a74c7f322b77aa9a9fbf00523ec5
+PODFILE CHECKSUM: 56a54087776b2bbc91768269079153b938f21257
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.9.0
