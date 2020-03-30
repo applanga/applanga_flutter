@@ -36,7 +36,8 @@ class ApplangaLocalizations {
       'hello_world': 'Hello World!',
       'showScreenShotMenu': 'Not Working',
       'hideScreenShotMenu': 'Not Working',
-      'draftModeLabel': 'Not Working'
+      'draftModeLabel': 'Not Working',
+      'takeProgramaticScreenshot': 'Not Working'
     },
     'es': {
       'title': 'Titulo',

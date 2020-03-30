@@ -86,7 +86,17 @@ class DemoAppState extends State<DemoApp>{
                   ApplangaLocalizations.of(context).get("hideScreenShotMenu")
               ),
 
+            ),
+            FlatButton(
+              onPressed: () {
+                ApplangaFlutter.captureScreenshotWithTag("test_ios");
+              },
+              child: Text(
+                  ApplangaLocalizations.of(context).get("takeProgramaticScreenshot")
+              ),
+
             )
+
           ],
         ),
       ),

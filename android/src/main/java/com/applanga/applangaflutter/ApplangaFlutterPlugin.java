@@ -77,7 +77,15 @@ public class ApplangaFlutterPlugin implements MethodCallHandler  {
 
       result.success(Applanga.getString(key, defaultValue));
 
-    } else if (call.method.equals("update")){
+    } else if (call.method.equals("takeScreenshotWithTag")) {
+
+      String tag = call.argument("tag");
+
+      Applanga.captureScreenshot(tag,null);
+
+      result.success(null);
+
+    }else if (call.method.equals("update")){
       Applanga.update(new ApplangaCallback() {
         @Override
         public void onLocalizeFinished(final boolean b) {

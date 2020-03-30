@@ -23,7 +23,13 @@
 
       result([Applanga localizedStringForKey:key withDefaultValue:defaultValue]);
 
-  } else if ([@"localizeMap" isEqualToString:call.method])  {
+  } else if ([@"takeScreenshotWithTag" isEqualToString:call.method])  {
+
+       NSString* tag = call.arguments[@"tag"];
+
+       [Applanga captureScreenshotWithTag:tag andIDs:nil];
+
+ } else if ([@"localizeMap" isEqualToString:call.method])  {
       result([Applanga localizeMap:call.arguments]);
   } else if ([@"showDraftModeDialog" isEqualToString:call.method])  {
       [Applanga showDraftModeDialog];

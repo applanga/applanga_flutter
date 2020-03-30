@@ -28,6 +28,12 @@ class ApplangaFlutter {
     await _channel.invokeMethod('showDraftModeDialog');
   }
 
+  static Future<void> captureScreenshotWithTag(String tag) async {
+    await _channel.invokeMethod('takeScreenshotWithTag',<String, dynamic>{
+      'tag': tag,
+    });
+  }
+
   static Future<Map<String, Map<String,String>>> localizeMap(Map<String, Map<String,String>> map) async {
     Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizeMap", map);
 
