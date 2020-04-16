@@ -74,3 +74,8 @@ You can also take screenshot programmatically with the method `ApplangaFlutter.c
 
 
 ##### NOTE: Screenshots collect the values of strings on screen using server side OCR, so will not be 100% accurate in some cases. 
+
+#### Automating screenshot upload
+
+By using tests and a test runner like flutter_driver you can automate the taking and uploading of screenshotd from your apps. In the example project, in the test_driver folder you can see how we setup an automatic screenshot.
+

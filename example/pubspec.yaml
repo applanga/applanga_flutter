@@ -27,12 +27,12 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   applanga_flutter:
-    # for dev only path: /Users/Richard/Documents/FlutterSDK
+   #path: /Users/Richard/Documents/Flutter
 
 dev_dependencies:
-  flutter_test:
+  flutter_driver:
     sdk: flutter
-
+  test: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
