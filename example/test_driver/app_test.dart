@@ -1,4 +1,5 @@
 // Imports the Flutter Driver API.
+//flutter drive --target=test_driver/app.dart to run the tests
 import 'package:flutter_driver/flutter_driver.dart' as drive;
 import 'package:test/test.dart';
 
