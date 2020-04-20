@@ -2,7 +2,6 @@
 //flutter drive --target=test_driver/app.dart to run the tests
 import 'package:flutter_driver/flutter_driver.dart' as drive;
 import 'package:test/test.dart';
-
 void main() {
   group('Applanga Tests', () {
     // First, define the Finders and use them to locate widgets from the
@@ -28,7 +27,9 @@ void main() {
     test('takeScreenShot', () async {
       // First, tap the button.
       await Future.delayed(const Duration(seconds: 3), (){});
-      await driver.tap(screenShotButton);
+      driver.requestData("applanga-testView");
+      //await driver.tap(screenShotButton);
+      //  await ApplangaFlutter.captureScreenshotWithTag("CalledFromTest!");
       await Future.delayed(const Duration(seconds: 3), (){});
       // Then, verify the counter text is incremented by 1.
      // expect(await driver.getText(counterTextFinder), "1");
