@@ -1,14 +1,11 @@
 // Imports the Flutter Driver API.
 //flutter drive --target=test_driver/app.dart to run the tests
+import 'dart:developer';
 import 'package:flutter_driver/flutter_driver.dart' as drive;
 import 'package:test/test.dart';
+import 'applanga_test_utils.dart';
 void main() {
   group('Applanga Tests', () {
-    // First, define the Finders and use them to locate widgets from the
-    // test suite. Note: the Strings provided to the `byValueKey` method must
-    // be the same as the Strings we used for the Keys in step 1.
-
-    final screenShotButton = drive.find.byValueKey('screenShot');
 
     drive.FlutterDriver driver;
 
@@ -24,15 +21,20 @@ void main() {
       }
     });
 
-    test('takeScreenShot', () async {
-      // First, tap the button.
+      test('takeScreenShot', () async {
+
+      await Future.delayed(const Duration(seconds: 1), (){});
+
+      var stringIds = new List<String>();
+
+      stringIds.add("draftModeLabel");
+
+      stringIds.add("showScreenShotMenu");
+
+      driver.requestData(ApplangaFlutterTestUtils.takeApplangaScreenshot("IOS-ocrDisabled2", false, stringIds));
+
       await Future.delayed(const Duration(seconds: 3), (){});
-      driver.requestData("applanga-testView");
-      //await driver.tap(screenShotButton);
-      //  await ApplangaFlutter.captureScreenshotWithTag("CalledFromTest!");
-      await Future.delayed(const Duration(seconds: 3), (){});
-      // Then, verify the counter text is incremented by 1.
-     // expect(await driver.getText(counterTextFinder), "1");
+
     });
   });
 }

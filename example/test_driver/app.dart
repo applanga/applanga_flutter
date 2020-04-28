@@ -1,24 +1,16 @@
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:applanga_flutter_test_app/main.dart' as app;
 import 'package:applanga_flutter/applanga_flutter.dart';
-
+import 'applanga_test_utils.dart';
 void main() {
 
-  Future<String> dataHandler(String msg) async {
+  var applangaTestUtil = ApplangaFlutterTestUtils(ApplangaFlutter.captureScreenshotWithTag);
 
-      if(msg.contains("applanga-"))
-      {
-          msg = msg.replaceAll("applanga-", "");
-          ApplangaFlutter.captureScreenshotWithTag(msg);
-      }
+  enableFlutterDriverExtension(handler: (payload) async {
+    applangaTestUtil.checkForApplangaRequests(payload);
+    return "";
+  });
 
-  }
-
-  // This line enables the extension.
-  enableFlutterDriverExtension(handler: dataHandler);
-
-  // Call the `main()` function of the app, or call `runApp` with
-  // any widget you are interested in testing.
   app.main();
 
 }

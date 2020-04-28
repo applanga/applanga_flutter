@@ -27,6 +27,7 @@ import com.applanga.android.ApplangaScreenshotInterface;
 
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * ApplangaFlutterPlugin
@@ -81,7 +82,13 @@ public class ApplangaFlutterPlugin implements MethodCallHandler  {
 
       String tag = call.argument("tag");
 
-      Applanga.captureScreenshot(tag,null);
+      Boolean useOcr = call.argument("useOcr");
+
+      Applanga.setOcrEnabled(useOcr);
+
+      List<String> stringIds = call.argument("stringIds");
+
+      Applanga.captureScreenshot(tag,stringIds);
 
       result.success(null);
 

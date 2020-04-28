@@ -25,9 +25,21 @@
 
   } else if ([@"takeScreenshotWithTag" isEqualToString:call.method])  {
 
-       NSString* tag = call.arguments[@"tag"];
+      NSString* tag = call.arguments[@"tag"];
 
-       [Applanga captureScreenshotWithTag:tag andIDs:nil];
+      BOOL useOcr = call.arguments[@"useOcr"];
+
+      [Applanga setOcrEnabled:useOcr];
+    
+      if(call.arguments[@"stringIds"] == [NSNull null])
+      {
+          [Applanga captureScreenshotWithTag:tag andIDs:nil];
+      }
+      else
+      {
+          NSArray* stringIds = call.arguments[@"stringIds"];
+          [Applanga captureScreenshotWithTag:tag andIDs:stringIds];
+      }
 
  } else if ([@"localizeMap" isEqualToString:call.method])  {
       result([Applanga localizeMap:call.arguments]);

@@ -65,9 +65,9 @@ class DemoAppState extends State<DemoApp>{
                     ApplangaFlutter.showDraftModeDialog();
               },
 
-            key: Key("draft"),
+            
               child: Text(
-                ApplangaLocalizations.of(context).get("draftModeLabel")
+                ApplangaLocalizations.of(context).get("draftModeLabel"),
               ),
 
             ),
@@ -91,9 +91,8 @@ class DemoAppState extends State<DemoApp>{
             ),
             FlatButton(
               onPressed: () {
-                ApplangaFlutter.captureScreenshotWithTag("test_ios_tests2");
+                ApplangaFlutter.captureScreenshotWithTag("test_ios_tests2",true,null);
               },
-              key: Key("screenShot"),
               child: Text(
                   ApplangaLocalizations.of(context).get("takeProgramaticScreenshot")
               ),
