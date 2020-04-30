@@ -15,7 +15,7 @@ class ApplangaFlutterTestUtils  {
     applangaSetLanguageMethod = setlanguageMethod;
   }
 
-  static void takeApplangaScreenshot(FlutterDriver driver,String tag,bool enableOcr, List<String> stringIds)
+  static Future<void> takeApplangaScreenshot(FlutterDriver driver,String tag,bool enableOcr, List<String> stringIds) async
   {
     var json =
     {
@@ -25,7 +25,7 @@ class ApplangaFlutterTestUtils  {
       'stringIds': stringIds
     };
     var jsonString = jsonEncode(json);
-    driver.requestData(jsonString);
+    await driver.requestData(jsonString);
   }
 
   static void setApplangaLanguage(FlutterDriver driver,String lang)
@@ -39,7 +39,7 @@ class ApplangaFlutterTestUtils  {
     driver.requestData(jsonString);
   }
 
-  void checkForApplangaRequests(String request)
+  Future<String> checkForApplangaRequests(String request) async
   {
     if(request.contains("applanga-screenshot")) {
       Map<String, dynamic> data = jsonDecode(request);
@@ -49,18 +49,22 @@ class ApplangaFlutterTestUtils  {
       if(stringIds != null)
       {
         var convertedStringIds = new List<String>.from(stringIds);
-        applangaScreenshotMethod(tag,enableOcr,convertedStringIds);
+        await applangaScreenshotMethod(tag,enableOcr,convertedStringIds);
+        return "ok";
       }
       else
       {
-        applangaScreenshotMethod(tag,enableOcr,null);
+        await applangaScreenshotMethod(tag,enableOcr,null);
+        return "ok";
       }
     }
     else if(request.contains("applanga-setlanguage")) {
       Map<String, dynamic> data = jsonDecode(request);
       var lang = data["lang"];
       applangaSetLanguageMethod(lang);
+      return "ok";
     }
+    return "ok";
   }
 
 }

@@ -28,8 +28,8 @@ class ApplangaFlutter {
     await _channel.invokeMethod('showDraftModeDialog');
   }
 
-  static void captureScreenshotWithTag(String tag, bool useOcr,List<String> stringIds){
-    _channel.invokeMethod('takeScreenshotWithTag',<String, dynamic>{
+  static Future<void> captureScreenshotWithTag(String tag, bool useOcr,List<String> stringIds) async{
+   await _channel.invokeMethod('takeScreenshotWithTag',<String, dynamic>{
       'tag': tag,
       'useOcr': useOcr,
       'stringIds': stringIds

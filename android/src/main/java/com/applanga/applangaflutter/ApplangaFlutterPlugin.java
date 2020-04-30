@@ -24,6 +24,7 @@ import io.flutter.embedding.engine.renderer.FlutterRenderer;
 import com.applanga.android.Applanga;
 import com.applanga.android.ApplangaCallback;
 import com.applanga.android.ApplangaScreenshotInterface;
+import com.applanga.android.ScreenshotCallback;
 
 
 import java.util.HashMap;
@@ -88,9 +89,21 @@ public class ApplangaFlutterPlugin implements MethodCallHandler  {
 
       List<String> stringIds = call.argument("stringIds");
 
-      Applanga.captureScreenshot(tag,stringIds);
+      Applanga.captureScreenshot(tag,stringIds,new ScreenshotCallback<Boolean>() {
+        @Override
+        public void execute(Boolean aBoolean) {
+          if(registrar != null){
+            registrar.activity().runOnUiThread(new Runnable() {
+              @Override
+              public void run() {
+                Log.i("RICH", "Callback Called in java");
+                result.success(null);
+              }
+            });
+          }
 
-      result.success(null);
+        }
+      });
 
     }else if (call.method.equals("setlanguage")) {
 

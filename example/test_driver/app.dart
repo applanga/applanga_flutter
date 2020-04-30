@@ -8,7 +8,8 @@ void main() {
   var applangaTestUtil = ApplangaFlutterTestUtils(ApplangaFlutter.captureScreenshotWithTag, ApplangaFlutter.setLanguage);
 
   enableFlutterDriverExtension(handler: (payload) async {
-    applangaTestUtil.checkForApplangaRequests(payload);
+    await applangaTestUtil.checkForApplangaRequests(payload);
+    return "";
   });
 
   app.main();

@@ -33,15 +33,19 @@
     
       if(call.arguments[@"stringIds"] == [NSNull null])
       {
-          [Applanga captureScreenshotWithTag:tag andIDs:nil];
+          [Applanga captureScreenshotWithTag:tag andIDs:nil withCompletionHandler:^(BOOL success) {
+              result([NSNumber numberWithBool:success]);
+          }];
       }
       else
       {
           NSArray* stringIds = call.arguments[@"stringIds"];
-          [Applanga captureScreenshotWithTag:tag andIDs:stringIds];
+          [Applanga captureScreenshotWithTag:tag andIDs:stringIds withCompletionHandler:^(BOOL success) {
+              result([NSNumber numberWithBool:success]);
+          }];
       }
 
- }else if ([@"setLanguage" isEqualToString:call.method])  {
+ }else if ([@"setlanguage" isEqualToString:call.method])  {
 
       NSString* lang = call.arguments[@"lang"];
      
