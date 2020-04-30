@@ -8,7 +8,7 @@ class ApplangaLocalizationsDelegate extends LocalizationsDelegate<ApplangaLocali
   const ApplangaLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => ['en', 'es', 'de'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => ['en', 'de'].contains(locale.languageCode);
 
   @override
   Future<ApplangaLocalizations> load(Locale locale) {
@@ -37,24 +37,27 @@ class ApplangaLocalizations {
       'showScreenShotMenu': 'Not Working',
       'hideScreenShotMenu': 'Not Working',
       'draftModeLabel': 'Not Working',
-      'takeProgramaticScreenshot': 'Not Working'
-    },
-    'es': {
-      'title': 'Titulo',
-      'hello_world': 'Hola Mundo!'
+      'takeProgramaticScreenshot': 'Not Working',
+      'secondPageTitle': 'Not Working'
     },
     'de': {
-      'title': 'Titel',
-      'hello_world': 'Hallo Welt!'
+      'title': 'Title',
+      'hello_world': 'Hello World!',
+      'showScreenShotMenu': 'Not Working',
+      'hideScreenShotMenu': 'Not Working',
+      'draftModeLabel': 'Not Working',
+      'takeProgramaticScreenshot': 'Not Working',
+      'secondPageTitle': 'Not Working'
     }
   };
 
   /// Actualises the key - string map with the strings from applanga's dashboard
   Future localizeMap() async{
-    print(this.locale.countryCode);
-    print(_localizedValues);
+    print(this.locale.languageCode);
+    print("Before Localisation: " + _localizedValues.toString());
     _localizedValues = await ApplangaFlutter.localizeMap(_localizedValues);
-    print(_localizedValues);
+    print("After Localisation: " + _localizedValues.toString());
+
   }
 
 

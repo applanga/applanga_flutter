@@ -77,5 +77,54 @@ You can also take screenshot programmatically with the method `ApplangaFlutter.c
 
 #### Automating screenshot upload
 
-By using tests and a test runner like flutter_driver you can automate the taking and uploading of screenshotd from your apps. In the example project, in the test_driver folder you can see how we setup an automatic screenshot.
+By using tests and a test runner like flutter_driver you can automate the taking and uploading of screenshotd from your apps. In the example project, in the test_driver folder you can see how we setup an automatic screenshot flow including 2 views.
 
+In the driver app wrapper 'test_driver/app.dart' you can see that we first initialise the applanga test utils and then we use them to decode messages in the driver handler like so:
+
+```
+void main() {
+
+  var applangaTestUtil = ApplangaFlutterTestUtils(ApplangaFlutter.captureScreenshotWithTag, ApplangaFlutter.setLanguage);
+
+  enableFlutterDriverExtension(handler: (payload) async {
+    applangaTestUtil.checkForApplangaRequests(payload);
+  });
+
+  app.main();
+
+}
+```
+Then in the test running file 'test_driver/app_test.dart', we have a test that takes 2 screenshots, the first with OCR disabled and the string IDs manually passed, the second with OCR enabled.
+
+```
+test('takeScreenShots', () async {
+
+        //set the sdk language to german so that the screenshots are attached to the german language in the applanga dashboard
+        ApplangaFlutterTestUtils.setApplangaLanguage(driver,"de");
+
+        await Future.delayed(const Duration(seconds: 1), (){});
+
+        //manually add the string ids for this view
+        var stringIds = new List<String>();
+        stringIds.add("draftModeLabel");
+        stringIds.add("showScreenShotMenu");
+
+        //upload a screenshot with the tag "Page-1", OCR disabled and the string ids manually set
+        ApplangaFlutterTestUtils.takeApplangaScreenshot(driver,"Page-1", false, stringIds);
+
+        //give the sdk time to complete the upload
+        await Future.delayed(const Duration(seconds: 2), (){});
+
+        //open the second view
+        driver.tap(drive.find.byValueKey("OpenSecondPage"));
+
+        await Future.delayed(const Duration(seconds: 1), (){});
+
+        //take a screenshot with the tag "Page-2", OCR enabled and no string ids manually passed
+        ApplangaFlutterTestUtils.takeApplangaScreenshot(driver,"Page-2", true, null);
+
+        //give the sdk time to complete the upload
+        await Future.delayed(const Duration(seconds: 2), (){});
+
+      });
+```

@@ -17,9 +17,8 @@ class Demo extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('en', ''),
-        const Locale('es', ''),
-        const Locale('de', ''),
+        const Locale('en'),
+        const Locale('de')
       ],
       // Watch out: MaterialApp creates a Localizations widget
       // with the specified delegates. DemoLocalizations.of()
@@ -34,7 +33,6 @@ class DemoApp extends StatefulWidget {
   DemoAppState createState() => new DemoAppState();
 }
 class DemoAppState extends State<DemoApp>{
-
 
   void _applangaUpdate() async{
     await ApplangaFlutter.update();
@@ -64,8 +62,6 @@ class DemoAppState extends State<DemoApp>{
               onPressed: () {
                     ApplangaFlutter.showDraftModeDialog();
               },
-
-            
               child: Text(
                 ApplangaLocalizations.of(context).get("draftModeLabel"),
               ),
@@ -87,7 +83,6 @@ class DemoAppState extends State<DemoApp>{
               child: Text(
                   ApplangaLocalizations.of(context).get("hideScreenShotMenu")
               ),
-
             ),
             FlatButton(
               onPressed: () {
@@ -96,10 +91,39 @@ class DemoAppState extends State<DemoApp>{
               child: Text(
                   ApplangaLocalizations.of(context).get("takeProgramaticScreenshot")
               ),
-
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SecondRoute()),
+                );
+              },
+              key: Key("OpenSecondPage"),
+              child: Text(
+                  "Open Second View"
+              ),
             )
-
           ],
+        ),
+      ),
+    );
+  }
+
+}
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Route"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+            // Navigate back to first route when tapped.
+          },
+          child: Text(ApplangaLocalizations.of(context).get("secondPageTitle")),
         ),
       ),
     );

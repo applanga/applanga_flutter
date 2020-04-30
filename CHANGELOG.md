@@ -1,3 +1,7 @@
+## [0.0.7]
+
+* Added ApplangaFlutterTestUtils for better automated screenshot flow
+
 ## [0.0.6]
 
 * Added Autoimated screenshot example using flutter_driver

@@ -92,6 +92,14 @@ public class ApplangaFlutterPlugin implements MethodCallHandler  {
 
       result.success(null);
 
+    }else if (call.method.equals("setlanguage")) {
+
+      String lang = call.argument("lang");
+
+      Applanga.setLanguage(lang);
+
+      result.success(null);
+
     }else if (call.method.equals("update")){
       Applanga.update(new ApplangaCallback() {
         @Override

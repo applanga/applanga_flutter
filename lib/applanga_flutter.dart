@@ -36,6 +36,12 @@ class ApplangaFlutter {
     });
   }
 
+  static void setLanguage(String lang){
+    _channel.invokeMethod('setlanguage',<String, dynamic>{
+      'lang': lang
+    });
+  }
+
   static Future<Map<String, Map<String,String>>> localizeMap(Map<String, Map<String,String>> map) async {
     Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizeMap", map);
 
