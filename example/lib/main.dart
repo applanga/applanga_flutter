@@ -86,7 +86,7 @@ class DemoAppState extends State<DemoApp>{
             ),
             FlatButton(
               onPressed: () {
-                ApplangaFlutter.captureScreenshotWithTag("test_ios_tests2",true,null);
+                ApplangaFlutter.captureScreenshotWithTag("test",true,null);
               },
               child: Text(
                   ApplangaLocalizations.of(context).get("takeProgramaticScreenshot")

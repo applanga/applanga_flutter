@@ -85,11 +85,9 @@ public class ApplangaFlutterPlugin implements MethodCallHandler  {
 
       Boolean useOcr = call.argument("useOcr");
 
-      Applanga.setOcrEnabled(useOcr);
-
       List<String> stringIds = call.argument("stringIds");
 
-      Applanga.captureScreenshot(tag,stringIds,new ScreenshotCallback<Boolean>() {
+      Applanga.captureScreenshot(tag,stringIds,useOcr,new ScreenshotCallback<Boolean>() {
         @Override
         public void execute(Boolean aBoolean) {
           if(registrar != null){

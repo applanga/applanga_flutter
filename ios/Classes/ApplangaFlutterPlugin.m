@@ -28,19 +28,17 @@
       NSString* tag = call.arguments[@"tag"];
 
       BOOL useOcr = call.arguments[@"useOcr"];
-
-      [Applanga setOcrEnabled:useOcr];
     
       if(call.arguments[@"stringIds"] == [NSNull null])
       {
-          [Applanga captureScreenshotWithTag:tag andIDs:nil withCompletionHandler:^(BOOL success) {
+          [Applanga captureScreenshotWithTag:tag andIDs:nil useOcr:useOcr withCompletionHandler:^(BOOL success) {
               result([NSNumber numberWithBool:success]);
           }];
       }
       else
       {
           NSArray* stringIds = call.arguments[@"stringIds"];
-          [Applanga captureScreenshotWithTag:tag andIDs:stringIds withCompletionHandler:^(BOOL success) {
+          [Applanga captureScreenshotWithTag:tag andIDs:stringIds useOcr:useOcr withCompletionHandler:^(BOOL success) {
               result([NSNumber numberWithBool:success]);
           }];
       }
