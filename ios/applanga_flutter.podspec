@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'applanga_flutter'
-  s.version          = '0.0.1'
+  s.version          = '0.0.7'
   s.summary          = 'ApplangaSDK for Flutter.'
   s.description      = <<-DESC
 ApplangaSDK for Flutter.
@@ -17,6 +17,6 @@ ApplangaSDK for Flutter.
   s.dependency 'Flutter'
   s.dependency 'Applanga'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 end
 

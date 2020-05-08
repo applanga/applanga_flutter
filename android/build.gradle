@@ -17,18 +17,18 @@ rootProject.allprojects {
         google()
         jcenter()
 
-//        maven {
-//            url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
-//        }
-//        maven {
-//            url 'https://jitpack.io'
-//        }
+        maven {
+            url 'https://maven.applanga.com/'
+        }
+        maven {
+            url 'https://jitpack.io'
+        }
 
          //   for dev only
-        def releaseRepositoryPath = file('/Users/richard/Documents/ApplangaSDK/sdk/android/sdk-android/maven/releases')
-        maven {
-            url "file://${releaseRepositoryPath.absolutePath}"
-        }
+//        def releaseRepositoryPath = file('/Users/richard/Documents/ApplangaSDK/sdk/android/sdk-android/maven/releases')
+//        maven {
+//            url "file://${releaseRepositoryPath.absolutePath}"
+//        }
 
     }
 }
@@ -50,5 +50,5 @@ android {
 
 
 dependencies {
-    implementation "com.applanga.android:Applanga:3.0.606"
+    implementation "com.applanga.android:Applanga:3.0.129"
 }

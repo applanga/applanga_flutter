@@ -35,8 +35,6 @@ end
 target 'Runner' do
   use_frameworks!
 
-    pod 'Applanga', '2.0.133'
-
 
   use_modular_headers!
 
