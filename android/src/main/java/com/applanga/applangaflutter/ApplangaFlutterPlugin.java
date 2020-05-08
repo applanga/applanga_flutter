@@ -33,8 +33,8 @@ import java.util.List;
 /**
  * ApplangaFlutterPlugin
  */
-public class ApplangaFlutterPlugin implements MethodCallHandler  {
-  
+public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin {
+
   private static Registrar registrar = null;
 
   private static Object renderer;
@@ -117,21 +117,21 @@ public class ApplangaFlutterPlugin implements MethodCallHandler  {
         public void onLocalizeFinished(final boolean b) {
           Log.d("applanga", String.format("onLocalizeFinished(%b)", b));
           if(registrar != null){
-           registrar.activity().runOnUiThread(new Runnable() {
-             @Override
-             public void run() {
-               result.success(b);
-             }
-           });
+            registrar.activity().runOnUiThread(new Runnable() {
+              @Override
+              public void run() {
+                result.success(b);
+              }
+            });
           }
         }
       });
 
       Applanga.setScreenshotInterface(new ApplangaScreenshotInterface(){
-          @Override
+        @Override
         public Bitmap getScreenshot(){
-            return getTheScreenshot();
-          }
+          return getTheScreenshot();
+        }
       });
 
     } else if(call.method.equals("localizeMap")) {
@@ -165,4 +165,13 @@ public class ApplangaFlutterPlugin implements MethodCallHandler  {
     }
   }
 
+  @Override
+  public void onAttachedToEngine(FlutterPluginBinding binding) {
+
+  }
+
+  @Override
+  public void onDetachedFromEngine(FlutterPluginBinding binding) {
+
+  }
 }
