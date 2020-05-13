@@ -67,7 +67,6 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
 
   }
 
-  
 
   private Bitmap getTheScreenshot()
   {
@@ -78,23 +77,20 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
         ViewGroup theGroup = (ViewGroup)rootView;
         FindTheFlutterView(theGroup);
 
+        Bitmap bitmap = null;
 
-          Bitmap bitmap = null;
-
-        if(mainFlutterView instanceof io.flutter.view.FlutterView) {
-
+        if(mainFlutterView instanceof io.flutter.view.FlutterView)
+        {
             bitmap = ((io.flutter.view.FlutterView) mainFlutterView).getBitmap();
-
-        }else if(mainFlutterView instanceof io.flutter.embedding.android.FlutterView) {
-
+        }
+        else if(mainFlutterView instanceof io.flutter.embedding.android.FlutterView)
+        {
             io.flutter.embedding.android.FlutterView theView = (io.flutter.embedding.android.FlutterView) mainFlutterView;
             theView.setDrawingCacheEnabled(true);
             theView.buildDrawingCache();
             bitmap = theView.getDrawingCache();
             theView.setDrawingCacheEnabled(false);
-
         }
-
         rootView.setDrawingCacheEnabled(false);
         mainFlutterView = null;
         return bitmap;
@@ -109,7 +105,7 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
   {
     for(int i = 0; i < viewGroup.getChildCount(); i++) {
       View child = (View) viewGroup.getChildAt(i);
-      Log.println(Log.INFO, "APPLANGA", "CLASSNAME: " + child.getClass().getSimpleName());
+//      Log.println(Log.INFO, "APPLANGA", "CLASSNAME: " + child.getClass().getSimpleName());
       if(child.getClass().getSimpleName().equals("FlutterView") )
       {
         mainFlutterView = child;
@@ -121,7 +117,6 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
       }
     }
   }
-
 
   @Override
   public void onMethodCall(MethodCall call, final Result result) {
@@ -138,27 +133,25 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
 
     } else if (call.method.equals("takeScreenshotWithTag")) {
 
-      String tag = call.argument("tag");
+        String tag = call.argument("tag");
 
-      Boolean useOcr = call.argument("useOcr");
+        Boolean useOcr = call.argument("useOcr");
 
-      List<String> stringIds = call.argument("stringIds");
+        List<String> stringIds = call.argument("stringIds");
 
-      Applanga.captureScreenshot(tag,stringIds,useOcr,new ScreenshotCallback<Boolean>() {
-        @Override
-        public void execute(Boolean aBoolean) {
-          if(theActivity != null){
-            theActivity.runOnUiThread(new Runnable() {
-              @Override
-              public void run() {
-                Log.i("RICH", "Callback Called in java");
-                result.success(null);
-              }
-            });
-          }
-
-        }
-      });
+        Applanga.captureScreenshot(tag,stringIds,useOcr,new ScreenshotCallback<Boolean>() {
+            @Override
+            public void execute(final Boolean aBoolean) {
+            if(theActivity != null){
+                theActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                    result.success(aBoolean);
+                    }
+                });
+            }
+            }
+        });
 
     }else if (call.method.equals("setlanguage")) {
 
