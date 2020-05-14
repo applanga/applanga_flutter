@@ -70,9 +70,11 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
 
   private Bitmap getTheScreenshot()
   {
-    try {
+            Log.println(Log.INFO, "APPLANGA", "get the bitmap");
+
+      try {
+
         View rootView = theActivity.getWindow().getDecorView().getRootView();
-        rootView.setDrawingCacheEnabled(true);
 
         ViewGroup theGroup = (ViewGroup)rootView;
         FindTheFlutterView(theGroup);
@@ -81,19 +83,21 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
 
         if(mainFlutterView instanceof io.flutter.view.FlutterView)
         {
+            Log.println(Log.INFO, "APPLANGA", "get the bitmap old flutter view");
+
             bitmap = ((io.flutter.view.FlutterView) mainFlutterView).getBitmap();
         }
         else if(mainFlutterView instanceof io.flutter.embedding.android.FlutterView)
         {
+            Log.println(Log.INFO, "APPLANGA", "get the bitmap new flutter view");
+
             io.flutter.embedding.android.FlutterView theView = (io.flutter.embedding.android.FlutterView) mainFlutterView;
-            theView.setDrawingCacheEnabled(true);
             theView.buildDrawingCache();
             bitmap = theView.getDrawingCache();
-            theView.setDrawingCacheEnabled(false);
         }
-        rootView.setDrawingCacheEnabled(false);
         mainFlutterView = null;
-        return bitmap;
+          Log.println(Log.INFO, "APPLANGA", "returning flutter view");
+          return bitmap;
 
     } catch (Exception ex) {
       Log.println(Log.INFO, "APPLANGA", "Error taking screenshot: " + ex.getMessage());

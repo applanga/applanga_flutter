@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'applanga_flutter'
-  s.version          = '0.0.9'
+  s.version          = '0.0.10'
   s.summary          = 'ApplangaSDK for Flutter.'
   s.description      = <<-DESC
 ApplangaSDK for Flutter.
