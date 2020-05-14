@@ -73,6 +73,8 @@ Once in draft mode you can show or hide the screenshot menu like so `ApplangaFlu
 
 ##### NOTE: Screenshots collect the values of strings on screen using server side OCR, so will not be 100% accurate in some cases. 
 
+##### NOTE: As of flutter V 1.12 it is no longer possible for us to get a proper screenshot of the flutter renderer, so android screenshots will appear blank if you are using a version later than that. iOS screenshots still work well.
+
 #### Automating screenshot upload
 
 By using tests and a test runner like flutter_driver you can automate the taking and uploading of screenshotd from your apps. In the example project, in the test_driver folder you can see how we setup an automatic screenshot flow including 2 views.
