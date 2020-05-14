@@ -1,3 +1,6 @@
+## [0.0.10]
+* Fixed recycled bitmap issue on android
+
 ## [0.0.7]
 
 * Added ApplangaFlutterTestUtils for better automated screenshot flow
