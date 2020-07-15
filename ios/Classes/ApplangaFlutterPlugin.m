@@ -2,13 +2,21 @@
 #import "Applanga.h"
 
 @implementation ApplangaFlutterPlugin
+static FlutterMethodChannel *channel = nil;
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  FlutterMethodChannel* channel = [FlutterMethodChannel
+  channel = [FlutterMethodChannel
       methodChannelWithName:@"applanga_flutter"
             binaryMessenger:[registrar messenger]];
   ApplangaFlutterPlugin* instance = [[ApplangaFlutterPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
+
+  [Applanga setScreenshotInterface:instance];
+/*
+  [channel invokeMethod:@"getStringPositions" arguments:nil result:^(id _Nullable result) {
+
+      }];*/
+
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
@@ -70,3 +78,15 @@
 }
 @end
 
+@interface ApplangaFlutterPlugin (ApplangaInterface) <ApplangaScreenshotInterface>
+@end
+
+@implementation ApplangaFlutterPlugin (ApplangaInterface)
+
+- (void)getStringPositions:(void (^)(NSString* result))completionHandler {
+    [channel invokeMethod:@"getStringPositions" arguments:nil result:^(id _Nullable result) {
+        completionHandler(result);
+    }];
+}
+
+@end

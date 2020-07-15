@@ -10,4 +10,9 @@ class MainActivity: FlutterActivity() {
     super.onCreate(savedInstanceState)
     GeneratedPluginRegistrant.registerWith(this)
   }
+
+  override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+    com.applanga.applangaflutter.ApplangaFlutterPlugin.dispatchTouchEvent(ev, this)
+    return super.dispatchTouchEvent(ev)
+  }
 }
