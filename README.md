@@ -34,6 +34,7 @@ To use this plugin, add `applanga_flutter` as a [dependency in your pubspec.yaml
 **Note**: *The Flutter to native bridge is asynchronous. So all Methods are asynchronous calls.*
 
 ##### ApplangaFlutter.getString("string\_key", "default\_message")
+
 If *string\_key* does not exists, *default\_message* gets uploaded (see topic *String Upload*).
 
 ##### ApplangaFlutter.getUpdate()
@@ -41,7 +42,7 @@ Fetches changes from the dashboard and updates the local Applanga Database. You 
 
 ##### ApplangaFlutter.localizeMap(map) (recommended)
 
-```
+```dart
 ApplangaFlutter.localizeMap(
 	{
 		"en": {
@@ -64,24 +65,61 @@ Open your ios/\*.xcodeproj or ios/\*.xcworkspace in XCode and run your app.
 ##### Debug mode for Android
 Open Android Studio, File - Open. android/ directory. Run "Debug 'app'".
 
-#### Draft Mode and screeshot menu
+#### Draft Mode and Screenshot Menu
 
-To trigger the draft mode activation dialog you can call `ApplangaFlutter.showDraftModeDialog();`
+Applanga [Draft Mode](https://www.applanga.com/docs/translation-management-dashboard/draft_on-device-testing) can be be activate with a multitouch gesture which works out of the box on iOS builds but for Android you need to forward input events to the SDK which can be done in a custom main Activity like so:
 
-Once in draft mode you can show or hide the screenshot menu like so `ApplangaFlutter.setScreenShotMenuVisible(bool);`              
+```kotlin
+class MainActivity: FlutterActivity() {
+    override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine);
+    }
 
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        com.applanga.applangaflutter.ApplangaFlutterPlugin.dispatchTouchEvent(ev, this)
+        return super.dispatchTouchEvent(ev)
+    }
+}
+```
 
-##### NOTE: Screenshots collect the values of strings on screen using server side OCR, so will not be 100% accurate in some cases. 
+To trigger the [Draft Mode](https://www.applanga.com/docs/translation-management-dashboard/draft_on-device-testing) dialog via code you can call `ApplangaFlutter.showDraftModeDialog();`
 
-##### NOTE: As of flutter V 1.12 it is no longer possible for us to get a proper screenshot of the flutter renderer, so android screenshots will appear blank if you are using a version later than that. iOS screenshots still work well.
+Once in draft mode you can show or hide the screenshot menu by swiping down with 2 fingers or via code like this `ApplangaFlutter.setScreenShotMenuVisible(bool);`              
 
+For string positions to be properly connected on the screenshots you need to annotate each widget to provide the individual BuildContext to Applanga va `setScreenTag` and if you also want the text properly linked to an ID on Applanga you need to provide a matchin `Key` on each `Text` Widget as shown in teh example below.
+
+```dart
+class ExampleRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    setScreenTag(context, "ExampleRoute");
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(Localization.of(context).loc_key_1, key: Key("loc_key_1")),
+      ),
+      body: Wrap(
+      children: [
+        RaisedButton(
+          child: Text(Localization.of(context).loc_key_1, key: Key("loc_key_1")),
+          onPressed: () {...}
+        ),
+        RaisedButton(
+          child: Text(Localization.of(context).loc_key_2, key: Key("loc_key_2")),
+          onPressed: () {...}
+        )
+        ],
+      ),
+    );
+  }
+}
+```
 #### Automating screenshot upload
 
-By using tests and a test runner like flutter_driver you can automate the taking and uploading of screenshotd from your apps. In the example project, in the test_driver folder you can see how we setup an automatic screenshot flow including 2 views.
+By using tests and a test runner like [flutter_driver](https://api.flutter.dev/flutter/flutter_driver/flutter_driver-library.html) you can automate the taking and uploading of screenshots from your Apps. In the example project, in the test_driver folder you can see how we setup an automatic screenshot flow including 2 views.
 
-In the driver app wrapper 'test_driver/app.dart' you can see that we first initialise the applanga test utils and then we use them to decode messages in the driver handler like so:
+In the driver app wrapper 'test_driver/app.dart' you can see that we first initialise the Applanga test utils and then we use them to decode messages in the driver handler like so:
 
-```
+```dart
 void main() {
 
   var applangaTestUtil = ApplangaFlutterTestUtils(ApplangaFlutter.captureScreenshotWithTag, ApplangaFlutter.setLanguage);
@@ -94,9 +132,10 @@ void main() {
 
 }
 ```
-Then in the test running file 'test_driver/app_test.dart', we have a test that takes 2 screenshots, the first with OCR disabled and the string IDs manually passed, the second with OCR enabled.
 
-```
+Then in the test running file 'test_driver/app_test.dart', we have a test that takes 2 screenshots, the first with additional string IDs manually passed, the second without enabled. By default OCR should always be disabled since its accuracy may vary and may conflict with widget annotation but if you can not annotate your widgets via `setScreenTag` it can be used as a fallback option.
+
+```dart
 test('takeScreenShots', () async {
 
         //allow time for app to init
@@ -117,8 +156,8 @@ test('takeScreenShots', () async {
         driver.tap(drive.find.byValueKey("OpenSecondPage"));
         await Future.delayed(const Duration(seconds: 1), (){});
 
-        //take a screenshot with the tag "Page-2", OCR enabled and no string ids manually passed
-        await ApplangaFlutterTestUtils.takeApplangaScreenshot(driver,"Page-2", true,null);
+        //take a screenshot with the tag "Page-2", OCR disabled and no string ids manually passed
+        await ApplangaFlutterTestUtils.takeApplangaScreenshot(driver,"Page-2", false, null);
 
       });
 ```

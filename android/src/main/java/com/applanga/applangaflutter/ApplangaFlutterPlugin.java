@@ -13,7 +13,9 @@ import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-
+import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
+import android.view.MotionEvent;
 
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -43,13 +45,16 @@ import java.util.Map;
  */
 public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, ActivityAware {
 
+    public static void dispatchTouchEvent(MotionEvent ev, Activity a) {
+        Applanga.dispatchTouchEvent(ev, a);
+    }
   private static Activity theActivity = null;
 
  private static Object mainFlutterView;
-
+    static MethodChannel channel = null;
 
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "applanga_flutter");
+    channel = new MethodChannel(registrar.messenger(), "applanga_flutter");
     channel.setMethodCallHandler(new ApplangaFlutterPlugin());
     ApplangaFlutterPlugin.theActivity = registrar.activity();
     Applanga.init(registrar.activeContext());
@@ -57,7 +62,7 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding binding) {
-    final MethodChannel channel = new MethodChannel(binding.getBinaryMessenger(), "applanga_flutter");
+    channel = new MethodChannel(binding.getBinaryMessenger(), "applanga_flutter");
     channel.setMethodCallHandler(new ApplangaFlutterPlugin());
     Applanga.init(binding.getApplicationContext());
   }
@@ -104,6 +109,26 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
     }
     return null;
   }
+
+    private View FindFirstSubViewOfType(ViewGroup viewGroup, String typeName)
+    {
+        for(int i = 0; i < viewGroup.getChildCount(); i++) {
+            View child = (View) viewGroup.getChildAt(i);
+//      Log.println(Log.INFO, "APPLANGA", "CLASSNAME: " + child.getClass().getSimpleName());
+            if(child.getClass().getSimpleName().equals(typeName) )
+            {
+                return child;
+            }
+            if(child instanceof ViewGroup)
+            {
+                View v = FindFirstSubViewOfType((ViewGroup) child, typeName);
+                if(v != null) {
+                    return v;
+                }
+            }
+        }
+        return null;
+    }
 
   private void FindTheFlutterView(ViewGroup viewGroup)
   {
@@ -186,6 +211,33 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
         public Bitmap getScreenshot(){
           return getTheScreenshot();
         }
+
+          @Override
+          public void getStringPositions(final ApplangaScreenshotInterface.StringPositionsCallback callback){
+              Log.d("applanga","foo");
+              channel.invokeMethod("getStringPositions", null, new MethodChannel.Result() {
+                  @UiThread
+                  @Override
+                  public void success(Object result) {
+                      Log.d("applanga","foo1");
+                      callback.finish((String)result);
+                  }
+
+                  @UiThread
+                  @Override
+                  public void error(String errorCode, @Nullable String errorMessage, @Nullable Object errorDetails) {
+                      Log.d("applanga","foo2");
+                      callback.finish(null);
+                  }
+
+                  @UiThread
+                  @Override
+                  public void notImplemented() {
+                      Log.d("applanga","foo3");
+                      callback.finish(null);
+                  }
+              });
+          }
       });
 
     } else if(call.method.equals("localizeMap")) {

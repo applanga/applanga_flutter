@@ -49,6 +49,7 @@ class DemoAppState extends State<DemoApp>{
 
   @override
   Widget build(BuildContext context) {
+    setScreenTag(context,"test");
     return new Scaffold(
       appBar: new AppBar(
         //title: new Text(DemoLocalizations.of(context).title),
@@ -114,6 +115,7 @@ class DemoAppState extends State<DemoApp>{
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    setScreenTag(context,"test2");
     return Scaffold(
       appBar: AppBar(
         title: Text("Second Route"),
