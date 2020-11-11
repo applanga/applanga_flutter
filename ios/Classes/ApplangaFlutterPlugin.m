@@ -59,7 +59,13 @@ static FlutterMethodChannel *channel = nil;
       
  }  else if ([@"localizeMap" isEqualToString:call.method])  {
       result([Applanga localizeMap:call.arguments]);
-  } else if ([@"showDraftModeDialog" isEqualToString:call.method])  {
+
+  }else if ([@"localizedStringsForCurrentLanguage" isEqualToString:call.method])  {
+
+         result([Applanga localizedStringsForCurrentLanguage]);
+
+ } else if ([@"showDraftModeDialog" isEqualToString:call.method])  {
+
       [Applanga showDraftModeDialog];
   } else if ([@"showScreenShotMenu" isEqualToString:call.method])  {
          [Applanga setScreenShotMenuVisible:true];
