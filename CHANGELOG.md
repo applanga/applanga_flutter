@@ -1,3 +1,6 @@
+##[0.0.13]
+* Added localizedStringsForCurrentLanguage
+
 ## [0.0.10]
 * Fixed recycled bitmap issue on android
 

@@ -40,7 +40,11 @@ If *string\_key* does not exists, *default\_message* gets uploaded (see topic *S
 ##### ApplangaFlutter.getUpdate()
 Fetches changes from the dashboard and updates the local Applanga Database. You have to rerender your UI to see latest changes. Be aware that due to our CDN-Caching it can take up to 15 minutes to be able to fetch new translations.
 
-##### ApplangaFlutter.localizeMap(map) (recommended)
+##### ApplangaFlutter.localizedStringsForCurrentLanguage()
+
+Returns a Map<String,String> containing the keys and values of all strings for this language. This method is slow, so it would be best to use it when the app starts and then use the result to get strings from later on.
+
+##### ApplangaFlutter.localizeMap(map)
 
 ```dart
 ApplangaFlutter.localizeMap(

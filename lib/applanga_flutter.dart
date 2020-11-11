@@ -185,7 +185,21 @@ class ApplangaFlutter {
     });
   }
 
-  static Future<Map<String, Map<String,String>>> localizeMap(Map<String, Map<String, String>> map) async {
+  static Future<Map<String,String>> localizedStringsForCurrentLanguage() async {
+      Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizedStringsForCurrentLanguage");
+
+      Map<String,String> result =  Map<String,String>();
+
+      applangaMap.forEach((key,value){
+        assert(key.runtimeType == String);
+        assert(value.runtimeType == String);
+        result.putIfAbsent(key, ()=>value);
+      });
+
+      return result;
+
+  }
+    static Future<Map<String, Map<String,String>>> localizeMap(Map<String, Map<String, String>> map) async {
     Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizeMap", map);
 
     //we will return this

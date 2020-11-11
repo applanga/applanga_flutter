@@ -58,6 +58,11 @@ class ApplangaLocalizations {
     _localizedValues = await ApplangaFlutter.localizeMap(_localizedValues);
     print("After Localisation: " + _localizedValues.toString());
 
+    Map<String, String> allLocalisations = await ApplangaFlutter.localizedStringsForCurrentLanguage();
+    print("All texts length: " + allLocalisations.length.toString());
+    allLocalisations.forEach((key,value)=>{
+      print("KEY: " + key + " value: " + value)
+    });
   }
 
 

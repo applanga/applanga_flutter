@@ -190,6 +190,9 @@ public class ApplangaFlutterPlugin implements MethodCallHandler, FlutterPlugin, 
 
       result.success(null);
 
+    }else if (call.method.equals("localizedStringsForCurrentLanguage")) {
+        Map<String,String> translations = Applanga.localizedStringsForCurrentLanguage();
+        result.success(translations);
     }else if (call.method.equals("update")){
       Applanga.update(new ApplangaCallback() {
         @Override
