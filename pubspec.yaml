@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-    
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -22,6 +22,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   plugin:
-    androidPackage: com.applanga.applangaflutter
-    pluginClass: ApplangaFlutterPlugin
+    android:
+      package: com.applanga.applangaflutter
+      pluginClass: ApplangaFlutterPlugin
 
