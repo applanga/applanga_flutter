@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
 import 'dart:ui';
 
 class ALStringPosition {

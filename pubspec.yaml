@@ -1,7 +1,6 @@
 name: applanga_flutter
 description: ApplangaSDK for Flutter.
 version: 0.0.12
-author: Applanga <info@applanga.com>
 homepage: https://github.com/applanga/applanga_flutter
 
 environment:
@@ -15,6 +14,8 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  flutter_driver:
     sdk: flutter
 
 # The following section is specific to Flutter.
