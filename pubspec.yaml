@@ -22,7 +22,9 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   plugin:
-    android:
-      package: com.applanga.applangaflutter
-      pluginClass: ApplangaFlutterPlugin
-
+    platforms:
+        android:
+          package: com.applanga.applangaflutter
+          pluginClass: ApplangaFlutterPlugin
+        ios:
+          pluginClass: ApplangaFlutterPlugin
