@@ -1,13 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:applanga_flutter/applanga_flutter.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:flutter/services.dart';
+
 import 'localisations.dart';
 
 void main() {
-  runApp(new Demo());
+  runApp(MyApp());
 }
 
-class Demo extends StatelessWidget {
+class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -20,108 +25,122 @@ class Demo extends StatelessWidget {
         const Locale('en'),
         const Locale('de')
       ],
-      // Watch out: MaterialApp creates a Localizations widget
-      // with the specified delegates. DemoLocalizations.of()
-      // will only find the app's Localizations widget if its
-      // context is a child of the app.
-      home: new DemoApp(),
+
+      home: new App(),
     );
   }
+
 }
 
-class DemoApp extends StatefulWidget {
-  DemoAppState createState() => new DemoAppState();
+class App extends StatefulWidget {
+  _MyAppState createState() => new _MyAppState();
 }
-class DemoAppState extends State<DemoApp>{
 
-  void _applangaUpdate() async{
+class _MyAppState extends State<App> {
+  String _platformVersion = 'Unknown';
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+    initApplanga();
+  }
+
+  Future<void> initApplanga() async {
     await ApplangaFlutter.update();
     await ApplangaLocalizations.of(context).localizeMap();
     setState(() {
-      //do nothing just rebuild widget tree -> important
+      //do nothing just rebuild widget tree
     });
   }
 
-  void initState() {
-    super.initState();
-    _applangaUpdate();
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    String platformVersion;
+
+    if (!mounted) return;
+
+    setState(() {
+      _platformVersion = platformVersion;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     setScreenTag(context,"test");
-    return new Scaffold(
-      appBar: new AppBar(
-        //title: new Text(DemoLocalizations.of(context).title),
-        title: new Text(ApplangaLocalizations.of(context).get("hello_world")),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-              onPressed: () {
-                    ApplangaFlutter.showDraftModeDialog();
-              },
-              child: Text(
-                ApplangaLocalizations.of(context).get("draftModeLabel"),
-              ),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: new AppBar(
+          //title: new Text(DemoLocalizations.of(context).title),
+          title: new Text(ApplangaLocalizations.of(context).get("hello_world")),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  ApplangaFlutter.showDraftModeDialog();
+                },
+                child: Text(
+                  ApplangaLocalizations.of(context).get("draftModeLabel"),key: Key("draftModeLabel"),
+                ),
 
-            ),
-            FlatButton(
-              onPressed: () {
-                ApplangaFlutter.setScreenShotMenuVisible(true);
-              },
-              child: Text(
-                  ApplangaLocalizations.of(context).get("showScreenShotMenu")
               ),
+              TextButton(
+                onPressed: () {
+                  ApplangaFlutter.setScreenShotMenuVisible(true);
+                },
+                child: Text(
+                    ApplangaLocalizations.of(context).get("showScreenShotMenu"),key: Key("showScreenShotMenu"),
+                ),
 
-            ),
-            FlatButton(
-              onPressed: () {
-                ApplangaFlutter.setScreenShotMenuVisible(false);
-              },
-              child: Text(
-                  ApplangaLocalizations.of(context).get("hideScreenShotMenu")
               ),
-            ),
-            FlatButton(
-              onPressed: () {
-                ApplangaFlutter.captureScreenshotWithTag("test",true,null);
-              },
-              child: Text(
-                  ApplangaLocalizations.of(context).get("takeProgramaticScreenshot")
+              TextButton(
+                onPressed: () {
+                  ApplangaFlutter.setScreenShotMenuVisible(false);
+                },
+                child: Text(
+                    ApplangaLocalizations.of(context).get("hideScreenShotMenu"),key: Key("hideScreenShotMenu"),
+                ),
               ),
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SecondRoute()),
-                );
-              },
-              key: Key("OpenSecondPage"),
-              child: Text(
-                  "Open Second View"
+              TextButton(
+                onPressed: () {
+                  ApplangaFlutter.captureScreenshotWithTag("test",true,null);
+                },
+                child: Text(
+                    ApplangaLocalizations.of(context).get("takeProgramaticScreenshot"),key: Key("takeProgramaticScreenshot"),
+                ),
               ),
-            )
-          ],
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SecondRoute()),
+                  );
+                },
+                key: Key("OpenSecondPage"),
+                child: Text(
+                    "Open Second View"
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
-
 }
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    setScreenTag(context,"test2");
+    setScreenTag(context, "test2");
     return Scaffold(
       appBar: AppBar(
         title: Text("Second Route"),
       ),
       body: Center(
-        child: RaisedButton(
+        child: TextButton(
           onPressed: () {
             // Navigate back to first route when tapped.
           },

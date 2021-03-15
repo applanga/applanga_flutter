@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:applanga_flutter/applanga_flutter.dart';
 
 class ApplangaLocalizationsDelegate extends LocalizationsDelegate<ApplangaLocalizations> {
   const ApplangaLocalizationsDelegate();

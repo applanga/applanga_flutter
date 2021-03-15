@@ -88,7 +88,7 @@ class MainActivity: FlutterActivity() {
 
 To trigger the [Draft Mode](https://www.applanga.com/docs/translation-management-dashboard/draft_on-device-testing) dialog via code you can call `ApplangaFlutter.showDraftModeDialog();`
 
-Once in draft mode you can show or hide the screenshot menu by swiping down with 2 fingers or via code like this `ApplangaFlutter.setScreenShotMenuVisible(bool);`              
+Once in draft mode you can show or hide the screenshot menu by swiping down with 2 fingers or via code like this `ApplangaFlutter.setScreenShotMenuVisible(bool);`
 
 For string positions to be properly connected on the screenshots you need to annotate each widget to provide the individual BuildContext to Applanga va `setScreenTag` and if you also want the text properly linked to an ID on Applanga you need to provide a matchin `Key` on each `Text` Widget as shown in teh example below.
 

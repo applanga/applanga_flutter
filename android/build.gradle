@@ -1,14 +1,16 @@
-group 'com.applanga.applangaflutter'
+group 'com.applanga.applanga_flutter'
 version '1.0-SNAPSHOT'
 
 buildscript {
+    ext.kotlin_version = '1.3.50'
     repositories {
         google()
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -16,39 +18,31 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
-
+        def releaseRepositoryPath = file('/Users/richard/Documents/ApplangaSDK/sdk/android/sdk-android/maven/releases')
         maven {
-            url 'https://maven.applanga.com/'
+            url "file://${releaseRepositoryPath.absolutePath}"
         }
-        maven {
-            url 'https://jitpack.io'
-        }
-
-         //   for dev only
-//        def releaseRepositoryPath = file('/Users/richard/Documents/ApplangaSDK/sdk/android/sdk-android/maven/releases')
-//        maven {
-//            url "file://${releaseRepositoryPath.absolutePath}"
-//        }
-
+       // maven { url 'https://maven.applanga.com/'}
+        //maven { url 'https://jitpack.io' }
     }
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
     defaultConfig {
         minSdkVersion 16
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    lintOptions {
-        disable 'InvalidPackage'
     }
 }
 
-
-
 dependencies {
-    implementation "com.applanga.android:Applanga:3.0.141"
+    implementation "com.applanga.android:Applanga:3.0.999"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

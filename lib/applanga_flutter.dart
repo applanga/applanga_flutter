@@ -7,12 +7,12 @@ class ALStringPosition {
 
   ALStringPosition(Element element, BuildContext parentContext) {
     Text t = element.widget as Text;
-    
+
     if(t.key is ValueKey<String>) {
       ValueKey<String> vk = t.key as ValueKey<String>;
       this._key = vk.value;
     }
-    
+
     this._value = t.data;
 
     Rect bounds = element.globalPaintBoundsTo(parentContext);
@@ -21,12 +21,11 @@ class ALStringPosition {
     this._y = bounds.top;
     this._width = bounds.width;
     this._height = bounds.height;
-    
-    //print("Tag:" + tag +  " - Widget: " + t.key.toString() + " - " + t.data + " - " + element.size.toString() + " - " + element.globalPaintBounds.toString());
+
   }
-  String separator = "";//"""\n";
-  String _key = null;
-  String _value = null;
+  String separator = "";
+  String _key;
+  String _value;
   double _x = -1;
   double _y = -1;
   double _width = -1;
@@ -86,7 +85,7 @@ extension ApplangaWidgetEx on Widget {
   }
 }
 
-extension ApplangaStateWidgetEx<Widget> on State<Widget> {
+extension ApplangaStateWidgetEx<Widget> on State<StatefulWidget> {
   void setScreenTag(BuildContext context, String tag) {
     ApplangaFlutter.setScreenTag(context, tag);
   }
@@ -107,7 +106,7 @@ class ApplangaMethodHandler {
 }
 class ApplangaFlutter {
   static const MethodChannel _channel =
-      const MethodChannel('applanga_flutter');
+  const MethodChannel('applanga_flutter');
 
   static BuildContext _currentScreenContext = null;
   static String  _currentScreenTag = null;
@@ -115,11 +114,6 @@ class ApplangaFlutter {
   static void setScreenTag(BuildContext context, String tag) {
     _currentScreenContext = context;
     _currentScreenTag = tag;
-  }
-
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
   }
 
   static Future<String> getString(String key, String defaultValue) async {
@@ -140,7 +134,7 @@ class ApplangaFlutter {
   }
 
   static Future<void> screenshot() async{
-     return screenshotOf(_currentScreenContext, _currentScreenTag);
+    return screenshotOf(_currentScreenContext, _currentScreenTag);
   }
 
   static String getStringPositionsOf(BuildContext context) {
@@ -171,7 +165,7 @@ class ApplangaFlutter {
   }
 
   static Future<void> captureScreenshotWithTag(String tag, bool useOcr, List<String> stringIds) async {
-   return await _channel.invokeMethod('takeScreenshotWithTag',<String, dynamic>{
+    return await _channel.invokeMethod('takeScreenshotWithTag',<String, dynamic>{
       'tag': tag,
       'useOcr': useOcr,
       'stringIds': stringIds
@@ -185,20 +179,20 @@ class ApplangaFlutter {
   }
 
   static Future<Map<String,String>> localizedStringsForCurrentLanguage() async {
-      Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizedStringsForCurrentLanguage");
+    Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizedStringsForCurrentLanguage");
 
-      Map<String,String> result =  Map<String,String>();
+    Map<String,String> result =  Map<String,String>();
 
-      applangaMap.forEach((key,value){
-        assert(key.runtimeType == String);
-        assert(value.runtimeType == String);
-        result.putIfAbsent(key, ()=>value);
-      });
+    applangaMap.forEach((key,value){
+      assert(key.runtimeType == String);
+      assert(value.runtimeType == String);
+      result.putIfAbsent(key, ()=>value);
+    });
 
-      return result;
+    return result;
 
   }
-    static Future<Map<String, Map<String,String>>> localizeMap(Map<String, Map<String, String>> map) async {
+  static Future<Map<String, Map<String,String>>> localizeMap(Map<String, Map<String, String>> map) async {
     Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizeMap", map);
 
     //we will return this
@@ -232,9 +226,9 @@ class ApplangaFlutter {
       return await _channel.invokeMethod('showScreenShotMenu');
     }
     else
-      {
-        return await _channel.invokeMethod('hideScreenShotMenu');
+    {
+      return await _channel.invokeMethod('hideScreenShotMenu');
 
-      }
+    }
   }
 }
