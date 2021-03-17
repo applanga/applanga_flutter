@@ -2,9 +2,7 @@
 
 A Flutter plugin for [Applanga](https://applanga.com).
 
-For a sample Usage see the example.
-
-*Note*: This plugin is still under development, and some APIs might not be available yet. [Feedback](https://github.com/applanga/applanga_flutter/issues) and [Pull Requests](https://github.com/applanga/applanga_flutter/pulls) are most welcome!
+For a sample Usage see the example project included in this repo.
 
 ### Usage
 

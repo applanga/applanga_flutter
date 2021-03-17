@@ -1,10 +1,7 @@
-#
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint applanga_flutter.podspec` to validate before publishing.
-#
+
 Pod::Spec.new do |s|
   s.name             = 'applanga_flutter'
-  s.version          = '0.0.12'
+  s.version          = '2.0.12'
   s.summary          = 'ApplangaSDK for Flutter.'
   s.description      = <<-DESC
 A new Flutter plugin.
