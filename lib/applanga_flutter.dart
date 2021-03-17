@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 class ALStringPosition {
 
   ALStringPosition(Element element, BuildContext parentContext) {
@@ -105,6 +106,10 @@ class ApplangaMethodHandler {
   }
 }
 class ApplangaFlutter {
+
+
+  static bool isSupported = (Platform.isAndroid || Platform.isIOS) && !kIsWeb;
+
   static const MethodChannel _channel =
   const MethodChannel('applanga_flutter');
 
@@ -117,6 +122,12 @@ class ApplangaFlutter {
   }
 
   static Future<String> getString(String key, String defaultValue) async {
+
+    if(!isSupported)
+    {
+        return defaultValue;
+    }
+
     final String version = await _channel.invokeMethod('getString', <String, dynamic>{
       'key': key,
       'defaultValue': defaultValue
@@ -130,10 +141,18 @@ class ApplangaFlutter {
   }
 
   static Future<void> showDraftModeDialog() async {
+    if(!isSupported)
+    {
+      return;
+    }
     await _channel.invokeMethod('showDraftModeDialog');
   }
 
   static Future<void> screenshot() async{
+    if(!isSupported)
+    {
+      return;
+    }
     return screenshotOf(_currentScreenContext, _currentScreenTag);
   }
 
@@ -159,12 +178,20 @@ class ApplangaFlutter {
   }
 
   static void screenshotOf(BuildContext context, String tag) async {
+    if(!isSupported)
+    {
+      return;
+    }
     //stringIds.add(stringPositions);
     await captureScreenshotWithTag(tag, false, null);
     //context.visitChildElements(visitor);
   }
 
   static Future<void> captureScreenshotWithTag(String tag, bool useOcr, List<String> stringIds) async {
+    if(!isSupported)
+    {
+      return;
+    }
     return await _channel.invokeMethod('takeScreenshotWithTag',<String, dynamic>{
       'tag': tag,
       'useOcr': useOcr,
@@ -173,12 +200,20 @@ class ApplangaFlutter {
   }
 
   static void setLanguage(String lang){
+    if(!isSupported)
+    {
+      return;
+    }
     _channel.invokeMethod('setlanguage',<String, dynamic>{
       'lang': lang
     });
   }
 
   static Future<Map<String,String>> localizedStringsForCurrentLanguage() async {
+    if(!isSupported)
+    {
+      return null;
+    }
     Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizedStringsForCurrentLanguage");
 
     Map<String,String> result =  Map<String,String>();
@@ -193,6 +228,10 @@ class ApplangaFlutter {
 
   }
   static Future<Map<String, Map<String,String>>> localizeMap(Map<String, Map<String, String>> map) async {
+    if(!isSupported)
+    {
+      return map;
+    }
     Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizeMap", map);
 
     //we will return this
@@ -214,6 +253,10 @@ class ApplangaFlutter {
   }
 
   static Future<bool> update() async {
+    if(!isSupported)
+    {
+      return false;
+    }
     if(_callHandler == null) {
       _callHandler = new ApplangaMethodHandler(_channel);
     }
@@ -221,6 +264,10 @@ class ApplangaFlutter {
   }
 
   static Future<void> setScreenShotMenuVisible(bool visable) async {
+    if(!isSupported)
+    {
+      return;
+    }
     if(visable)
     {
       return await _channel.invokeMethod('showScreenShotMenu');
