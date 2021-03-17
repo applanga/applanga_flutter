@@ -2,9 +2,6 @@ import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'package:flutter/services.dart';
-
 import 'localisations.dart';
 
 void main() {
@@ -144,7 +141,7 @@ class SecondRoute extends StatelessWidget {
           onPressed: () {
             // Navigate back to first route when tapped.
           },
-          child: Text(ApplangaLocalizations.of(context).get("secondPageTitle")),
+          child: Text(ApplangaLocalizations.of(context).get("secondPageTitle"),key: Key("secondPageTitle"),),
         ),
       ),
     );
