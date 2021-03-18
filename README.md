@@ -2,9 +2,7 @@
 
 A Flutter plugin for [Applanga](https://applanga.com).
 
-For a sample Usage see the example.
-
-*Note*: This plugin is still under development, and some APIs might not be available yet. [Feedback](https://github.com/applanga/applanga_flutter/issues) and [Pull Requests](https://github.com/applanga/applanga_flutter/pulls) are most welcome!
+For a sample Usage see the example project included in this repo.
 
 ### Usage
 
@@ -88,7 +86,7 @@ class MainActivity: FlutterActivity() {
 
 To trigger the [Draft Mode](https://www.applanga.com/docs/translation-management-dashboard/draft_on-device-testing) dialog via code you can call `ApplangaFlutter.showDraftModeDialog();`
 
-Once in draft mode you can show or hide the screenshot menu by swiping down with 2 fingers or via code like this `ApplangaFlutter.setScreenShotMenuVisible(bool);`              
+Once in draft mode you can show or hide the screenshot menu by swiping down with 2 fingers or via code like this `ApplangaFlutter.setScreenShotMenuVisible(bool);`
 
 For string positions to be properly connected on the screenshots you need to annotate each widget to provide the individual BuildContext to Applanga va `setScreenTag` and if you also want the text properly linked to an ID on Applanga you need to provide a matchin `Key` on each `Text` Widget as shown in teh example below.
 
@@ -165,3 +163,7 @@ test('takeScreenShots', () async {
 
       });
 ```
+
+### Legacy support
+
+If you are using a version of flutter below 1.20.0 then please use version 0.0.12 of the applanga flutter plugin

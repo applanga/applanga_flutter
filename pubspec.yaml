@@ -1,11 +1,11 @@
 name: applanga_flutter
 description: ApplangaSDK for Flutter.
-version: 0.0.12
+version: 2.0.1
 homepage: https://github.com/applanga/applanga_flutter
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
-  flutter: ">=1.10.0 <2.0.0"
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.20.0"
 
 dependencies:
   flutter:
@@ -19,13 +19,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
-# The following section is specific to Flutter.
 flutter:
   plugin:
     platforms:
-        android:
-          package: com.applanga.applangaflutter
-          pluginClass: ApplangaFlutterPlugin
-        ios:
-          pluginClass: ApplangaFlutterPlugin
+      android:
+        package: com.applanga.applanga_flutter
+        pluginClass: ApplangaFlutterPlugin
+      ios:
+        pluginClass: ApplangaFlutterPlugin
+

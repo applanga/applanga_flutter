@@ -1,5 +1,14 @@
 #import "ApplangaFlutterPlugin.h"
 #import "Applanga.h"
+#if __has_include(<applanga_flutter/applanga_flutter-Swift.h>)
+#import <applanga_flutter/applanga_flutter-Swift.h>
+#else
+// Support project import fallback if the generated compatibility header
+// is not copied when this plugin is created as a library.
+// https://forums.swift.org/t/swift-static-libraries-dont-copy-generated-objective-c-header/19816
+#import "applanga_flutter-Swift.h"
+#endif
+
 
 @implementation ApplangaFlutterPlugin
 static FlutterMethodChannel *channel = nil;
@@ -36,7 +45,7 @@ static FlutterMethodChannel *channel = nil;
       NSString* tag = call.arguments[@"tag"];
 
       BOOL useOcr = call.arguments[@"useOcr"];
-    
+
       if(call.arguments[@"stringIds"] == [NSNull null])
       {
           [Applanga captureScreenshotWithTag:tag andIDs:nil useOcr:useOcr withCompletionHandler:^(BOOL success) {
@@ -54,9 +63,9 @@ static FlutterMethodChannel *channel = nil;
  }else if ([@"setlanguage" isEqualToString:call.method])  {
 
       NSString* lang = call.arguments[@"lang"];
-     
+
       [Applanga setLanguage:lang];
-      
+
  }  else if ([@"localizeMap" isEqualToString:call.method])  {
       result([Applanga localizeMap:call.arguments]);
 
