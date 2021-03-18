@@ -1,4 +1,7 @@
-##[0.0.13]
+## [2.0.35]
+* Added support for Flutter V2
+
+## [0.0.13]
 * Added localizedStringsForCurrentLanguage
 
 ## [0.0.10]
