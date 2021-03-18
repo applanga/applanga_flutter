@@ -18,12 +18,8 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
-        def releaseRepositoryPath = file('/Users/richard/Documents/ApplangaSDK/sdk/android/sdk-android/maven/releases')
-        maven {
-            url "file://${releaseRepositoryPath.absolutePath}"
-        }
-       // maven { url 'https://maven.applanga.com/'}
-        //maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.applanga.com/'}
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -42,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation "com.applanga.android:Applanga:3.0.999"
+    implementation "com.applanga.android:Applanga:3.0.142"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

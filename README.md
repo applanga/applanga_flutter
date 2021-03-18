@@ -163,3 +163,7 @@ test('takeScreenShots', () async {
 
       });
 ```
+
+### Legacy support
+
+If you are using a version of flutter below 1.20.0 then please use version 0.0.12 of the applanga flutter plugin
