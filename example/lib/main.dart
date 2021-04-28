@@ -69,7 +69,7 @@ class _MyAppState extends State<App> {
       home: Scaffold(
         appBar: new AppBar(
           //title: new Text(DemoLocalizations.of(context).title),
-          title: new Text(ApplangaLocalizations.of(context).get("hello_world")),
+          title: new Text(ApplangaLocalizations.of(context).get("title"),key: Key("title")),
         ),
         body: Center(
           child: Column(
@@ -103,7 +103,7 @@ class _MyAppState extends State<App> {
               ),
               TextButton(
                 onPressed: () {
-                  ApplangaFlutter.captureScreenshotWithTag("test",true,null);
+                  ApplangaFlutter.captureScreenshotWithTag("test");
                 },
                 child: Text(
                     ApplangaLocalizations.of(context).get("takeProgramaticScreenshot"),key: Key("takeProgramaticScreenshot"),
@@ -134,14 +134,14 @@ class SecondRoute extends StatelessWidget {
     setScreenTag(context, "test2");
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: Text(ApplangaLocalizations.of(context).get("secondPageTitle"),key: Key("secondPageTitle")),
       ),
       body: Center(
         child: TextButton(
           onPressed: () {
             // Navigate back to first route when tapped.
           },
-          child: Text(ApplangaLocalizations.of(context).get("secondPageTitle"),key: Key("secondPageTitle"),),
+          child: Text(ApplangaLocalizations.of(context).get("hello_world"),key: Key("hello_world"),),
         ),
       ),
     );

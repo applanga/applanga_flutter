@@ -182,16 +182,20 @@ class ApplangaFlutter {
     {
       return;
     }
-    //stringIds.add(stringPositions);
-    await captureScreenshotWithTag(tag, false, null);
-    //context.visitChildElements(visitor);
+    await captureScreenshotWithTag(tag);
   }
 
-  static Future<void> captureScreenshotWithTag(String tag, bool useOcr, List<String> stringIds) async {
+
+  static Future<void> captureScreenshotWithTag(String tag, {bool useOcr = false, List<String> stringIds}) async {
     if(!isSupported)
     {
       return;
     }
+    if(stringIds == null)
+    {
+      stringIds = new List<String>();
+    }
+
     return await _channel.invokeMethod('takeScreenshotWithTag',<String, dynamic>{
       'tag': tag,
       'useOcr': useOcr,

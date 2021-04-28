@@ -1,3 +1,6 @@
+## [2.0.36]
+* Added example tests for automating screenshot upload with integration_tests package
+
 ## [2.0.35]
 * Added support for Flutter V2
 
