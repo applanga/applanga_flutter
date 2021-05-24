@@ -14,10 +14,7 @@ void main() {
 
   group('end-to-end test', () {
     testWidgets('Take Applanga Screenshots', (WidgetTester tester) async {
-      app.main();
-
-      await tester.pumpAndSettle();
-      sleep(Duration(seconds: 1));
+      await tester.pumpWidget(MyApp());
 
       //Check localisation is working
       expect(checkTextWidgetText(tester, 'title', "Title"), true);
@@ -35,19 +32,18 @@ void main() {
           true);
 
       //Take screenshots
-      await ApplangaFlutter.captureScreenshotWithTag(
-          "integration test page 1b");
+      await tester.pumpAndSettle(Duration(seconds: 10));
+      ApplangaFlutter.captureScreenshotWithTag("integration_test_page_1b");
+      await tester.pumpAndSettle(Duration(seconds: 10));
 
       //open second page
       await tester.tap(find.byKey(Key("OpenSecondPage")));
       await tester.pumpAndSettle();
-      sleep(Duration(seconds: 1));
 
-      // take screenshot
-      await ApplangaFlutter.captureScreenshotWithTag(
-          "integration test page 2b");
-
-      sleep(Duration(seconds: 5));
+      // take secod screenshot
+      await tester.pumpAndSettle(Duration(seconds: 10));
+      ApplangaFlutter.captureScreenshotWithTag("integration_test_page_2b");
+      await tester.pumpAndSettle(Duration(seconds: 10));
     });
   });
 }

@@ -100,7 +100,7 @@ class _MyAppState extends State<App> {
               ),
               TextButton(
                 onPressed: () {
-                  ApplangaFlutter.captureScreenshotWithTag("test");
+                  ApplangaFlutter.captureScreenshotWithTag("test1_ios");
                 },
                 child: Text(
                   ApplangaLocalizations.of(context)
