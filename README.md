@@ -12,7 +12,7 @@ To use this plugin, add `applanga_flutter` as a [dependency in your pubspec.yaml
 
 ##### Applanga settings file
 
-1. Download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***.
+1. Download the *Applanga Settings File* for your app from the Applanga Project Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***.
 2. Add the *Applanga Settings File* to your Android modules resources res/raw directory
 3. Also Add the *Applanga Settings File* to your iOS modules main target. To do this open the ios module in Xcode and drag the settings file into the project. Make sure to tick the target you want it applied to.
 
