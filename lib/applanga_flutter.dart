@@ -4,26 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
 class ALStringPosition {
-
-  ALStringPosition(Element element, BuildContext parentContext) {
-    Text t = element.widget as Text;
-
-    if(t.key is ValueKey<String>) {
-      ValueKey<String> vk = t.key as ValueKey<String>;
-      this._key = vk.value;
-    }
-
-    this._value = t.data;
-
-    Rect bounds = element.globalPaintBoundsTo(parentContext);
-
+  ALStringPosition(BuildContext parentContext,
+      {String key, String value, @required Rect bounds}) {
+    assert(key != null || value != null);
+    assert(bounds != null);
     this._x = bounds.left;
     this._y = bounds.top;
     this._width = bounds.width;
     this._height = bounds.height;
-
+    this._value = value;
+    this._key = key;
   }
+
   String separator = "";
   String _key;
   String _value;
@@ -35,14 +29,13 @@ class ALStringPosition {
   String toJson() {
 
     return "{" + separator +
-        (_key != null ? '"key": "' + _key + '",' + separator  : "")+
-        (_value != null ? '"value": "' + _value + '",' + separator : "")+
+        (_key != null ? '"key": "' + _key + '",' + separator  : "") +
+        '"value": "' + (_value != null ? _value : "") + '",' +
         '"x": ' + _x.toStringAsFixed(0) + "," + separator +
         '"y": ' + _y.toStringAsFixed(0) + "," + separator +
         '"width": ' + _width.toStringAsFixed(0) + "," + separator +
         '"height": ' + _height.toStringAsFixed(0)+ "" + separator +
         "}";
-
   }
 }
 
@@ -116,6 +109,8 @@ class ApplangaFlutter {
   static BuildContext _currentScreenContext = null;
   static String  _currentScreenTag = null;
   static ApplangaMethodHandler _callHandler = null;
+  static bool _isInShowIdMode = false;
+
   static void setScreenTag(BuildContext context, String tag) {
     _currentScreenContext = context;
     _currentScreenTag = tag;
@@ -140,6 +135,12 @@ class ApplangaFlutter {
     return b;
   }
 
+  static Future<void> setShowIdModeEnabled(bool enabled) {
+    _isInShowIdMode = enabled;
+    return _channel.invokeListMethod(
+        'setShowIdModeEnabled', <String, dynamic>{'enabled': enabled});
+  }
+
   static Future<void> showDraftModeDialog() async {
     if(!isSupported)
     {
@@ -157,18 +158,42 @@ class ApplangaFlutter {
   }
 
   static String getStringPositionsOf(BuildContext context) {
-    String stringPositions = '{"ALStringPositions":[';
+    List<ALStringPosition> stringPositionsList = [];
     void visitor(Element element) {
       if (element.widget is Text) {
-        ALStringPosition spos = new ALStringPosition(element, context);
-        if (stringPositions != '{"ALStringPositions":[') {
-          stringPositions = stringPositions + "," + spos.separator;
+        String key;
+        String value;
+        Rect bounds = element.globalPaintBoundsTo(context);
+        Text t = element.widget as Text;
+        if (t.key is ValueKey<String>) {
+          ValueKey<String> vk = t.key as ValueKey<String>;
+          key = vk.value;
         }
-        stringPositions = stringPositions + spos.toJson();
+        value = t.data;
+        ALStringPosition spos;
+        if (_isInShowIdMode) {
+          // if is in show id mode the value is the key
+          // and we don't upload values/keys which are not existing within
+          // applanga
+          key = value;
+          spos = new ALStringPosition(context,
+              key: key, bounds: bounds);
+        } else {
+          spos = new ALStringPosition(context,
+              key: key, value: value, bounds: bounds);
+        }
+        stringPositionsList.add(spos);
       }
       element.visitChildren(visitor);
     }
+
     context.visitChildElements(visitor);
+
+    String stringPositions = '{"ALStringPositions":[';
+    for (ALStringPosition spos in stringPositionsList) {
+      if (stringPositionsList.indexOf(spos) != 0) stringPositions += ",";
+      stringPositions += spos.separator + spos.toJson();
+    }
     stringPositions = stringPositions + "]}\n";
     return stringPositions;
   }

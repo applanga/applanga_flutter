@@ -39,7 +39,11 @@ static FlutterMethodChannel *channel = nil;
         NSString* defaultValue = call.arguments[@"defaultValue"];
 
       result([Applanga localizedStringForKey:key withDefaultValue:defaultValue]);
+  } else if ([@"setShowIdModeEnabled" isEqualToString:call.method]) {
+      BOOL callEnabled = [call.arguments[@"enabled"] boolValue];
 
+      [ Applanga setShowIdModeEnabled:callEnabled];
+      result(nil);
   } else if ([@"takeScreenshotWithTag" isEqualToString:call.method])  {
 
       NSString* tag = call.arguments[@"tag"];

@@ -9,7 +9,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -18,15 +17,10 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('en'),
-        const Locale('de')
-      ],
-
+      supportedLocales: [const Locale('en'), const Locale('de')],
       home: new App(),
     );
   }
-
 }
 
 class App extends StatefulWidget {
@@ -64,12 +58,13 @@ class _MyAppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    setScreenTag(context,"test");
+    setScreenTag(context, "test");
     return MaterialApp(
       home: Scaffold(
         appBar: new AppBar(
           //title: new Text(DemoLocalizations.of(context).title),
-          title: new Text(ApplangaLocalizations.of(context).get("title"),key: Key("title")),
+          title: new Text(ApplangaLocalizations.of(context).get("title"),
+              key: Key("title")),
         ),
         body: Center(
           child: Column(
@@ -79,10 +74,13 @@ class _MyAppState extends State<App> {
                 onPressed: () {
                   ApplangaFlutter.showDraftModeDialog();
                 },
-                child: Text(
-                  ApplangaLocalizations.of(context).get("draftModeLabel"),key: Key("draftModeLabel"),
-                ),
-
+                child: FutureBuilder<String>(
+                    future: ApplangaFlutter.getString("show_draft_mode_dialog", "nothing"),
+                    builder: (context, data) {
+                      return Text(data.hasData
+                          ? data.data.replaceAll("%arg", "draft")
+                          : "");
+                    }),
               ),
               TextButton(
                 onPressed: () {
@@ -91,7 +89,6 @@ class _MyAppState extends State<App> {
                 child: Text(
                     ApplangaLocalizations.of(context).get("showScreenShotMenu"),key: Key("showScreenShotMenu"),
                 ),
-
               ),
               TextButton(
                 onPressed: () {
@@ -106,7 +103,8 @@ class _MyAppState extends State<App> {
                   ApplangaFlutter.captureScreenshotWithTag("test");
                 },
                 child: Text(
-                    ApplangaLocalizations.of(context).get("takeProgramaticScreenshot"),key: Key("takeProgramaticScreenshot"),
+                  ApplangaLocalizations.of(context)
+                      .get("takeProgramaticScreenshot"),
                 ),
               ),
               TextButton(
@@ -117,9 +115,21 @@ class _MyAppState extends State<App> {
                   );
                 },
                 key: Key("OpenSecondPage"),
-                child: Text(
-                    "Open Second View"
-                ),
+                child: Text("Open Second View"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await ApplangaLocalizations.of(context).enableShowIdMode();
+                  setState(() {});
+                },
+                child: Text("enable show id mode"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await ApplangaLocalizations.of(context).disableShowIdMode();
+                  setState(() {});
+                },
+                child: Text("disable show id mode"),
               )
             ],
           ),
@@ -128,20 +138,25 @@ class _MyAppState extends State<App> {
     );
   }
 }
+
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     setScreenTag(context, "test2");
     return Scaffold(
       appBar: AppBar(
-        title: Text(ApplangaLocalizations.of(context).get("secondPageTitle"),key: Key("secondPageTitle")),
+        title: Text(ApplangaLocalizations.of(context).get("secondPageTitle"),
+            key: Key("secondPageTitle")),
       ),
       body: Center(
         child: TextButton(
           onPressed: () {
             // Navigate back to first route when tapped.
           },
-          child: Text(ApplangaLocalizations.of(context).get("hello_world"),key: Key("hello_world"),),
+          child: Text(
+            ApplangaLocalizations.of(context).get("hello_world"),
+            key: Key("hello_world"),
+          ),
         ),
       ),
     );

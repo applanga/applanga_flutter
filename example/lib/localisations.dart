@@ -4,7 +4,8 @@ import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class ApplangaLocalizationsDelegate extends LocalizationsDelegate<ApplangaLocalizations> {
+class ApplangaLocalizationsDelegate
+    extends LocalizationsDelegate<ApplangaLocalizations> {
   const ApplangaLocalizationsDelegate();
 
   @override
@@ -14,7 +15,8 @@ class ApplangaLocalizationsDelegate extends LocalizationsDelegate<ApplangaLocali
   Future<ApplangaLocalizations> load(Locale locale) {
     // Returning a SynchronousFuture here because an async "load" operation
     // isn't needed to produce an instance of DemoLocalizations.
-    return new SynchronousFuture<ApplangaLocalizations>(new ApplangaLocalizations(locale));
+    return new SynchronousFuture<ApplangaLocalizations>(
+        new ApplangaLocalizations(locale));
   }
 
   @override
@@ -27,7 +29,8 @@ class ApplangaLocalizations {
   final Locale locale;
 
   static ApplangaLocalizations of(BuildContext context) {
-    return Localizations.of<ApplangaLocalizations>(context, ApplangaLocalizations);
+    return Localizations.of<ApplangaLocalizations>(
+        context, ApplangaLocalizations);
   }
 
   static Map<String, Map<String, String>> _localizedValues = {
@@ -52,19 +55,30 @@ class ApplangaLocalizations {
   };
 
   /// Actualises the key - string map with the strings from applanga's dashboard
-  Future localizeMap() async{
+  Future localizeMap() async {
     print(this.locale.languageCode);
     print("Before Localisation: " + _localizedValues.toString());
     _localizedValues = await ApplangaFlutter.localizeMap(_localizedValues);
     print("After Localisation: " + _localizedValues.toString());
 
-    Map<String, String> allLocalisations = await ApplangaFlutter.localizedStringsForCurrentLanguage();
+    Map<String, String> allLocalisations =
+        await ApplangaFlutter.localizedStringsForCurrentLanguage();
     print("All texts length: " + allLocalisations.length.toString());
-    allLocalisations.forEach((key,value)=>{
-      print("KEY: " + key + " value: " + value)
-    });
+    allLocalisations
+        .forEach((key, value) => {print("KEY: " + key + " value: " + value)});
   }
 
+  void enableShowIdMode() async {
+    await ApplangaFlutter.setShowIdModeEnabled(true);
+    // we need to show the ids instead of strings for the map
+    await localizeMap();
+  }
+
+  void disableShowIdMode() async {
+    await ApplangaFlutter.setShowIdModeEnabled(false);
+    // we need to localise the map once again
+    await localizeMap();
+  }
 
   ///Returns the string value for current language. If it does not exists
   ///fallback to english.
@@ -73,7 +87,7 @@ class ApplangaLocalizations {
 
     translatedString = _localizedValues[locale.languageCode][key];
     //print("key : '$key', lang : '${locale.languageCode}', value : '$translatedString'");
-    if(translatedString == null) {
+    if (translatedString == null) {
       translatedString = _localizedValues['en'][key]; //fallback
       //print("key : '$key', lang : 'en', value : '$translatedString'");
     }
@@ -81,7 +95,7 @@ class ApplangaLocalizations {
     return translatedString == null ? "NULL! key : $key" : translatedString;
   }
 
-  String getHelloWorld(){
+  String getHelloWorld() {
     return get("hello_world");
   }
 }

@@ -108,7 +108,11 @@ class ApplangaFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
 
     Log.d("onMethodCall", "name = " + call.method);
-    if (call.method == "getString") {
+    if (call.method == "setShowIdModeEnabled") {
+      val enabled = call.argument<Boolean>("enabled");
+      Applanga.setShowIdModeEnabled(enabled!!)
+      result.success(null);
+    } else if (call.method == "getString") {
       val key = call.argument<String>("key")
       val defaultValue = call.argument<String>("defaultValue")
       Log.d("applanga", "calling get string with key: $key and default value: $defaultValue")

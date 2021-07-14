@@ -115,6 +115,19 @@ class ExampleRoute extends StatelessWidget {
   }
 }
 ```
+
+#### Show Id Mode
+
+Enabling the applanga show id mode forces the sdk to return your string ids instead of string values, for all `getString()` or `localizeMap()` calls.
+This should not be used in production. It is especially useful for screenshots - as all strings will be tagged correctly even the dynamic strings and strings set at runtime.
+
+```
+ApplangaFlutter.setShowIdModeEnabled(true);
+```
+
+After enabling the show id mode you have to call `localizeMap()`  again and you have to refresh your view tree with `setState()`.
+
+
 #### Automating screenshot upload
 
 By using tests and a test runner like [flutter_driver](https://api.flutter.dev/flutter/flutter_driver/flutter_driver-library.html) you can automate the taking and uploading of screenshots from your Apps. In the example project, in the test_driver folder you can see how we setup an automatic screenshot flow including 2 views.
