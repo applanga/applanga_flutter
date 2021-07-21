@@ -34,13 +34,16 @@ class App extends StatefulWidget {
 }
 
 class _MyAppState extends State<App> {
-  String _platformVersion = 'Unknown';
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-    initApplanga();
+
+    initApplanga().then((value) => {
+          setState(() {
+            //do nothing just rebuild widget tree
+          })
+        });
   }
 
   Future<void> initApplanga() async {
@@ -48,17 +51,6 @@ class _MyAppState extends State<App> {
     await ApplangaLocalizations.of(context).localizeMap();
     setState(() {
       //do nothing just rebuild widget tree
-    });
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
     });
   }
 
