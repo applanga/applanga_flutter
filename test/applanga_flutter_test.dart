@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:applanga_flutter/applanga_flutter.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('applanga_flutter');
