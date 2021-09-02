@@ -16,7 +16,7 @@ class ALStringPosition {
 
     this._value = t.data;
 
-    Rect bounds = element.globalPaintBoundsTo(parentContext);
+    Rect bounds = element.globalPaintBoundsTo(parentContext)!;
 
     this._x = bounds.left;
     this._y = bounds.top;
@@ -25,8 +25,8 @@ class ALStringPosition {
 
   }
   String separator = "";
-  String _key;
-  String _value;
+  String? _key;
+  String? _value;
   double _x = -1;
   double _y = -1;
   double _width = -1;
@@ -35,8 +35,8 @@ class ALStringPosition {
   String toJson() {
 
     return "{" + separator +
-        (_key != null ? '"key": "' + _key + '",' + separator  : "")+
-        (_value != null ? '"value": "' + _value + '",' + separator : "")+
+        (_key != null ? '"key": "' + _key! + '",' + separator  : "")+
+        (_value != null ? '"value": "' + _value! + '",' + separator : "")+
         '"x": ' + _x.toStringAsFixed(0) + "," + separator +
         '"y": ' + _y.toStringAsFixed(0) + "," + separator +
         '"width": ' + _width.toStringAsFixed(0) + "," + separator +
@@ -47,23 +47,23 @@ class ALStringPosition {
 }
 
 extension ApplangaElementEx on Element {
-  Rect get globalPaintBounds {
-    var translation = renderObject?.getTransformTo(null)?.getTranslation();
-    if (translation != null && renderObject.paintBounds != null) {
-      return renderObject.paintBounds
+  Rect? get globalPaintBounds {
+    var translation = renderObject?.getTransformTo(null).getTranslation();
+    if (translation != null) {
+      return renderObject!.paintBounds
           .shift(Offset(translation.x, translation.y));
     } else {
       return null;
     }
   }
 
-  Rect globalPaintBoundsTo(BuildContext context) {
-    var translation = renderObject?.getTransformTo(context.findRenderObject())?.getTranslation();
-    if (translation != null && renderObject.paintBounds != null) {
+  Rect? globalPaintBoundsTo(BuildContext context) {
+    var translation = renderObject?.getTransformTo(context.findRenderObject()).getTranslation();
+    if (translation != null) {
       double width = MediaQuery.of(context).size.width;
       double height = MediaQuery.of(context).size.height;
 
-      Rect r = renderObject.paintBounds;
+      Rect r = renderObject!.paintBounds;
       r = r.translate(translation.x, translation.y);
       double scaleX = window.physicalSize.width / width;
       double scaleY = window.physicalSize.height / height;
@@ -98,7 +98,7 @@ class ApplangaMethodHandler {
 
   }
 
-  Future<String> _callHandler(MethodCall call) async {
+  Future<String?> _callHandler(MethodCall call) async {
     switch(call.method) {
       case "getStringPositions":
         return ApplangaFlutter.stringPositions;
@@ -113,22 +113,22 @@ class ApplangaFlutter {
   static const MethodChannel _channel =
   const MethodChannel('applanga_flutter');
 
-  static BuildContext _currentScreenContext = null;
-  static String  _currentScreenTag = null;
-  static ApplangaMethodHandler _callHandler = null;
+  static BuildContext? _currentScreenContext;
+  static String?  _currentScreenTag;
+  static ApplangaMethodHandler? _callHandler;
   static void setScreenTag(BuildContext context, String tag) {
     _currentScreenContext = context;
     _currentScreenTag = tag;
   }
 
-  static Future<String> getString(String key, String defaultValue) async {
+  static Future<String?> getString(String key, String defaultValue) async {
 
     if(!isSupported)
     {
         return defaultValue;
     }
 
-    final String version = await _channel.invokeMethod('getString', <String, dynamic>{
+    final String? version = await _channel.invokeMethod('getString', <String, dynamic>{
       'key': key,
       'defaultValue': defaultValue
     });
@@ -136,7 +136,7 @@ class ApplangaFlutter {
   }
 
   static Future<bool> isDebuggerConnected() async {
-    final bool b = await _channel.invokeMethod('isDebuggerConnected');
+    final bool b = await _channel.invokeMethod('isDebuggerConnected') ?? false;
     return b;
   }
 
@@ -174,10 +174,10 @@ class ApplangaFlutter {
   }
 
   static String get stringPositions {
-    return getStringPositionsOf(_currentScreenContext);
+    return getStringPositionsOf(_currentScreenContext!);
   }
 
-  static void screenshotOf(BuildContext context, String tag) async {
+  static void screenshotOf(BuildContext? context, String? tag) async {
     if(!isSupported)
     {
       return;
@@ -185,18 +185,14 @@ class ApplangaFlutter {
     await captureScreenshotWithTag(tag);
   }
 
-
-  static Future<void> captureScreenshotWithTag(String tag, {bool useOcr = false, List<String> stringIds}) async {
-    if(!isSupported)
-    {
+  static Future<void> captureScreenshotWithTag(String? tag,
+      {bool useOcr = false, List<String>? stringIds = const []}) async {
+    if (!isSupported) {
       return;
     }
-    if(stringIds == null)
-    {
-      stringIds = new List<String>();
-    }
 
-    return await _channel.invokeMethod('takeScreenshotWithTag',<String, dynamic>{
+    return await _channel.invokeMethod(
+        'takeScreenshotWithTag', <String, dynamic>{
       'tag': tag,
       'useOcr': useOcr,
       'stringIds': stringIds
@@ -213,12 +209,13 @@ class ApplangaFlutter {
     });
   }
 
-  static Future<Map<String,String>> localizedStringsForCurrentLanguage() async {
+  static Future<Map<String,String>?> localizedStringsForCurrentLanguage() async {
     if(!isSupported)
     {
       return null;
     }
-    Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizedStringsForCurrentLanguage");
+    Map<dynamic, dynamic> applangaMap =
+        await _channel.invokeMethod("localizedStringsForCurrentLanguage");
 
     Map<String,String> result =  Map<String,String>();
 
@@ -236,7 +233,7 @@ class ApplangaFlutter {
     {
       return map;
     }
-    Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizeMap", map);
+    Map<dynamic,dynamic> applangaMap = await _channel.invokeMethod("localizeMap", map) ;
 
     //we will return this
     Map<String, Map<String,String>> result =  Map<String, Map<String,String>>();
@@ -256,7 +253,7 @@ class ApplangaFlutter {
     return result;
   }
 
-  static Future<bool> update() async {
+  static Future<bool?> update() async {
     if(!isSupported)
     {
       return false;

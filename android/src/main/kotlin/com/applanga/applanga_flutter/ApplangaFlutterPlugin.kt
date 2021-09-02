@@ -142,19 +142,19 @@ class ApplangaFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
           channel.invokeMethod("getStringPositions", null, object : Result {
             @UiThread
             override fun success(result: Any?) {
-              Log.d("applanga", "foo1")
+              Log.d("applanga", "getStringPositions success")
               callback.finish(result as String?)
             }
 
             @UiThread
             override fun error(errorCode: String, errorMessage: String?, errorDetails: Any?) {
-              Log.d("applanga", "foo2")
+              Log.d("applanga", "getStringPositions $errorMessage")
               callback.finish(null)
             }
 
             @UiThread
             override fun notImplemented() {
-              Log.d("applanga", "foo3")
+              Log.d("applanga", "getStringPositions not implemenented")
               callback.finish(null)
             }
           })

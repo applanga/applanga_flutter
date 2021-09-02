@@ -3,13 +3,13 @@ import 'package:flutter_driver/flutter_driver.dart';
 
 class ApplangaFlutterTestUtils  {
 
-  Function(String,bool,List<String>) applangaScreenshotMethod;
+  late Function(String?,bool?,List<String>?) applangaScreenshotMethod;
 
-  Function(String) applangaSetLanguageMethod;
+  late Function(String) applangaSetLanguageMethod;
 
 
 
-  ApplangaFlutterTestUtils(Function(String,bool,List<String>) screenshotMethod,Function(String) setlanguageMethod)
+  ApplangaFlutterTestUtils(Function(String?,bool?,List<String>?) screenshotMethod,Function(String) setlanguageMethod)
   {
     applangaScreenshotMethod = screenshotMethod;
     applangaSetLanguageMethod = setlanguageMethod;
