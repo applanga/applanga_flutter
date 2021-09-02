@@ -1,3 +1,16 @@
+# Applanga SDK for Flutter Localization CHANGELOG
+***
+*Website:* https://www.applanga.com
+
+*Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
+***
+
+## Version 2.0.39 (2 Sep 2021) 
+* Migrated to null safety
+
+## [2.0.37]
+* Docu wording changed
+
 ## [2.0.36]
 * Added example tests for automating screenshot upload with integration_tests package
 
