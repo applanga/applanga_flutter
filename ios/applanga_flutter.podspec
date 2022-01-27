@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'applanga_flutter'
-  s.version          = '2.0.40'
+  s.version          = '2.0.41'
   s.summary          = 'ApplangaSDK for Flutter.'
   s.description      = <<-DESC
 A new Flutter plugin.
