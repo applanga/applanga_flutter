@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'applanga_flutter'
-  s.version          = '0.0.1'
+  s.version          = '3.0.43'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 With ApplangaFlutter you can get all your translations over the air. It's also
@@ -17,7 +17,7 @@ With ApplangaFlutter you can get all your translations over the air. It's also
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Applanga', '~> 2.0.158'
+  s.dependency 'Applanga', '~> 2.0.15858'
 
   s.platform = :ios, '9.0'
 
