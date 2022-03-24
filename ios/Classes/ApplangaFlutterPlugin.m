@@ -21,65 +21,44 @@ static FlutterMethodChannel *channel = nil;
   [registrar addMethodCallDelegate:instance channel:channel];
 
   [Applanga setScreenshotInterface:instance];
-/*
-  [channel invokeMethod:@"getStringPositions" arguments:nil result:^(id _Nullable result) {
-
-      }];*/
-
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-  if ([@"update" isEqualToString:call.method])  {
-      [Applanga updateWithCompletionHandler:^(BOOL success) {
+  if ([@"init" isEqualToString:call.method]) {
+      result(nil);
+  } else if ([@"setShowIdModeEnabled" isEqualToString:call.method]){
+      BOOL enabled = [[call.arguments objectForKey:@"enabled"] boolValue];
+      [Applanga setShowIdModeEnabled:enabled];
+      result(nil);
+  } else if ([@"update" isEqualToString:call.method])  {
+      NSArray* groups = call.arguments[@"groups"];
+      NSArray* languages = call.arguments[@"languages"];
+      
+      [Applanga updateGroups:groups andLanguages:languages withCompletionHandler:^(BOOL success) {
           result([NSNumber numberWithBool:success]);
       }];
-  } else if ([@"getString" isEqualToString:call.method])  {
-
-        NSString* key = call.arguments[@"key"];
-        NSString* defaultValue = call.arguments[@"defaultValue"];
-
-      result([Applanga localizedStringForKey:key withDefaultValue:defaultValue]);
-
   } else if ([@"takeScreenshotWithTag" isEqualToString:call.method])  {
-
       NSString* tag = call.arguments[@"tag"];
-
-      BOOL useOcr = call.arguments[@"useOcr"];
-
-      if(call.arguments[@"stringIds"] == [NSNull null])
-      {
-          [Applanga captureScreenshotWithTag:tag andIDs:nil useOcr:useOcr withCompletionHandler:^(BOOL success) {
+      NSArray* stringIds = call.arguments[@"stringIds"];
+      NSString* positions = call.arguments[@"stringPos"];
+      [Applanga captureScreenshotWithTag:tag ids:stringIds positions:positions withCompletionHandler:^(BOOL success) {
               result([NSNumber numberWithBool:success]);
-          }];
-      }
-      else
-      {
-          NSArray* stringIds = call.arguments[@"stringIds"];
-          [Applanga captureScreenshotWithTag:tag andIDs:stringIds useOcr:useOcr withCompletionHandler:^(BOOL success) {
-              result([NSNumber numberWithBool:success]);
-          }];
-      }
-
- }else if ([@"setlanguage" isEqualToString:call.method])  {
-
+      }];
+  } else if ([@"setLanguage" isEqualToString:call.method])  {
       NSString* lang = call.arguments[@"lang"];
-
       [Applanga setLanguage:lang];
-
- }  else if ([@"localizeMap" isEqualToString:call.method])  {
-      result([Applanga localizeMap:call.arguments]);
-
-  }else if ([@"localizedStringsForCurrentLanguage" isEqualToString:call.method])  {
-
-         result([Applanga localizedStringsForCurrentLanguage]);
-
- } else if ([@"showDraftModeDialog" isEqualToString:call.method])  {
-
+      result(nil);
+  } else if ([@"localizeMap" isEqualToString:call.method])  {
+      result([Applanga localizeMap:call.arguments andUpdateMissingStrings: FALSE]);
+  } else if ([@"showDraftModeDialog" isEqualToString:call.method])  {
       [Applanga showDraftModeDialog];
+      result(nil);
   } else if ([@"showScreenShotMenu" isEqualToString:call.method])  {
-         [Applanga setScreenShotMenuVisible:true];
+      [Applanga setScreenShotMenuVisible:true];
+      result(nil);
   } else if ([@"hideScreenShotMenu" isEqualToString:call.method])  {
-             [Applanga setScreenShotMenuVisible:false];
+      [Applanga setScreenShotMenuVisible:false];
+      result(nil);
   }  else {
       result(FlutterMethodNotImplemented);
   }
@@ -97,11 +76,8 @@ static FlutterMethodChannel *channel = nil;
 @end
 
 @implementation ApplangaFlutterPlugin (ApplangaInterface)
-
-- (void)getStringPositions:(void (^)(NSString* result))completionHandler {
-    [channel invokeMethod:@"getStringPositions" arguments:nil result:^(id _Nullable result) {
-        completionHandler(result);
-    }];
+- (void)onCaptureScreenshotFromOverlay:(NSString*)screenTag {
+    [channel invokeMethod:@"captureScreenshotFromOverlay" arguments:screenTag];
 }
 
 @end

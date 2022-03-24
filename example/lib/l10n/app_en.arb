@@ -1,0 +1,29 @@
+{
+  "@@locale": "en",
+  "homePageTitle": "ApplangaFlutter Example {date}",
+  "@homePageTitle": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    },
+    "description": "A message with a date parameter"
+  },
+  "youHavePushedTheButtonXTimes": "{count,plural, =0{You have not clicked the button with your {finger} yet.} other{You have clicked the button with your {finger} {count} times.}}",
+  "@youHavePushedTheButtonXTimes": {
+    "description": "A plural message with an additional parameter",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "finger": {
+        "example": "thumb"
+      }
+    }
+  },
+  "increment": "Increment",
+  "goToSecondPage": "Go to Second Page",
+  "secondPageTitle": "Second Page Title",
+  "helloFromSecondPage": "Hello!\nFrom the second page."
+}
