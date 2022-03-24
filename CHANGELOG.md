@@ -5,9 +5,6 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
-## Version 2.0.41 (27 Jan 2022) 
-* bump version number to use the latest applanga android sdk 
-
 ## Version 2.0.39 (2 Sep 2021) 
 * Migrated to null safety
 

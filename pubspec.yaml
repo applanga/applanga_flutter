@@ -1,6 +1,6 @@
 name: applanga_flutter
-description: ApplangaSDK for Flutter.
-version: 2.0.41
+description: With ApplangaFlutter you can easily manage your (over-the-air) translations with tiny changes to your codebase.
+version: 2.0.1
 homepage: https://github.com/applanga/applanga_flutter
 
 environment:
@@ -14,10 +14,20 @@ dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  petitparser: ^4.2.0
+  yaml: ^3.1.0
+  analyzer: ^3.3.1
+  dart_style: ^2.1.0
+  synchronized: ^3.0.0
 
 dev_dependencies:
+  flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
+  build: ^2.1.0
+  path: ^1.8.0
 
 flutter:
   plugin:
@@ -27,4 +37,12 @@ flutter:
         pluginClass: ApplangaFlutterPlugin
       ios:
         pluginClass: ApplangaFlutterPlugin
-
+      macos:
+        pluginClass: ApplangaFlutterPlugin
+      windows:
+        pluginClass: ApplangaFlutterPlugin
+      linux:
+        pluginClass: ApplangaFlutterPlugin
+      web:
+        pluginClass: ApplangaFlutterWeb
+        fileName: applanga_flutter_web.dart
