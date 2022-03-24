@@ -5,10 +5,7 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
-## Version 3.0.43 (24 Mar 2022) 
-* fixed dependency version error caused by build script
-
-## Version 3.0.42 (24 Mar 2022) 
+## Version 3.0.44 (24 Mar 2022) 
 * ___Breaking Changes___ introduced applanga_flutter 3.0 
 
 ## Version 2.0.41 (27 Jan 2022) 
