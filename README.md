@@ -181,7 +181,7 @@ Once in draft mode you can show or hide the screenshot menu by swiping down with
 
 
 Applanga will detect every string and it's position inside the latest `ApplangaScreenshotScope` or `ApplangaScreenshotScopeMixin`.
-In order to get good and clean screenshots from your screens or widgets you have to make sure to either wrap your widget with the `ApplangaScreenshotScope` widget or you add the `ApplangaScreenshotScopeMixin` to your State as shown in the examples below and as shown in the example app from this repository.
+In order to get good and clean screenshots make sure to wrap all your screens or widgets with either `ApplangaScreenshotScope` widget or add `ApplangaScreenshotScopeMixin` to your state as shown in the examples below and as shown in the example app from this repository.
 
 Use `ApplangaScreenshotScope`:
 ```dart
