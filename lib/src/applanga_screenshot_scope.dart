@@ -16,7 +16,6 @@ class ApplangaScreenshotScope extends StatefulWidget {
 
 class _ApplangaScreenshotScopeState extends State<ApplangaScreenshotScope>
     with ApplangaScreenshotScopeMixin {
-
   @override
   Widget build(BuildContext context) {
     return widget.child;

@@ -22,8 +22,8 @@ class ApplangaCliOutdatedException extends ApplangaFlutterException {
   ApplangaCliOutdatedException(
       {required this.currentVersion, required this.minVersion})
       : super("-> applanga cli is outdated.\n"
-      "Current version: $currentVersion.\n"
-      "Required minVersion: $minVersion.");
+            "Current version: $currentVersion.\n"
+            "Required minVersion: $minVersion.");
 }
 
 class ApplangaCliNotFoundException extends ApplangaCliException {
@@ -31,8 +31,9 @@ class ApplangaCliNotFoundException extends ApplangaCliException {
 }
 
 class ApplangaFlutterContextException extends ApplangaFlutterException {
-  ApplangaFlutterContextException() : super("Context is not valid.\n"
-      "Applanga can't detect string positions within this Context.\n"
-      "Set your context within your WidgetsApp, CupertinoApp or MaterialApp.\n"
-      "Don't forget to dispose the context with ApplangaFlutter.I.dispose(context).");
+  ApplangaFlutterContextException()
+      : super("Context is not valid.\n"
+            "Applanga can't detect string positions within this Context.\n"
+            "Set your context within your WidgetsApp, CupertinoApp or MaterialApp.\n"
+            "Don't forget to dispose the context with ApplangaFlutter.I.dispose(context).");
 }
