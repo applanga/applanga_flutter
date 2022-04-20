@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:applanga_flutter/src/applanga_exception.dart';
@@ -7,6 +9,7 @@ import 'package:applanga_flutter/src/screenshot/string_position.dart';
 import 'package:applanga_flutter/src/screenshot/translation_tuple.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/locale.dart' as intl_locale;
@@ -18,6 +21,7 @@ class ApplangaFlutter {
   static late final MethodChannel? _channel;
   static final ApplangaFlutter instance = ApplangaFlutter._internal();
   static final ApplangaFlutter I = instance;
+  static const _screenshotPixelRatio = 1.5;
 
   // ignore: close_sinks
   final StreamController<TranslationTuple> _translationStream =
@@ -80,6 +84,7 @@ class ApplangaFlutter {
   }
 
   void _init() {
+    debugPrint("hi this is applanga_flutter");
     if (!_isSupported) return;
     _channel = const MethodChannel('applanga_flutter');
     _channel!.invokeMethod('init');
@@ -463,8 +468,6 @@ class ApplangaFlutter {
   /// [useOcr] is
   Future<void> captureScreenshotWithTag(String tag,
       {List<String>? stringIds}) async {
-    if (!_isSupported) return;
-
     if (stringIds == null) {
       await _captureScreenshotWithTagAndShowIdMode(tag);
     } else {
@@ -476,7 +479,11 @@ class ApplangaFlutter {
 
   Future<void> _captureScreenshot(String tag,
       {List<String>? stringIds, List<ALStringPosition>? stringPos}) async {
-    if (!_isSupported) return Future.value();
+    if (!_isSupported) {
+      await captureScreenshotFlutter(tag,
+          stringIds: stringIds, stringPos: stringPos);
+      return;
+    }
     String? stringPosAsString;
     if (stringPos != null) {
       stringPosAsString = ALStringPosition.listToJsonString(stringPos);
@@ -486,6 +493,18 @@ class ApplangaFlutter {
       'stringIds': stringIds ?? const [],
       'stringPos': stringPosAsString ?? ''
     });
+  }
+
+  Future<ui.Image?> captureScreenshotFlutter(
+    String tag, {
+    List<String>? stringIds,
+    List<ALStringPosition>? stringPos,
+  }) async {
+    RenderRepaintBoundary? canvas = repaintBoundryKey.currentContext
+        ?.findRenderObject() as RenderRepaintBoundary?;
+    if (canvas == null) return null;
+    final _screenshot = await canvas.toImage(pixelRatio: _screenshotPixelRatio);
+    return _screenshot;
   }
 
   List<ALStringPosition> _getStringPositions(BuildContext? context) {

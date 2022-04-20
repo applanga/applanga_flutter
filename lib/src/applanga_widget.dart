@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:flutter/widgets.dart';
 
+final repaintBoundryKey = GlobalKey<_ApplangaWidgetState>();
+
 class ApplangaWidget extends StatefulWidget {
   final Widget child;
 
@@ -35,7 +37,10 @@ class _ApplangaWidgetState extends State<ApplangaWidget>
 
   @override
   Widget build(BuildContext context) {
-    return ApplangaInherited(state: this, child: widget.child);
+    return RepaintBoundary(
+      key: repaintBoundryKey,
+      child: ApplangaInherited(state: this, child: widget.child),
+    );
   }
 }
 
