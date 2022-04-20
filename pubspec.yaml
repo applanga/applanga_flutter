@@ -21,6 +21,7 @@ dependencies:
   analyzer: ^3.3.1
   dart_style: ^2.1.0
   synchronized: ^3.0.0
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_lints: ^1.0.4

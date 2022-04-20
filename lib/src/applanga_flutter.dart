@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io' show Platform;
 import 'dart:typed_data';
+import 'package:http/http.dart' as http;
 import 'dart:ui' as ui;
+import 'package:http_parser/http_parser.dart';
 
 import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:applanga_flutter/src/applanga_exception.dart';
@@ -495,7 +498,56 @@ class ApplangaFlutter {
     });
   }
 
-  Future<ui.Image?> captureScreenshotFlutter(
+  Future<void> flutterScreenshotUpload(
+    String tag, {
+    List<String>? stringIds,
+    List<ALStringPosition>? stringPos,
+  }) async {
+    Map<String, String>? headers = {
+      'Authorization':
+          'Bearer 61f0fe1b67139b6a16dd1f97!b4bffd942f44fbd21782e27865ccbcc3',
+      'Content-Type': 'multipart/form-data',
+    };
+    String appId = "61f0fe1b67139b6a16dd1f97";
+    var url =
+        Uri.parse("https://api.applanga.com/v1/api/screenshots?app=$appId");
+    var request = http.MultipartRequest('POST', url);
+    Map<String, dynamic> stringPositions = {
+      'key': 'KEY246',
+      'x': 100,
+      'y': 10,
+      'width': 200,
+      'height': 40,
+    };
+
+    Map<String, dynamic> data = {
+      'screenTag': tag,
+      'width': 600,
+      'height': 400,
+      'deviceModel': "test device model",
+      'platform': "test platform",
+      'operatingSystem': "test os",
+      'bundleVersion': "test bundle version",
+      'deviceLanguageLong': "en",
+      'useOCR': false,
+      'useFuzzyMatching': true,
+      'stringPositions': stringPositions,
+    };
+
+    request.headers.addAll(headers);
+    request.fields['data'] = jsonEncode(data);
+
+    var screenshotByteData = (await captureScreenshotFlutter(tag))!;
+    request.files.add(http.MultipartFile.fromBytes(
+        'file', screenshotByteData.buffer.asUint8List(),
+        contentType: MediaType('image', 'jpeg')));
+
+    request
+        .send()
+        .then((response) => {if (response.statusCode == 200) print("PASSED")});
+  }
+
+  Future<ByteData?> captureScreenshotFlutter(
     String tag, {
     List<String>? stringIds,
     List<ALStringPosition>? stringPos,
@@ -504,7 +556,7 @@ class ApplangaFlutter {
         ?.findRenderObject() as RenderRepaintBoundary?;
     if (canvas == null) return null;
     final _screenshot = await canvas.toImage(pixelRatio: _screenshotPixelRatio);
-    return _screenshot;
+    return _screenshot.toByteData();
   }
 
   List<ALStringPosition> _getStringPositions(BuildContext? context) {

@@ -146,6 +146,18 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "http",
+      "rootUri": "file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "intl",
       "rootUri": "file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
       "packageUri": "lib/",
@@ -320,7 +332,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-04-20T12:41:50.475241Z",
+  "generated": "2022-04-20T15:41:51.195530Z",
   "generator": "pub",
   "generatorVersion": "2.17.0-69.2.beta"
 }

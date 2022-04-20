@@ -70,6 +70,14 @@ glob
 2.14
 file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/glob-2.0.2/
 file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/glob-2.0.2/lib/
+http
+2.14
+file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/
+file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/lib/
+http_parser
+2.12
+file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/
+file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/lib/
 intl
 2.12
 file:///Users/davidmcfaul/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/

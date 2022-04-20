@@ -88,7 +88,8 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with ApplangaScreenshotScopeMixin{
+class _MyHomePageState extends State<MyHomePage>
+    with ApplangaScreenshotScopeMixin {
   int _counter = 0;
 
   void _incrementCounter() {
