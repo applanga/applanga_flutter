@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
-import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'dart:ui' as ui;
 import 'package:http_parser/http_parser.dart';
 
 import 'package:applanga_flutter/applanga_flutter.dart';
@@ -512,15 +510,12 @@ class ApplangaFlutter {
     var url =
         Uri.parse("https://api.applanga.com/v1/api/screenshots?app=$appId");
     var request = http.MultipartRequest('POST', url);
-    Map<String, dynamic> stringPositions = {
-      'key': 'KEY246',
-      'x': 100,
-      'y': 10,
-      'width': 200,
-      'height': 40,
-    };
 
-    Map<String, dynamic> data = {
+    List<dynamic> stringPositionList = [
+      {"key": "Key99", "x": 100, "y": 10, "width": 200, "height": 40},
+    ];
+
+    Map<dynamic, dynamic> data = {
       'screenTag': tag,
       'width': 600,
       'height': 400,
@@ -531,20 +526,34 @@ class ApplangaFlutter {
       'deviceLanguageLong': "en",
       'useOCR': false,
       'useFuzzyMatching': true,
-      'stringPositions': stringPositions,
+      'stringPositions': stringPositionList,
     };
+    Map<dynamic, dynamic> dataList = {'data': data};
 
     request.headers.addAll(headers);
-    request.fields['data'] = jsonEncode(data);
+    request.fields['data'] = jsonEncode(dataList);
 
     var screenshotByteData = (await captureScreenshotFlutter(tag))!;
     request.files.add(http.MultipartFile.fromBytes(
         'file', screenshotByteData.buffer.asUint8List(),
         contentType: MediaType('image', 'jpeg')));
 
-    request
-        .send()
-        .then((response) => {if (response.statusCode == 200) print("PASSED")});
+    request.send().then(
+          (response) => {
+            if (response.statusCode == 200)
+              {
+                print(
+                  "PASSED",
+                ),
+              }
+            else
+              {
+                print(
+                  'FAILED',
+                ),
+              }
+          },
+        );
   }
 
   Future<ByteData?> captureScreenshotFlutter(
