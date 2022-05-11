@@ -528,32 +528,20 @@ class ApplangaFlutter {
       'useFuzzyMatching': true,
       'stringPositions': stringPositionList,
     };
-    Map<dynamic, dynamic> dataList = {'data': data};
-
-    request.headers.addAll(headers);
-    request.fields['data'] = jsonEncode(dataList);
 
     var screenshotByteData = (await captureScreenshotFlutter(tag))!;
+
     request.files.add(http.MultipartFile.fromBytes(
         'file', screenshotByteData.buffer.asUint8List(),
-        contentType: MediaType('image', 'jpeg')));
+        filename: tag, contentType: MediaType.parse('image/png')));
 
-    request.send().then(
-          (response) => {
-            if (response.statusCode == 200)
-              {
-                print(
-                  "PASSED",
-                ),
-              }
-            else
-              {
-                print(
-                  'FAILED',
-                ),
-              }
-          },
-        );
+    request.headers.addAll(headers);
+
+    request.fields['data'] = jsonEncode(data);
+
+    var response = await request.send();
+    print(response.statusCode);
+
   }
 
   Future<ByteData?> captureScreenshotFlutter(
