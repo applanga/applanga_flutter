@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/locale.dart' as intl_locale;
 import 'package:synchronized/synchronized.dart';
+import 'dart:ui' as ui;
 
 export 'icu/icu_string.dart';
 
@@ -529,19 +530,17 @@ class ApplangaFlutter {
       'stringPositions': stringPositionList,
     };
 
-    var screenshotByteData = (await captureScreenshotFlutter(tag))!;
+    var screenshotByteData = (await captureScreenshotFlutter(tag))!;    
 
     request.files.add(http.MultipartFile.fromBytes(
         'file', screenshotByteData.buffer.asUint8List(),
-        filename: tag, contentType: MediaType.parse('image/png')));
+        filename: tag, contentType: MediaType('image','png')));
 
     request.headers.addAll(headers);
 
     request.fields['data'] = jsonEncode(data);
 
     var response = await request.send();
-    print(response.statusCode);
-
   }
 
   Future<ByteData?> captureScreenshotFlutter(
@@ -552,8 +551,10 @@ class ApplangaFlutter {
     RenderRepaintBoundary? canvas = repaintBoundryKey.currentContext
         ?.findRenderObject() as RenderRepaintBoundary?;
     if (canvas == null) return null;
-    final _screenshot = await canvas.toImage(pixelRatio: _screenshotPixelRatio);
-    return _screenshot.toByteData();
+    final ui.Image image = await canvas.toImage();
+    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    
+    return byteData;
   }
 
   List<ALStringPosition> _getStringPositions(BuildContext? context) {
