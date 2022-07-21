@@ -1,4 +1,3 @@
-[![pub package](https://img.shields.io/pub/v/applanga_flutter.svg)](https://pub.dev/packages/applanga_flutter) [![pub points](https://badges.bar/applanga_flutter/pub%20points)](https://pub.dev/packages/applanga_flutter/score)
 # Applanga SDK for Flutter 
 
 ## Table of Contents
