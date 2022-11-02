@@ -13,7 +13,7 @@
     - [Generate and replace AppLocalizationsClass with ApplangaLocalizationsClass](#Generate-and-replace-AppLocalizationsClass-with-ApplangaLocalizationsClass)
     - [Draft Mode and Screenshot Menu](#Draft-Mode-and-Screenshot-Menu)
     - [Automating screenshot upload](#Automating-screenshot-upload)
-    - [Automatic settings files update]('Automatic-settings-files-update)
+    - [Automatic settings files update](#Automatic-settings-files-update)
 ***
 
 ## Basic Usage
