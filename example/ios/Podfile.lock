@@ -1,7 +1,7 @@
 PODS:
   - Applanga (2.0.161)
   - applanga_flutter (3.0.44):
-    - Applanga (~> 2.0.161)
+    - Applanga (= 2.0.161)
     - Flutter
   - Flutter (1.0.0)
   - integration_test (0.0.1):
@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Applanga: bb90a6f2cbff3e2c3f330bc5a466eeff84082573
-  applanga_flutter: 876f14319b650c5c6f33dfdedf7d0253b6cf6fb8
+  applanga_flutter: 48b3cc4ebf639e06dba6b489a23f3706a2e81719
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
 

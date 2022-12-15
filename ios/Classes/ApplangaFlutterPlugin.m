@@ -1,5 +1,5 @@
 #import "ApplangaFlutterPlugin.h"
-#import "Applanga/Applanga.h"
+#import <Applanga/Applanga.h>
 #if __has_include(<applanga_flutter/applanga_flutter-Swift.h>)
 #import <applanga_flutter/applanga_flutter-Swift.h>
 #else

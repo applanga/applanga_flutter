@@ -17,7 +17,7 @@ With ApplangaFlutter you can get all your translations over the air. It's also
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Applanga', '~> 2.0.161'
+  s.dependency 'Applanga', '2.0.161'
 
   s.platform = :ios, '9.0'
 
