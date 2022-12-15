@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 // ignore_for_file: non_constant_identifier_names
+// ignore_for_file: unused_local_variable
 class ApplangaLocalizations extends AppLocalizations {
   final AppLocalizations _original;
 
@@ -53,7 +54,11 @@ class ApplangaLocalizations extends AppLocalizations {
   }
 
   @override
-  String youHavePushedTheButtonXTimes(num count, Object finger) {
+  String youHavePushedTheButtonXTimes(int count, Object finger) {
+    String _temp0 = intl.Intl.pluralLogic(count,
+        locale: localeName,
+        other: 'You have clicked the button with your $finger $count times.',
+        zero: 'You have not clicked the button with your $finger yet.');
     return ApplangaFlutter.instance.getIcuString('youHavePushedTheButtonXTimes',
             {'count': count, 'finger': finger}) ??
         _original.youHavePushedTheButtonXTimes(count, finger);

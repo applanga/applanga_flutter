@@ -13,6 +13,7 @@ class ALStringPosition {
   final int elementHash;
 
   String? get key => _key;
+
   String? get value => _value;
 
   ALStringPosition(this._key, this._value, this._x, this._y, this._width,

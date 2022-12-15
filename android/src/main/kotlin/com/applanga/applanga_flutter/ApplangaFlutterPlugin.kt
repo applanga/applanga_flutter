@@ -7,11 +7,8 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
-import androidx.annotation.UiThread
 import com.applanga.android.Applanga
 import com.applanga.android.ApplangaScreenshotInterface
-import com.applanga.android.ApplangaScreenshotInterface.StringPositionsCallback
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -35,7 +32,7 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "applanga_flutter")
         channel.setMethodCallHandler(this)
         Applanga.init(flutterPluginBinding.applicationContext)
@@ -57,7 +54,7 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         theActivity = null
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
 
@@ -96,7 +93,7 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    override fun onMethodCall(call: MethodCall, result: Result) {
         if (call.method == "init") {
             Applanga.setScreenshotInterface(object : ApplangaScreenshotInterface {
                 override fun onCaptureScreenshotFromOverlay(screenTag: String){
