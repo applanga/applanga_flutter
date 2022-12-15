@@ -94,7 +94,7 @@ class LocalizationBaseLangVisitor extends SimpleAstVisitor {
         getter.add(node.name.toString());
       } else {
         for (final param in node.parameters!.parameters) {
-          String? paramName = param.identifier?.toString();
+          String? paramName = param.name?.toString();
           if (paramName != null) {
             originalParams.putIfAbsent(paramName, () => paramName);
           }

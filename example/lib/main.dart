@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> with ApplangaScreenshotScopeMix
             Text(
               AppLocalizations.of(context)!
                   .youHavePushedTheButtonXTimes(_counter, 'thumb'),
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),

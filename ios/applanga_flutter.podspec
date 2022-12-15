@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'applanga_flutter'
   s.version          = '3.0.44'
-  s.summary          = 'A new flutter plugin project.'
+  s.summary          = 'Enables over-the-air translations for Android and iOS.'
   s.description      = <<-DESC
 With ApplangaFlutter you can get all your translations over the air. It's also
   suitable to update and download your newest translations from and to the flutter project via
@@ -17,7 +17,7 @@ With ApplangaFlutter you can get all your translations over the air. It's also
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Applanga', '~> 2.0.158'
+  s.dependency 'Applanga', '~> 2.0.161'
 
   s.platform = :ios, '9.0'
 

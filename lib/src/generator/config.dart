@@ -141,10 +141,10 @@ class ApplangaConfig {
       throw ApplangaConfigException("access_token is not set.");
     }
 
-    var _updateSettingsfilesOnPullTmp =
+    var updateSettingsfilesOnPullTmp =
         applangaConfig["update_settingsfiles_on_pull"];
-    if (_updateSettingsfilesOnPullTmp is bool) {
-      _updateSettingsfilesOnPull = _updateSettingsfilesOnPullTmp;
+    if (updateSettingsfilesOnPullTmp is bool) {
+      _updateSettingsfilesOnPull = updateSettingsfilesOnPullTmp;
     }
 
     var groups = applangaConfig["update_groups"];
@@ -235,13 +235,13 @@ class ApplangaConfig {
   }
 
   String? _getBaseLanguageFromTemplateArb() {
-    var _file = File(arbTemplateFilePath);
+    var file = File(arbTemplateFilePath);
     Map<String, Object?> arbMap;
     try {
-      arbMap = json.decode(_file.readAsStringSync()) as Map<String, Object?>;
+      arbMap = json.decode(file.readAsStringSync()) as Map<String, Object?>;
     } on FormatException catch (e) {
       throw ApplangaConfigException(
-        'The arb file ${_file.path} has the following formatting issue: \n'
+        'The arb file ${file.path} has the following formatting issue: \n'
         '${e.toString()}',
       );
     }

@@ -9,7 +9,7 @@ class ApplangaWidget extends StatefulWidget {
   const ApplangaWidget({Key? key, required this.child}) : super(key: key);
 
   @override
-  _ApplangaWidgetState createState() => _ApplangaWidgetState();
+  State<ApplangaWidget> createState() => _ApplangaWidgetState();
 }
 
 class _ApplangaWidgetState extends State<ApplangaWidget>
@@ -18,7 +18,7 @@ class _ApplangaWidgetState extends State<ApplangaWidget>
     Completer completer = Completer();
     _rebuildAll(context);
     setState(() {});
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       completer.complete();
     });
     return completer.future;
@@ -46,9 +46,9 @@ class ApplangaInherited extends InheritedWidget {
     required Widget child,
   }) : super(key: key, child: child);
 
-  final _ApplangaWidgetState state;
+  final State<ApplangaWidget> state;
 
-  Future<void> rebuild() => state.rebuild();
+  Future<void> rebuild() => (state as _ApplangaWidgetState).rebuild();
 
   static ApplangaInherited? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ApplangaInherited>();

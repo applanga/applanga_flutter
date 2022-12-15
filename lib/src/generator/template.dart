@@ -20,6 +20,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 ${useIntlImport ? "import 'package:intl/intl.dart' as intl;" : ''}
 
 // ignore_for_file: non_constant_identifier_names
+// ignore_for_file: unused_local_variable
 class $className extends AppLocalizations {
   final AppLocalizations _original;
 

@@ -1,7 +1,7 @@
 PODS:
-  - Applanga (2.0.158)
-  - applanga_flutter (0.0.1):
-    - Applanga (~> 2.0.158)
+  - Applanga (2.0.161)
+  - applanga_flutter (3.0.44):
+    - Applanga (~> 2.0.161)
     - Flutter
   - Flutter (1.0.0)
   - integration_test (0.0.1):
@@ -25,11 +25,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  Applanga: 805560b3fc74beec02839c0876fd3bc8ccc78eea
-  applanga_flutter: cd6d1151e66dc39ff9893073ecb71dacda89376b
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  Applanga: bb90a6f2cbff3e2c3f330bc5a466eeff84082573
+  applanga_flutter: 876f14319b650c5c6f33dfdedf7d0253b6cf6fb8
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
 COCOAPODS: 1.11.2
