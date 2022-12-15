@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'applanga_flutter'
-  s.version          = '3.0.45'
+  s.version          = '3.0.46'
   s.summary          = 'Enables over-the-air translations for Android and iOS.'
   s.description      = <<-DESC
 With ApplangaFlutter you can get all your translations over the air. It's also

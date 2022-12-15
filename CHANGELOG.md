@@ -5,6 +5,9 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.46 (15 Dec 2022) 
+* resolving dependency conflict with the analyzer package
+
 ## Version 3.0.45 (15 Dec 2022) 
 * upgraded dependencies
 * fixed applanga xcframework issue on iOS
