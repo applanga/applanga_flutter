@@ -54,11 +54,7 @@ class ApplangaLocalizations extends AppLocalizations {
   }
 
   @override
-  String youHavePushedTheButtonXTimes(int count, Object finger) {
-    String _temp0 = intl.Intl.pluralLogic(count,
-        locale: localeName,
-        other: 'You have clicked the button with your $finger $count times.',
-        zero: 'You have not clicked the button with your $finger yet.');
+  String youHavePushedTheButtonXTimes(num count, Object finger) {
     return ApplangaFlutter.instance.getIcuString('youHavePushedTheButtonXTimes',
             {'count': count, 'finger': finger}) ??
         _original.youHavePushedTheButtonXTimes(count, finger);

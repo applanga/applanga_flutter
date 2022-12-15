@@ -29,14 +29,14 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.1
 
 flutter:
   uses-material-design: true
   generate: true
 
 applanga_flutter:
-  access_token: 6124e3eca9ae8a0e3862e531!085b688e23a9f9b11f3484bece24c18c
+  access_token: xxxx
   update_settingsfiles_on_pull: true
 #  update_groups: [main]
 #  update_languages: [en, en_US, es, es_CL]
