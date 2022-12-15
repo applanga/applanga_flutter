@@ -5,6 +5,11 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.45 (15 Dec 2022) 
+* upgraded dependencies
+* fixed applanga xcframework issue on iOS
+* fixed linting issues
+
 ## Version 3.0.44 (24 Mar 2022) 
 * ___Breaking Changes___ introduced applanga_flutter 3.0 
 
