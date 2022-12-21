@@ -4,16 +4,17 @@
 
 ## Table of Contents
 
-  - [Basic Usage](#Basic-Usage)
-    - [Applanga CLI installation](#Applanga-CLI-installation)
-    - [Localization preparation](#Localization-preparation)
-    - [Pull & Push new translations](#Pull-&-Push-new-translations)
-  - [Optional Over the Air Updates](#Over-the-Air-Updates)
-    - [Add Applanga's settings file](#Add-Applanga's-settings-file)
-    - [Generate and replace AppLocalizationsClass with ApplangaLocalizationsClass](#Generate-and-replace-AppLocalizationsClass-with-ApplangaLocalizationsClass)
-    - [Draft Mode and Screenshot Menu](#Draft-Mode-and-Screenshot-Menu)
-    - [Automating screenshot upload](#Automating-screenshot-upload)
-    - [Automatic settings files update](#Automatic-settings-files-update)
+  - [Basic Usage](#basic-usage)
+    - [Applanga CLI installation](#applanga-cli-installation)
+    - [Localization preparation](#localization-preparation)
+    - [Pull & Push new translations](#pull--push-new-translations)
+  - [Optional Over the Air Updates](#over-the-air-updates)
+    - [Add Applanga's settings file](#add-applangas-settings-file)
+    - [Generate and replace AppLocalizationsClass with ApplangaLocalizationsClass](#generate-and-replace-applocalizationsclass-with-applangalocalizationsclass)
+    - [Draft Mode](#draft-mode)
+    - [Screenshot Menu](#screenshot-menu)
+    - [Automating screenshot upload](#automating-screenshot-upload)
+    - [Automatic settings files update](#automatic-settings-files-update)
 ***
 
 ## Basic Usage
