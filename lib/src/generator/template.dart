@@ -24,9 +24,9 @@ ${useIntlImport ? "import 'package:intl/intl.dart' as intl;" : ''}
 class $className extends AppLocalizations {
   final AppLocalizations _original;
 
-  $className(_locale)
-      : _original = lookupAppLocalizations(_locale),
-        super(_locale.toString());
+  $className(locale)
+      : _original = lookupAppLocalizations(locale),
+        super(locale.toString());
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _${className}Delegate();
