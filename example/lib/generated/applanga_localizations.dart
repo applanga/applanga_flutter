@@ -9,9 +9,9 @@ import 'package:intl/intl.dart' as intl;
 class ApplangaLocalizations extends AppLocalizations {
   final AppLocalizations _original;
 
-  ApplangaLocalizations(_locale)
-      : _original = lookupAppLocalizations(_locale),
-        super(_locale.toString());
+  ApplangaLocalizations(locale)
+      : _original = lookupAppLocalizations(locale),
+        super(locale.toString());
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _ApplangaLocalizationsDelegate();
@@ -54,7 +54,11 @@ class ApplangaLocalizations extends AppLocalizations {
   }
 
   @override
-  String youHavePushedTheButtonXTimes(num count, Object finger) {
+  String youHavePushedTheButtonXTimes(int count, Object finger) {
+    String _temp0 = intl.Intl.pluralLogic(count,
+        locale: localeName,
+        other: 'You have clicked the button with your $finger $count times.',
+        zero: 'You have not clicked the button with your $finger yet.');
     return ApplangaFlutter.instance.getIcuString('youHavePushedTheButtonXTimes',
             {'count': count, 'finger': finger}) ??
         _original.youHavePushedTheButtonXTimes(count, finger);

@@ -19,7 +19,6 @@ class ApplangaConfig {
   String _destinationPath = 'lib/generated';
   String _destinationClassFileName = 'applanga_localizations.dart';
   String _className = 'ApplangaLocalizations';
-  String? _branchId = null;
 
   String get className => _className;
 
@@ -41,6 +40,10 @@ class ApplangaConfig {
   late String _accessToken;
 
   String get accessToken => _accessToken;
+
+  String? _branchId;
+
+  String? get branchId => _branchId;
 
   List<String>? _updateGroups;
 
