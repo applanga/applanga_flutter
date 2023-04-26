@@ -1,7 +1,7 @@
 PODS:
-  - Applanga (2.0.161)
-  - applanga_flutter (3.0.44):
-    - Applanga (= 2.0.161)
+  - Applanga (2.0.170)
+  - applanga_flutter (3.0.46):
+    - Applanga (= 2.0.170)
     - Flutter
   - Flutter (1.0.0)
   - integration_test (0.0.1):
@@ -25,8 +25,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  Applanga: bb90a6f2cbff3e2c3f330bc5a466eeff84082573
-  applanga_flutter: 48b3cc4ebf639e06dba6b489a23f3706a2e81719
+  Applanga: 3d8f72e57bb58d9c68a2def7415c26f3d6021d91
+  applanga_flutter: ec16103c0113720be4c14df3df8e2fa333b99d94
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
 
