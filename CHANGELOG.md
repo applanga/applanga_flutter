@@ -5,6 +5,11 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.47 (26 Apr 2023) 
+* upgraded Applanga dependencies
+* upgraded example/android
+* fixed setLanguage issue for iOS
+
 ## Version 3.0.46 (15 Dec 2022) 
 * resolving dependency conflict with the analyzer package
 
