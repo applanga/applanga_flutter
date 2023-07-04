@@ -484,13 +484,6 @@ class ApplangaFlutter {
     if (stringPos != null) {
       stringPosAsString = ALStringPosition.listToJsonString(stringPos);
     }
-    print("showIdMode enabled: ${_showIdMode}");
-    if (stringIds != null) {
-      print("alecsids: ${ALStringPosition.listToJsonString(stringPos!)}");
-    }
-    if (stringPos != null) {
-      print("alecspositions: ${ALStringPosition.listToJsonString(stringPos!)}");
-    }
     await _channel!.invokeMethod('takeScreenshotWithTag', <String, dynamic>{
       'tag': tag,
       'stringIds': stringIds ?? const [],

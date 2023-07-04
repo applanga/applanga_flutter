@@ -37,6 +37,7 @@ flutter:
 
 applanga_flutter:
   access_token: xxxx
+# if you make any changes here, call `flutter pub run applanga_flutter:generate`
   update_settingsfiles_on_pull: true
 #  update_groups: [main]
 #  update_languages: [en, en_US, es, es_CL]
