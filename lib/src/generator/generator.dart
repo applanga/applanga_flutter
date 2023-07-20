@@ -38,6 +38,7 @@ class ApplangaGenerator {
     final dartCode = generateAppLocalizationClass(
       config.className,
       config.baseLanguage,
+      config.branchId,
       config.updateGroups,
       config.updateLanguages,
       visitor.ids,
@@ -47,6 +48,7 @@ class ApplangaGenerator {
     );
     final formatter = DartFormatter();
     generatedFile.writeAsStringSync(formatter.format(dartCode));
+    stdout.writeln("${generatedFile.absolute} generated successfully!");
   }
 }
 

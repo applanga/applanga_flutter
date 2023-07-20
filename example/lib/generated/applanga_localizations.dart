@@ -9,9 +9,9 @@ import 'package:intl/intl.dart' as intl;
 class ApplangaLocalizations extends AppLocalizations {
   final AppLocalizations _original;
 
-  ApplangaLocalizations(_locale)
-      : _original = lookupAppLocalizations(_locale),
-        super(_locale.toString());
+  ApplangaLocalizations(locale)
+      : _original = lookupAppLocalizations(locale),
+        super(locale.toString());
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _ApplangaLocalizationsDelegate();

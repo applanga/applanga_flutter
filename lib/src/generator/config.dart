@@ -41,6 +41,10 @@ class ApplangaConfig {
 
   String get accessToken => _accessToken;
 
+  String? _branchId;
+
+  String? get branchId => _branchId;
+
   List<String>? _updateGroups;
 
   List<String>? get updateGroups => _updateGroups;
@@ -65,6 +69,7 @@ class ApplangaConfig {
   "app": {
     "access_token": "$accessToken",
     "base_language": "$baseLanguage",
+    ${_branchId != null ? "\"branch_id\": \"$_branchId\"," : ""}
     "pull": {
       "target": [
 """
@@ -108,6 +113,51 @@ class ApplangaConfig {
   ApplangaConfig._internal() {
     parsePubspec();
     parseL10n();
+  }
+
+  bool isCurrentApplangaJsonUpToDate(File applangaJsonFile) {
+    Map<String, Object?>? applangaJson;
+    try {
+      applangaJson = json.decode(applangaJsonFile.readAsStringSync());
+      if (applangaJson!["app"] is! Map) {
+        // if it has no app object return here already
+        throw Exception();
+      }
+    } catch (e) {
+      stdout.writeln("applanga json not valid.");
+      return false;
+    }
+
+    Map<String, Object?> app = applangaJson["app"] as Map<String, Object?>;
+
+    String? accessToken;
+    try {
+      accessToken = app["access_token"] as String;
+    } catch (e) {
+      /* ignore */
+    }
+
+    String? branchId;
+    try {
+      branchId = app["branch_id"] as String;
+    } catch (e) {
+      /* ignore */
+    }
+
+    if (_accessToken != accessToken) {
+      stdout.writeln("access token pubspec.yaml: $_accessToken");
+      stdout.writeln("access token .applanga.json: $accessToken");
+      stdout.writeln("-> access token mismatching.");
+      return false;
+    }
+
+    if (_branchId != branchId) {
+      stdout.writeln("branch id pubspec.yaml: $_branchId");
+      stdout.writeln("branch id .applanga.json: $branchId");
+      stdout.writeln("-> branch id mismatching.");
+      return false;
+    }
+    return true;
   }
 
   void parsePubspec() {
@@ -170,6 +220,11 @@ class ApplangaConfig {
     var outputDir = applangaConfig["output_dir"];
     if (outputDir is String) {
       _destinationPath = outputDir;
+    }
+
+    var branchId = applangaConfig["branch_id"];
+    if (branchId is String) {
+      _branchId = branchId;
     }
   }
 

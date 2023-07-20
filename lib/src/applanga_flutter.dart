@@ -46,6 +46,7 @@ class ApplangaFlutter {
   }
 
   late String _baseLanguage;
+  String? _branchId;
   Locale? _currentLocale;
 
   Locale? get currentLocale => _currentLocale;
@@ -83,6 +84,7 @@ class ApplangaFlutter {
     if (!_isSupported) return;
     _channel = const MethodChannel('applanga_flutter');
     _channel!.invokeMethod('init');
+    _compareSettingsFileBranchIdWithFlutterBranchId().catchError((e) => throw e);
     _channel!.setMethodCallHandler((call) async {
       debugPrint("setMethodCallHandler, call: ${call.method}");
       if (call.method == 'getStringPositions') {
@@ -222,7 +224,7 @@ class ApplangaFlutter {
   /// Sets meta data only once. It triggers an update if there hasn't been one
   /// for the default languages yet.
   Future<void> setMetaData(
-      Locale locale, String baseLanguage, List<String> keys,
+      Locale locale, String baseLanguage, String? branchId, List<String> keys,
       {List<String>? groups, List<String>? languages}) async {
     if (!isInitialised) {
       final language = locale.toLanguageTag();
@@ -242,6 +244,7 @@ class ApplangaFlutter {
         }
       }
       _baseLanguage = baseLanguage;
+      _branchId = branchId;
       _keys = keys;
 
       // add current language if it's not set for default languages
@@ -527,5 +530,29 @@ class ApplangaFlutter {
       context.visitChildElements(visitor);
     }
     return tree.join(', ');
+  }
+
+  /// returns the current set branch. The branch is set with the settings file
+  /// or when you have enabled the Draft Mode you can change your branch at
+  /// runtime.
+  Future<void> _compareSettingsFileBranchIdWithFlutterBranchId() async {
+    String? settingsFileBranchId =
+        await _channel!.invokeMethod("getSettingsFileBranchId");
+    if (_branchId == settingsFileBranchId) {
+      return;
+    } else if (_branchId != null && settingsFileBranchId == null) {
+      throw ApplangaConfigException(
+          "ApplangaFlutter: The Applanga settings file does not specify any branch. "
+          "Re-download your settings file for the correct branch.");
+    } else if (_branchId == null && settingsFileBranchId != null) {
+      throw ApplangaConfigException(
+          "ApplangaFlutter: The Applanga settings file is linked with a branch. "
+          "Add you branch to your pubspec.yaml as stated in the applanga_flutter documentation.");
+    } else if (_branchId != settingsFileBranchId) {
+      throw ApplangaConfigException(
+          "ApplangaFlutter: The Applanga settings file is linked with a different "
+          "branch than the branch defined in pubspec.yaml. You should keep both "
+          "branch id's in sync");
+    }
   }
 }

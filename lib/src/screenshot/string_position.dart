@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/widgets.dart';
 
 class ALStringPosition {
@@ -64,8 +62,8 @@ class ALStringPosition {
 
         Rect r = element.renderObject!.paintBounds;
         r = r.translate(translation.x, translation.y);
-        double scaleX = window.physicalSize.width / width;
-        double scaleY = window.physicalSize.height / height;
+        double scaleX = View.of(context).physicalSize.width / width;
+        double scaleY = View.of(context).physicalSize.height / height;
 
         double left = r.left * scaleX;
         double right = r.right * scaleX;
@@ -102,26 +100,18 @@ class ALStringPosition {
   }
 
   String toJson() {
-    return "{" +
-        separator +
-        (_key != null ? '"key": "' + _key! + '",' + separator : "") +
-        (_value != null ? '"value": "' + _value! + '",' + separator : "") +
-        '"x": ' +
-        _x.toStringAsFixed(0) +
-        "," +
-        separator +
-        '"y": ' +
-        _y.toStringAsFixed(0) +
-        "," +
-        separator +
-        '"width": ' +
-        _width.toStringAsFixed(0) +
-        "," +
-        separator +
-        '"height": ' +
-        _height.toStringAsFixed(0) +
-        "" +
-        separator +
-        "}";
+    return """{ 
+        $separator 
+        ${(_key != null ? '"key": "${_key!}",$separator' : "")} 
+        ${(_value != null ? '"value": "${_value!}",$separator' : "")} 
+        "x": ${_x.toStringAsFixed(0)},
+        $separator
+        "y": ${_y.toStringAsFixed(0)},
+        $separator
+        "width": ${_width.toStringAsFixed(0)},
+        $separator
+        "height": ${_height.toStringAsFixed(0)}
+        $separator
+        }""";
   }
 }

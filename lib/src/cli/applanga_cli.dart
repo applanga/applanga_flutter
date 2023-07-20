@@ -37,7 +37,12 @@ class ApplangaCli {
       _applangaJson.writeAsStringSync(_config.applangaJson);
       stdout.writeln("-> .applanga.json created");
     } else {
-      stdout.writeln("SKIPPED .applanga.json already created");
+      if (! _config.isCurrentApplangaJsonUpToDate(_applangaJson)) {
+        throw ApplangaConfigException(
+            "Applanga configurations in pubspec.yaml and .applanga.json are mismatching. Delete .applanga.json to recreate it.");
+      } else {
+        stdout.writeln("SKIPPED .applanga.json already created");
+      }
     }
   }
 

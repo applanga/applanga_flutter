@@ -6,6 +6,7 @@ import 'package:applanga_flutter/src/generator/generator.dart';
 String generateAppLocalizationClass(
     String className,
     String baseLanguage,
+    String? branchId,
     List<String>? baseGroups,
     List<String>? baseLanguages,
     List<String> ids,
@@ -24,9 +25,9 @@ ${useIntlImport ? "import 'package:intl/intl.dart' as intl;" : ''}
 class $className extends AppLocalizations {
   final AppLocalizations _original;
 
-  $className(_locale)
-      : _original = lookupAppLocalizations(_locale),
-        super(_locale.toString());
+  $className(locale)
+      : _original = lookupAppLocalizations(locale),
+        super(locale.toString());
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _${className}Delegate();
@@ -74,6 +75,7 @@ class _${className}Delegate
   Future<AppLocalizations> load(Locale locale) async {
     var result = $className(locale);
     await ApplangaFlutter.instance.setMetaData(locale,'$baseLanguage', 
+    ${branchId != null ? "'$branchId'" : "null"},
     _keys,
       ${baseGroups == null ? '' : 'groups: _groups,'}
       ${baseLanguages == null ? '' : 'languages: _languages'}

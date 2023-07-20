@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import com.applanga.android.`$InternalALPlugin`
 import com.applanga.android.Applanga
 import com.applanga.android.ApplangaScreenshotInterface
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -145,6 +146,9 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         } else if (call.method == "hideScreenShotMenu") {
             Applanga.setScreenShotMenuVisible(false)
             result.success(null)
+        } else if (call.method == "getSettingsFileBranchId"){
+            val branchId = Applanga.getSettingsFileBranchId()
+            result.success(branchId)
         } else {
             result.notImplemented()
         }

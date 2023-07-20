@@ -59,6 +59,8 @@ static FlutterMethodChannel *channel = nil;
   } else if ([@"hideScreenShotMenu" isEqualToString:call.method])  {
       [Applanga setScreenShotMenuVisible:false];
       result(nil);
+  } else if ([@"getSettingsFileBranchId" isEqualToString:call.method]){
+      result([Applanga getSettingsFileBranchId]);
   }  else {
       result(FlutterMethodNotImplemented);
   }
