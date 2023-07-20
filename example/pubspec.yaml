@@ -20,8 +20,8 @@ dependencies:
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
     path: ../
-  cupertino_icons: ^1.0.2
-  intl: ^0.17.0
+  cupertino_icons: ^1.0.5
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
@@ -29,7 +29,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.1
+  flutter_lints: ^2.0.2
 
 flutter:
   uses-material-design: true
@@ -39,5 +39,6 @@ applanga_flutter:
   access_token: xxxx
 # if you make any changes here, call `flutter pub run applanga_flutter:generate`
   update_settingsfiles_on_pull: true
+#  branch_id: xxxx
 #  update_groups: [main]
 #  update_languages: [en, en_US, es, es_CL]
