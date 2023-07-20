@@ -15,6 +15,7 @@
     - [Screenshot Menu](#screenshot-menu)
     - [Automating screenshot upload](#automating-screenshot-upload)
     - [Automatic settings files update](#automatic-settings-files-update)
+    - [Branching](#branching)
 ***
 
 ## Basic Usage
@@ -253,3 +254,33 @@ It's good practice to have it updated before an app release.
 Applanga only fetches new translations.
 If the settings file is up-to-date the first (automatic) ApplangaFlutter.update will result in a very lightweight get request.
 If the settings file is an old one -> the fetch request will contain a lot more info.
+
+## Branching
+
+If your project is a branching project use at least `applanga_flutter` version 3.0.47 and update your settings files.
+You can define your default branch in your `pubspec.yaml`:
+```yaml
+applanga_flutter:
+  access_token: xxxx
+  branch_id: xxxx
+```
+
+You can find your branch id in your project settings on the Applanga dashboard.
+After changing the branch id in your `pubspec.yaml` you have to run `flutter pub run applanga_flutter:generate` to regenerate your applanga config.
+If you change your default branch, you also have to manually download and update your settings files.
+If the default branch of your settings file differs from your default branch specified in your `pubspec.yaml`, `applanga_flutter` throws an exception.
+
+The default branch is used on app start and for update calls.
+To be sure branching is working look for the log line: `Branching is enabled.`
+
+To learn more about branching please have a look [here](https://www.applanga.com/docs/advanced-features/branching).
+
+### Draft Mode
+
+When enabling the Draft Mode you can switch your branch at runtime - an app restart is required.
+You also can use our draft overlay to switch your current branch.
+Every screenshot you take is linked to the current branch.
+
+### Production Apps
+
+Already published apps that still use settings files without branching and older SDKs will still work and they will use the default branch defined on the Applanga dashboard.
