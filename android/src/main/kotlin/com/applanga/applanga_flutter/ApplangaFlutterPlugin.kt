@@ -19,6 +19,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.view.FlutterView
 import java.util.*
+import com.applanga.android.`$InternalALPlugin`
 
 /** ApplangaFlutterPlugin */
 class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -131,7 +132,7 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(Debug.isDebuggerConnected())
         } else if (call.method == "setLanguage") {
             val lang = call.argument<String>("lang")
-            result.success(Applanga.setLanguage(lang))
+            result.success(Applanga.setLanguage(lang, false))
         } else if (call.method == "showDraftModeDialog") {
             if (theActivity != null) {
                 Applanga.showDraftModeDialog(theActivity)
