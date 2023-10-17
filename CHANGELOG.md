@@ -5,6 +5,11 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.49 (17 Oct 2023) 
+* upgraded Kotlin version
+* upgraded Applanga sdk version
+* upgraded intl version to 0.18.1
+
 ## Version 3.0.48 (20 Jul 2023) 
 * added branching support
 
