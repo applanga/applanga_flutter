@@ -19,7 +19,6 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.view.FlutterView
 import java.util.*
-import com.applanga.android.`$InternalALPlugin`
 
 /** ApplangaFlutterPlugin */
 class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {

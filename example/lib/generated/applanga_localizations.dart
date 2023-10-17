@@ -84,6 +84,7 @@ class _ApplangaLocalizationsDelegate
     await ApplangaFlutter.instance.setMetaData(
       locale,
       'en',
+      null,
       _keys,
     );
     await ApplangaFlutter.instance.loadLocaleAndUpdate(locale);
