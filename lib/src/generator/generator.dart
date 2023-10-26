@@ -41,6 +41,7 @@ class ApplangaGenerator {
       config.branchId,
       config.updateGroups,
       config.updateLanguages,
+      config.customLanguageFallback,
       visitor.ids,
       visitor.getter,
       visitor.formattingList,
