@@ -257,8 +257,10 @@ class ApplangaFlutter {
 
       // add current language if it's not set for default languages
       var updateLanguages = defaultLanguages;
-      if (!updateLanguages.contains(language)) {
-        updateLanguages.add(language);
+      for (var language in _currentLocaleList.listAsLocaleStrings) {
+        if (!updateLanguages.contains(language)) {
+          updateLanguages.add(language);
+        }
       }
 
       if (!updateLanguages.any((lang) => _translationCache.containsKey(lang))) {
@@ -276,7 +278,7 @@ class ApplangaFlutter {
   ///
   Future<void> loadLocaleAndUpdate(Locale locale) async {
     setCurrentLocale(locale);
-    final language = locale.toLanguageTag();
+    final language = _currentLocaleList.localeAsString;
     if (!_isSupported) return;
 
     if (!_translationCache.keys.contains(language)) {
