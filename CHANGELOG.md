@@ -5,6 +5,9 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.50 (14 Nov 2023) 
+* added new feature: Custom language fallback
+
 ## Version 3.0.49 (17 Oct 2023) 
 * upgraded Kotlin version
 * upgraded Applanga sdk version

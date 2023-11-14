@@ -1,6 +1,6 @@
 name: applanga_flutter
 description: With ApplangaFlutter you can easily manage your (over-the-air) translations with tiny changes to your codebase.
-version: 3.0.49
+version: 3.0.50
 homepage: https://github.com/applanga/applanga_flutter
 
 environment:
