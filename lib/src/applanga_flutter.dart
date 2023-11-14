@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:io' show Platform;
 
 import 'package:applanga_flutter/applanga_flutter.dart';
@@ -47,7 +46,6 @@ class ApplangaFlutter {
     }
   }
 
-  late String _baseLanguage;
   String? _branchId;
   late LocaleList _currentLocaleList;
 
@@ -233,7 +231,6 @@ class ApplangaFlutter {
       List<String>? languages,
       Map<String, List<String>>? customLanguageFallback}) async {
     if (!isInitialised) {
-      final language = locale.toLanguageTag();
       if (groups != null) {
         _defaultGroups = groups;
       }
@@ -249,7 +246,6 @@ class ApplangaFlutter {
           _defaultLanguages = defaultLanguages;
         }
       }
-      _baseLanguage = baseLanguage;
       _currentLocaleList = LocaleList(locale, baseLanguage,
           customLanguageFallback: customLanguageFallback);
       _branchId = branchId;
