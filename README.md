@@ -275,6 +275,21 @@ To be sure branching is working look for the log line: `Branching is enabled.`
 
 To learn more about branching please have a look [here](https://www.applanga.com/docs/advanced-features/branching).
 
+## Enable custom language fallback
+
+You can configure a custom language fallback for Flutter in your `pubspec.yaml`.
+When the SDK needs to translate a key with a specified language, it uses the order as provided.
+This overrides any other system or default fallbacks only for those languages.
+Other languages work according to the fallback specified using the `custom_language_fallback` value (or default if it's not set).
+The fallback is only overridden for the top-level language, so it's not possible to "nest" the custom fallbacks.
+
+```yaml
+applanga_flutter:
+  custom_language_fallback:
+    es-CL: [fr, es-US, de, es]
+    de-AT: [es, de-AT, de]
+```
+
 ### Draft Mode
 
 When enabling the Draft Mode you can switch your branch at runtime - an app restart is required.
