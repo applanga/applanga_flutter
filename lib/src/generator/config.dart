@@ -41,6 +41,11 @@ class ApplangaConfig {
 
   String get accessToken => _accessToken;
 
+  Map<String, List<String>>? _customLanguageFallback;
+
+  Map<String, List<String>>? get customLanguageFallback =>
+      _customLanguageFallback;
+
   String? _branchId;
 
   String? get branchId => _branchId;
@@ -225,6 +230,14 @@ class ApplangaConfig {
     var branchId = applangaConfig["branch_id"];
     if (branchId is String) {
       _branchId = branchId;
+    }
+
+    var customLanguageFallback = applangaConfig["custom_language_fallback"];
+    if (customLanguageFallback is yaml.YamlMap) {
+      _customLanguageFallback =
+          customLanguageFallback.map<String, List<String>>((key, value) {
+        return MapEntry(key, List<String>.from(value.value));
+      });
     }
   }
 

@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:io' show Platform;
 
 import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:applanga_flutter/src/applanga_exception.dart';
+import 'package:applanga_flutter/src/language/locale_list.dart';
 import 'package:applanga_flutter/src/screenshot/string_position.dart';
 import 'package:applanga_flutter/src/screenshot/translation_tuple.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -47,13 +49,13 @@ class ApplangaFlutter {
 
   late String _baseLanguage;
   String? _branchId;
-  Locale? _currentLocale;
+  late LocaleList _currentLocaleList;
 
-  Locale? get currentLocale => _currentLocale;
+  LocaleList get currentLocaleList => _currentLocaleList;
 
-  set currentLocale(Locale? locale) {
+  void setCurrentLocale(Locale locale) {
     _applangaSetLanguage(locale);
-    _currentLocale = locale;
+    currentLocaleList.changeLocale(locale);
   }
 
   bool _showIdMode = false;
@@ -84,7 +86,8 @@ class ApplangaFlutter {
     if (!_isSupported) return;
     _channel = const MethodChannel('applanga_flutter');
     _channel!.invokeMethod('init');
-    _compareSettingsFileBranchIdWithFlutterBranchId().catchError((e) => throw e);
+    _compareSettingsFileBranchIdWithFlutterBranchId()
+        .catchError((e) => throw e);
     _channel!.setMethodCallHandler((call) async {
       debugPrint("setMethodCallHandler, call: ${call.method}");
       if (call.method == 'getStringPositions') {
@@ -184,17 +187,18 @@ class ApplangaFlutter {
       }
     }
     var updateLanguages = parsedLocales ?? defaultLanguages;
-    if (currentLocale != null) {
-      String lang = currentLocale!.toLanguageTag();
-      if (!updateLanguages.contains(lang)) {
-        updateLanguages.add(lang);
+    if (currentLocaleList.hasCurrentLocale()) {
+      for (final currentLocale in currentLocaleList.list) {
+        if (!updateLanguages.contains(currentLocale.toLanguageTag())) {
+          updateLanguages.add(currentLocale.toLanguageTag());
+        }
       }
     }
 
     bool success = await _update(languages: updateLanguages, groups: groups);
 
     // load strings only if locale is known
-    if (currentLocale != null) {
+    if (currentLocaleList.hasCurrentLocale()) {
       await _loadLocale();
     }
 
@@ -225,7 +229,9 @@ class ApplangaFlutter {
   /// for the default languages yet.
   Future<void> setMetaData(
       Locale locale, String baseLanguage, String? branchId, List<String> keys,
-      {List<String>? groups, List<String>? languages}) async {
+      {List<String>? groups,
+      List<String>? languages,
+      Map<String, List<String>>? customLanguageFallback}) async {
     if (!isInitialised) {
       final language = locale.toLanguageTag();
       if (groups != null) {
@@ -244,13 +250,17 @@ class ApplangaFlutter {
         }
       }
       _baseLanguage = baseLanguage;
+      _currentLocaleList = LocaleList(locale, baseLanguage,
+          customLanguageFallback: customLanguageFallback);
       _branchId = branchId;
       _keys = keys;
 
       // add current language if it's not set for default languages
       var updateLanguages = defaultLanguages;
-      if (!updateLanguages.contains(language)) {
-        updateLanguages.add(language);
+      for (var language in _currentLocaleList.listAsLocaleStrings) {
+        if (!updateLanguages.contains(language)) {
+          updateLanguages.add(language);
+        }
       }
 
       if (!updateLanguages.any((lang) => _translationCache.containsKey(lang))) {
@@ -267,14 +277,14 @@ class ApplangaFlutter {
   /// Don't call this by yourself
   ///
   Future<void> loadLocaleAndUpdate(Locale locale) async {
-    currentLocale = locale;
-    final language = locale.toLanguageTag();
+    setCurrentLocale(locale);
+    final language = _currentLocaleList.localeAsString;
     if (!_isSupported) return;
 
     if (!_translationCache.keys.contains(language)) {
       // load locale
       await _loadLocale();
-      await _update(languages: [language]);
+      await _update(languages: currentLocaleList.listAsLocaleStrings);
     }
     // load locale (again after an update)
     await _loadLocale();
@@ -282,32 +292,37 @@ class ApplangaFlutter {
 
   Future<void> _loadLocale() async {
     if (!_isSupported) return Future.value();
-    if (currentLocale == null) {
+    if (!currentLocaleList.hasCurrentLocale()) {
       throw ApplangaFlutterException(
           "loading locale failed: No current Locale is set.");
     }
-    String localeName = currentLocale!.toLanguageTag();
-    String baseLocaleName = _baseLanguage;
-    var emptyStringKeyMap = {for (final key in _keys) key: null};
+    Map<String, String?> emptyStringKeyMap = {
+      for (final key in _keys) key: null
+    };
 
     // reset cache for this locale
-    _translationCache[localeName] = {};
+    _translationCache[_currentLocaleList.localeAsString] = {};
 
     Map<String, Map<String, String?>> map = {
-      baseLocaleName: emptyStringKeyMap,
-      localeName: emptyStringKeyMap,
-      if (currentLocale!.countryCode != null)
-        currentLocale!.languageCode: emptyStringKeyMap
+      for (var lang in currentLocaleList.listAsLocaleStrings)
+        lang: emptyStringKeyMap
     };
+
     Map<dynamic, dynamic> localeMap =
         await _channel!.invokeMethod("localizeMap", map);
 
     for (var key in _keys) {
-      var localisedString = localeMap[localeName][key] ??
-          localeMap[currentLocale!.languageCode][key] ??
-          localeMap[baseLocaleName][key];
+      String? localisedString;
+      for (final lang in currentLocaleList.listAsLocaleStrings) {
+        final translation = localeMap[lang][key];
+        if (translation != null) {
+          localisedString = translation;
+          break;
+        }
+      }
       if (localisedString != null) {
-        _translationCache[localeName]![key] = localisedString;
+        _translationCache[currentLocaleList.localeAsString]![key] =
+            localisedString;
       }
     }
     await _notifyChanges();
@@ -346,7 +361,8 @@ class ApplangaFlutter {
     } else if (_showIdMode) {
       result = key;
     } else {
-      final value = _translationCache[currentLocale!.toLanguageTag()]?[key];
+      final value =
+          _translationCache[currentLocaleList.locale.toLanguageTag()]?[key];
       if (value == null) {
         result = null;
       } else if (args == null) {
@@ -386,7 +402,7 @@ class ApplangaFlutter {
     _showIdMode = enabled;
     await _channel!.invokeMethod(
         'setShowIdModeEnabled', <String, dynamic>{'enabled': enabled});
-    if (_currentLocale != null) {
+    if (currentLocaleList.hasCurrentLocale()) {
       await _loadLocale();
     }
   }
@@ -453,7 +469,8 @@ class ApplangaFlutter {
       if (isValidKeyValuePair) {
         mergedPositions.add(actualPositions[i].copyWith(
             key: key,
-            value: _translationCache[_currentLocale!.toLanguageTag()]![key]));
+            value: _translationCache[currentLocaleList.locale.toLanguageTag()]![
+                key]));
       } else {
         mergedPositions.add(actualPositions[i]);
       }

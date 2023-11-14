@@ -42,3 +42,6 @@ applanga_flutter:
 #  branch_id: xxxx
 #  update_groups: [main]
 #  update_languages: [en, en_US, es, es_CL]
+#  custom_language_fallback:
+#    es-CL: [fr, es-US, de, es]
+#    de-AT: [es, de-AT, de]

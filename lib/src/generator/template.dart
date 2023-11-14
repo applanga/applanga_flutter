@@ -9,6 +9,7 @@ String generateAppLocalizationClass(
     String? branchId,
     List<String>? baseGroups,
     List<String>? baseLanguages,
+    Map<String, List<String>>? customLanguageFallback,
     List<String> ids,
     List<String> getters,
     List<ALIcuMethod> icuMethods,
@@ -70,6 +71,7 @@ class _${className}Delegate
   static const _keys = [${ids.map((id) => '\'$id\'').join(',\n')}];
   ${(baseGroups != null) ? "static const _groups = [${baseGroups.map((group) => '\'$group\'').join(',\n')}];" : ""}
   ${baseLanguages != null ? "static const _languages = [${baseLanguages.map((lang) => '\'$lang\'').join(',\n')}];" : ""}
+  ${customLanguageFallback != null ? "static const _customLanguageFallback = {${customLanguageFallback.entries.map((entry)=>'\'${entry.key}\': [${entry.value.map((lang)=>'\'$lang\'').join(",")}]').join(",\n")}};" : ""}
 
   @override
   Future<AppLocalizations> load(Locale locale) async {
@@ -78,7 +80,8 @@ class _${className}Delegate
     ${branchId != null ? "'$branchId'" : "null"},
     _keys,
       ${baseGroups == null ? '' : 'groups: _groups,'}
-      ${baseLanguages == null ? '' : 'languages: _languages'}
+      ${baseLanguages == null ? '' : 'languages: _languages,'}
+      ${customLanguageFallback == null ? '' : 'customLanguageFallback: _customLanguageFallback'}
       );
     await ApplangaFlutter.instance.loadLocaleAndUpdate(locale);
     return result;
