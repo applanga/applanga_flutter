@@ -44,7 +44,7 @@ void main() {
       };
       Locale l = const Locale.fromSubtags(
           languageCode: "de", countryCode: "DE");
-      LocaleList localeList = LocaleList(l, "en", customFallback: customFallback);
+      LocaleList localeList = LocaleList(l, "en", customLanguageFallback: customFallback);
       expect(localeList.list.length, 2);
       expect(localeList.list[0].toLanguageTag(), "de-AT");
       expect(localeList.list[1].toLanguageTag(), "en");
@@ -57,7 +57,7 @@ void main() {
       };
       Locale l = const Locale.fromSubtags(
           languageCode: "es", countryCode: "MX");
-      LocaleList localeList = LocaleList(l, "en", customFallback: customFallback);
+      LocaleList localeList = LocaleList(l, "en", customLanguageFallback: customFallback);
       expect(localeList.list.length, 4);
       expect(localeList.list[0].toLanguageTag(), "es-MX");
       expect(localeList.list[1].toLanguageTag(), "es-US");

@@ -78,6 +78,7 @@ class LocaleList {
             .toList();
       }
     }
+    return null;
   }
 
   Locale _localeFromString(String language) {
