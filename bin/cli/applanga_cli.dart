@@ -1,9 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:applanga_flutter/src/applanga_exception.dart';
-import 'package:applanga_flutter/src/generator/config.dart';
 import 'package:path/path.dart' as path;
+
+import '../generator/config.dart';
+import '../utils.dart';
 
 class ApplangaCli {
   late final ApplangaConfig _config = ApplangaConfig();
@@ -35,27 +36,22 @@ class ApplangaCli {
     if (!_applangaJson.existsSync()) {
       _applangaJson.createSync();
       _applangaJson.writeAsStringSync(_config.applangaJson);
-      stdout.writeln("-> .applanga.json created");
+      Utils.successWriteLn(".applanga.json created");
     } else {
-      if (! _config.isCurrentApplangaJsonUpToDate(_applangaJson)) {
+      if (!_config.isCurrentApplangaJsonUpToDate(_applangaJson)) {
         throw ApplangaConfigException(
             "Applanga configurations in pubspec.yaml and .applanga.json are mismatching. Delete .applanga.json to recreate it.");
       } else {
-        stdout.writeln("SKIPPED .applanga.json already created");
+        Utils.writeLn("\nSKIPPED .applanga.json already created");
       }
     }
   }
 
   void push(List<String> args) async {
-    stdout.writeln("-> applanga_flutter:push");
+    Utils.actionWriteLn("applanga_flutter:push");
     try {
       var process = await Process.start('applanga', ['push', ...args]);
-      process.stdout.transform(utf8.decoder).forEach((line) {
-        stdout.writeln(line);
-      });
-      process.stderr.transform(utf8.decoder).forEach((line) {
-        stderr.writeln(line);
-      });
+      Utils.forwardProcessOutput(process);
       final exitCode = await process.exitCode;
       if (exitCode != 0) {
         throw ApplangaCliException("applanga cli push failed.");
@@ -64,24 +60,19 @@ class ApplangaCli {
       _printCliNotFoundErrorMsg();
     } catch (e) {
       if (e is ApplangaConfigException) {
-        stdout.writeln(e.msg);
+        Utils.errorWriteLn(e.msg);
       } else {
-        stdout
-            .writeln("Something went wrong! Please contact applanga support.");
+        Utils.errorWriteLn(
+            "Something went wrong! Please contact applanga support.");
       }
     }
   }
 
   void pull(List<String> args) async {
-    stdout.writeln("-> applanga_flutter:pull");
+    Utils.actionWriteLn("applanga_flutter:pull");
     try {
       var process = await Process.start('applanga', ['pull', ...args]);
-      process.stdout.transform(utf8.decoder).forEach((line) {
-        stdout.writeln(line);
-      });
-      process.stderr.transform(utf8.decoder).forEach((line) {
-        stderr.writeln(line);
-      });
+      Utils.forwardProcessOutput(process);
       final exitCode = await process.exitCode;
       if (exitCode != 0) {
         throw ApplangaCliException("applanga cli push failed.");
@@ -90,29 +81,24 @@ class ApplangaCli {
       _printCliNotFoundErrorMsg();
     } catch (e) {
       if (e is ApplangaConfigException) {
-        stdout.writeln(e.msg);
+        Utils.errorWriteLn(e.msg);
       } else {
-        stdout
-            .writeln("Something went wrong! Please contact applanga support.");
+        Utils.errorWriteLn(
+            "Something went wrong! Please contact applanga support.");
       }
     }
     if (_config.updateSettingsfilesOnPull) {
-      stdout.writeln("-> automatic update settingsfiles on pull activated");
+      Utils.actionWriteLn("automatic update settingsfiles on pull activated");
       await updateSettingsfiles();
     }
   }
 
   Future<void> updateSettingsfiles({List<String>? args}) async {
-    stdout.writeln("-> applanga_flutter:updateSettingsfiles");
+    Utils.actionWriteLn("applanga_flutter:updateSettingsfiles");
     try {
       var process = await Process.start(
           'applanga', ['updateSettingsfiles', ...args ?? []]);
-      process.stdout.transform(utf8.decoder).forEach((line) {
-        stdout.writeln(line);
-      });
-      process.stderr.transform(utf8.decoder).forEach((line) {
-        stderr.writeln(line);
-      });
+      Utils.forwardProcessOutput(process);
       final exitCode = await process.exitCode;
       switch (exitCode) {
         case 0:
@@ -129,10 +115,10 @@ class ApplangaCli {
       _printCliNotFoundErrorMsg();
     } catch (e) {
       if (e is ApplangaConfigException || e is ApplangaCliOutdatedException) {
-        stdout.writeln((e as ApplangaFlutterException).msg);
+        Utils.errorWriteLn((e as ApplangaFlutterException).msg);
       } else {
-        stdout
-            .writeln("Something went wrong! Please contact applanga support.");
+        Utils.errorWriteLn(
+            "Something went wrong! Please contact applanga support.");
       }
     }
   }
@@ -140,9 +126,7 @@ class ApplangaCli {
   Future<String> _getCliVersion() async {
     var versionProcess = await Process.start('applanga', ['--version']);
     StringBuffer versionBuffer = StringBuffer();
-    versionProcess.stdout.transform(utf8.decoder).forEach((line) {
-      versionBuffer.writeln(line);
-    });
+    Utils.forwardProcessOutput(versionProcess);
     await versionProcess.exitCode;
     if (exitCode != 0) throw ApplangaCliNotFoundException();
     String version = RegExp(r'\d+\.\d+\.\d+')
@@ -153,16 +137,16 @@ class ApplangaCli {
     return version;
   }
 
-  static _printCliNotFoundErrorMsg() {
-    stdout.writeln("> Applang CLI not installed!");
-    stdout.writeln(
+  static void _printCliNotFoundErrorMsg() {
+    Utils.errorWriteLn("> Applang CLI not installed!");
+    Utils.errorWriteLn(
         "Please install Applanga's CLI according to the Documentation:");
-    stdout
-        .writeln("https://www.applanga.com/docs/integration-documentation/cli");
-    stdout.writeln("");
-    stdout.writeln("More info at the Applanga Flutter Documentation:");
-    stdout.writeln(
+    Utils.errorWriteLn(
+        "https://www.applanga.com/docs/integration-documentation/cli");
+    Utils.errorWriteLn("");
+    Utils.errorWriteLn("More info at the Applanga Flutter Documentation:");
+    Utils.errorWriteLn(
         "https://www.applanga.com/docs/integration-documentation/flutter");
-    stdout.writeln("\n");
+    Utils.errorWriteLn("\n");
   }
 }

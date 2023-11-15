@@ -1,7 +1,7 @@
-import 'package:applanga_flutter/src/generator/generator.dart';
-
 // parts took out from flutter_tools/lib/src/localizations/gen_l10n_templates.dart
 // https://github.com/flutter/flutter/blob/5848a1620deaf00cfc31be9957a8388bd6894803/packages/flutter_tools/lib/src/localizations/gen_l10n_templates.dart
+
+import 'generator.dart';
 
 String generateAppLocalizationClass(
     String className,
@@ -71,7 +71,7 @@ class _${className}Delegate
   static const _keys = [${ids.map((id) => '\'$id\'').join(',\n')}];
   ${(baseGroups != null) ? "static const _groups = [${baseGroups.map((group) => '\'$group\'').join(',\n')}];" : ""}
   ${baseLanguages != null ? "static const _languages = [${baseLanguages.map((lang) => '\'$lang\'').join(',\n')}];" : ""}
-  ${customLanguageFallback != null ? "static const _customLanguageFallback = {${customLanguageFallback.entries.map((entry)=>'\'${entry.key}\': [${entry.value.map((lang)=>'\'$lang\'').join(",")}]').join(",\n")}};" : ""}
+  ${customLanguageFallback != null ? "static const _customLanguageFallback = {${customLanguageFallback.entries.map((entry) => '\'${entry.key}\': [${entry.value.map((lang) => '\'$lang\'').join(",")}]').join(",\n")}};" : ""}
 
   @override
   Future<AppLocalizations> load(Locale locale) async {
