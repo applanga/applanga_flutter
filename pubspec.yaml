@@ -23,6 +23,7 @@ dependencies:
   synchronized: ^3.0.0+3
   intl: ^0.18.0
   path: ^1.8.0
+  ansicolor: ^2.0.2
 
 dev_dependencies:
   flutter_lints: ^2.0.1
