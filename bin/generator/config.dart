@@ -6,6 +6,8 @@ import 'package:intl/locale.dart';
 import 'package:path/path.dart' as path;
 import 'package:yaml/yaml.dart' as yaml;
 
+import '../utils.dart';
+
 class ApplangaConfig {
   String get _rootDirPath => Directory.current.path;
 
@@ -129,7 +131,7 @@ class ApplangaConfig {
         throw Exception();
       }
     } catch (e) {
-      stdout.writeln("applanga json not valid.");
+      Utils.errorWriteLn("applanga json not valid.");
       return false;
     }
 
@@ -150,16 +152,16 @@ class ApplangaConfig {
     }
 
     if (_accessToken != accessToken) {
-      stdout.writeln("access token pubspec.yaml: $_accessToken");
-      stdout.writeln("access token .applanga.json: $accessToken");
-      stdout.writeln("-> access token mismatching.");
+      Utils.writeLn("access token pubspec.yaml: $_accessToken");
+      Utils.writeLn("access token .applanga.json: $accessToken");
+      Utils.actionWriteLn("access token mismatching.");
       return false;
     }
 
     if (_branchId != branchId) {
-      stdout.writeln("branch id pubspec.yaml: $_branchId");
-      stdout.writeln("branch id .applanga.json: $branchId");
-      stdout.writeln("-> branch id mismatching.");
+      Utils.writeLn("branch id pubspec.yaml: $_branchId");
+      Utils.writeLn("branch id .applanga.json: $branchId");
+      Utils.actionWriteLn("branch id mismatching.");
       return false;
     }
     return true;
@@ -170,7 +172,7 @@ class ApplangaConfig {
     if (pubspecFile == null) {
       throw ApplangaConfigException("pubspec.yaml not found.");
     }
-    stdout.writeln("-> pubspec.yaml parsing: ${pubspecFile.path}");
+    Utils.actionWriteLn("pubspec.yaml parsing: ${pubspecFile.path}");
     var pubspecYaml = yaml.loadYaml(pubspecFile.readAsStringSync());
 
     // check if flutter localization generation is turned on
@@ -286,7 +288,7 @@ class ApplangaConfig {
       }
     } catch (_) {
       throw ApplangaConfigException('Could not locate auto generated file for '
-          'base language: $_baseLanguage');
+          'base language: $_baseLanguage. Try to run flutter pub get.');
     }
   }
 

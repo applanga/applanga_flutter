@@ -4,9 +4,11 @@ import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:applanga_flutter/src/applanga_exception.dart';
-import 'package:applanga_flutter/src/generator/config.dart';
-import 'package:applanga_flutter/src/generator/template.dart';
 import 'package:dart_style/dart_style.dart' show DartFormatter;
+
+import '../utils.dart';
+import 'config.dart';
+import 'template.dart';
 
 class ApplangaGenerator {
   late final ApplangaConfig config = ApplangaConfig();
@@ -16,10 +18,10 @@ class ApplangaGenerator {
       _generateLocalizationClass();
     } catch (e) {
       if (e is ApplangaConfigException) {
-        stdout.writeln(e.msg);
+        Utils.errorWriteLn(e.msg);
       } else {
-        stdout
-            .writeln("Something went wrong! Please contact applanga support.");
+        Utils.errorWriteLn(
+            "Something went wrong! Please contact applanga support.");
       }
     }
   }
@@ -49,7 +51,7 @@ class ApplangaGenerator {
     );
     final formatter = DartFormatter();
     generatedFile.writeAsStringSync(formatter.format(dartCode));
-    stdout.writeln("${generatedFile.absolute} generated successfully!");
+    Utils.successWriteLn("${generatedFile.absolute} generated successfully!");
   }
 }
 
