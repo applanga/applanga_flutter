@@ -4,6 +4,7 @@ import 'package:applanga_flutter/src/generator/generator.dart';
 // https://github.com/flutter/flutter/blob/5848a1620deaf00cfc31be9957a8388bd6894803/packages/flutter_tools/lib/src/localizations/gen_l10n_templates.dart
 
 String generateAppLocalizationClass(
+    String appLocalizationImport,
     String className,
     String baseLanguage,
     String? branchId,
@@ -18,8 +19,8 @@ String generateAppLocalizationClass(
 import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'; 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 ${useIntlImport ? "import 'package:intl/intl.dart' as intl;" : ''}
+import '$appLocalizationImport';
 
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: unused_local_variable
