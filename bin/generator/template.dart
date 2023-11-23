@@ -4,6 +4,7 @@
 import 'generator.dart';
 
 String generateAppLocalizationClass(
+    String appLocalizationImport,
     String className,
     String baseLanguage,
     String? branchId,
@@ -18,8 +19,8 @@ String generateAppLocalizationClass(
 import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'; 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 ${useIntlImport ? "import 'package:intl/intl.dart' as intl;" : ''}
+import '$appLocalizationImport';
 
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: unused_local_variable

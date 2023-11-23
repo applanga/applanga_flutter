@@ -20,6 +20,7 @@ class ApplangaGenerator {
       if (e is ApplangaConfigException) {
         Utils.errorWriteLn(e.msg);
       } else {
+        Utils.errorWriteLn(e.toString());
         Utils.errorWriteLn(
             "Something went wrong! Please contact applanga support.");
       }
@@ -38,6 +39,7 @@ class ApplangaGenerator {
     final generatedFile = File(config.destinationAppLocalizationsClassPath)
       ..createSync(recursive: true);
     final dartCode = generateAppLocalizationClass(
+      config.originAppLocalizationImport,
       config.className,
       config.baseLanguage,
       config.branchId,
