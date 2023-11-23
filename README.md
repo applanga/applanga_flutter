@@ -58,12 +58,12 @@ You can get your API Token on the on the dashboard from your project settings. T
 ### Pull & Push new translations
 To be able to perform a push or pull command you will have to setup [Applanga CLI](https://www.applanga.com/docs/integration-documentation/cli) first. 
 
-Execute `flutter pub run applanga_flutter:pull` from your shell and the package will download all new strings from all languages and add them to the corresponding arb files.
+Execute `dart run applanga_flutter:pull` from your shell and the package will download all new strings from all languages and add them to the corresponding arb files.
 
-Execute `flutter pub run applanga_flutter:push` from your shell and the package will upload all newly added strings from the arb files to the applanga dashboard.
+Execute `dart run applanga_flutter:push` from your shell and the package will upload all newly added strings from the arb files to the applanga dashboard.
 
 By default your base language `.arb` file is the single source of truth. So an `pull` will get and save all translations for all languages except the base language into corresponding arb files. A `push` will update only strings from the base language which are not uploaded yet to the dashboard.
-With this configuration a `flutter pub run applanga_flutter:push --force` is recommended. All translations for the base language and its meta-data (important for icu strings) are uploaded and updated.
+With this configuration a `dart run applanga_flutter:push --force` is recommended. All translations for the base language and its meta-data (important for icu strings) are uploaded and updated.
 You can change that `push` and `pull` behavior in your `.applanga.json`.
 ## Over the Air Updates
 
@@ -82,7 +82,7 @@ Over the air updates are optional and available for android and iOS.
 
 Generate the `ApplangaLocalizationsClass`
 
-`flutter pub run applanga_flutter:generate`
+`dart run applanga_flutter:generate`
 
 Add the class to your MaterialApp and replace the old delegate & locales:
 ```dart
@@ -239,7 +239,7 @@ await ApplangaFlutter.I.setShowIdModeEnabled(false);
 ### Automatic settings files update
 This is automatically enabled after doing a pull request. To do this manually use the following command:
 
-`flutter pub run applanga_flutter:update_settingsfiles`
+`dart run applanga_flutter:update_settingsfiles`
 
 To disable the automatic behavior add this to your `pubspec.yaml`:
 
@@ -266,7 +266,7 @@ applanga_flutter:
 ```
 
 You can find your branch id in your project settings on the Applanga dashboard.
-After changing the branch id in your `pubspec.yaml` you have to run `flutter pub run applanga_flutter:generate` to regenerate your applanga config.
+After changing the branch id in your `pubspec.yaml` you have to run `dart run applanga_flutter:generate` to regenerate your applanga config.
 If you change your default branch, you also have to manually download and update your settings files.
 If the default branch of your settings file differs from your default branch specified in your `pubspec.yaml`, `applanga_flutter` throws an exception.
 
