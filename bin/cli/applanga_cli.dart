@@ -63,7 +63,7 @@ class ApplangaCli {
         Utils.errorWriteLn(e.msg);
       } else {
         Utils.errorWriteLn(
-            "Something went wrong! Please contact applanga support.");
+            "Something went wrong! Is your access token correct? Please contact applanga support.");
       }
     }
   }
@@ -77,6 +77,11 @@ class ApplangaCli {
       if (exitCode != 0) {
         throw ApplangaCliException("applanga cli push failed.");
       }
+
+      if (_config.updateSettingsfilesOnPull) {
+        Utils.actionWriteLn("automatic update settingsfiles on pull activated");
+        await updateSettingsfiles();
+      }
     } on ApplangaCliNotFoundException {
       _printCliNotFoundErrorMsg();
     } catch (e) {
@@ -84,12 +89,8 @@ class ApplangaCli {
         Utils.errorWriteLn(e.msg);
       } else {
         Utils.errorWriteLn(
-            "Something went wrong! Please contact applanga support.");
+            "Something went wrong! Is your access token correct? Please contact applanga support.");
       }
-    }
-    if (_config.updateSettingsfilesOnPull) {
-      Utils.actionWriteLn("automatic update settingsfiles on pull activated");
-      await updateSettingsfiles();
     }
   }
 
