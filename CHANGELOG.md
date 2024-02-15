@@ -5,7 +5,10 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
-## Version 3.0.51 (23 Nov 2023) 
+## Version 3.0.52 (15 Feb 2024) 
+* improved error handling for pulling new translations
+
+## Version 3.0.51 (23 Nov 2023)
 * fixed applanga_flutter:generate command for non-synthetic l10n packages
 
 ## Version 3.0.50 (14 Nov 2023) 
