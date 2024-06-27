@@ -5,6 +5,10 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.53 (27 Jun 2024) 
+* updated dependecies
+* updated android gradle files
+
 ## Version 3.0.52 (15 Feb 2024) 
 * improved error handling for pulling new translations
 
