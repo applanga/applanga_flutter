@@ -194,7 +194,7 @@ class IcuString {
                 .expand((r) => r is List ? r : [r])
                 .toList()))
         .parse(value);
-    if (parsed.isSuccess) {
+    if (parsed is Success) {
       return parsed.value;
     } else {
       return null;

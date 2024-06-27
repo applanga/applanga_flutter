@@ -118,7 +118,7 @@ class ApplangaConfig {
       //  "file_format": "arb",
       //  "path": "$arbDir/${replaceArbFileNameWithApplangaLocalePlaceholder(arbTemplateFileName)}"
       //}
-      """  
+      """
         {
           "file_format": "arb",
           "language": "$baseLanguage",

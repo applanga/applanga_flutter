@@ -38,6 +38,5 @@ android {
 
 dependencies {
     implementation "com.applanga.android:Applanga:4.0.199"
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

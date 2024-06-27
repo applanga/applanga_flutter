@@ -1,10 +1,6 @@
 // Copyright (c) 2014, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-
-/// Contains a parser for ICU format plural/gender/select format for localized
-/// messages. See extract_to_arb.dart and make_hardcoded_translation.dart.
-
 import 'package:applanga_flutter/src/icu/icu_types.dart';
 import 'package:petitparser/petitparser.dart';
 

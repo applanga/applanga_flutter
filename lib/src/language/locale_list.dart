@@ -25,7 +25,8 @@ class LocaleList {
   late final Locale baseLanguage;
   late final Map<String, List<String>>? customLanguageFallback;
 
-  LocaleList(Locale locale, String baseLanguage, {this.customLanguageFallback}) {
+  LocaleList(Locale locale, String baseLanguage,
+      {this.customLanguageFallback}) {
     this.baseLanguage = _localeFromString(baseLanguage);
     changeLocale(locale);
   }
@@ -57,7 +58,7 @@ class LocaleList {
       }
       newLocaleList.addUniqueLocale(Locale(locale.languageCode));
     } else {
-      for(Locale c in customFallback){
+      for (Locale c in customFallback) {
         newLocaleList.addUniqueLocale(c);
       }
     }
@@ -68,7 +69,7 @@ class LocaleList {
   }
 
   List<Locale>? getCustomFallbackForLanguage(String language) {
-    if(customLanguageFallback == null){
+    if (customLanguageFallback == null) {
       return null;
     }
     for (String languageTag in customLanguageFallback!.keys) {

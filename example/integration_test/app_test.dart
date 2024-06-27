@@ -19,7 +19,7 @@ void main() {
             key: ObjectKey(_locale),
             startupLocale: _locale,
           ),
-          _pumpSettleDuration);
+          duration: _pumpSettleDuration);
       await tester.pumpAndSettle();
 
       // do the screenshot

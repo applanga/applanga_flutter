@@ -21,7 +21,7 @@ class Utils {
     stderr.writeln(_redPen("\n-> $msg"));
   }
 
-  static void successWriteLn(String msg){
+  static void successWriteLn(String msg) {
     stdout.writeln(_greenPen("\n-> $msg"));
   }
 
