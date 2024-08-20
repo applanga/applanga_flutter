@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           Expanded(
             child: MaterialApp(
               title: 'Flutter Demo',
-              locale: _currentLocale,
+              // locale: _currentLocale,
               localizationsDelegates:
                   ApplangaLocalizations.localizationsDelegates,
               supportedLocales: ApplangaLocalizations.supportedLocales,
@@ -90,7 +90,8 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with ApplangaScreenshotScopeMixin{
+class _MyHomePageState extends State<MyHomePage>
+    with ApplangaScreenshotScopeMixin {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -110,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> with ApplangaScreenshotScopeMix
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.homePageTitle(DateTime.now()),
+          AppLocalizations.of(context).homePageTitle(DateTime.now()),
           key: const ValueKey('homePageTitle'),
         ),
       ),
@@ -120,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> with ApplangaScreenshotScopeMix
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              AppLocalizations.of(context)!
+              AppLocalizations.of(context)
                   .youHavePushedTheButtonXTimes(_counter, 'thumb'),
               style: Theme.of(context).textTheme.headlineMedium,
               textAlign: TextAlign.center,
@@ -132,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> with ApplangaScreenshotScopeMix
                   builder: (context) => const SecondPage(),
                 ));
               },
-              label: Text(AppLocalizations.of(context)!.goToSecondPage),
+              label: Text(AppLocalizations.of(context).goToSecondPage),
               icon: const Icon(Icons.arrow_forward),
             ),
           ],
@@ -140,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> with ApplangaScreenshotScopeMix
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: AppLocalizations.of(context)!.increment,
+        tooltip: AppLocalizations.of(context).increment,
         child: const Icon(Icons.add),
       ),
     );

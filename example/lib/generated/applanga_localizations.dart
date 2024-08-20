@@ -1,11 +1,12 @@
 import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: unused_local_variable
+// ignore_for_file: no_leading_underscores_for_local_identifiers
 class ApplangaLocalizations extends AppLocalizations {
   final AppLocalizations _original;
 
@@ -22,8 +23,19 @@ class ApplangaLocalizations extends AppLocalizations {
     GlobalCupertinoLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
   ];
-  static const List<Locale> supportedLocales =
-      AppLocalizations.supportedLocales;
+  static Locale localeListResolutionCallback(locales, supportedLocales) =>
+      ApplangaFlutter.localeListResolutionCallback(locales, supportedLocales);
+
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('de'),
+    Locale('de', 'AT'),
+    Locale('en', 'US'),
+    Locale('es'),
+    Locale('es', 'CL'),
+    Locale('fr'),
+    Locale('ru')
+  ];
 
   @override
   String get increment =>
