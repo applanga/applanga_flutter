@@ -108,6 +108,22 @@ class ApplangaFlutter {
     });
   }
 
+  static Locale localeListResolutionCallback(locales, supportedLocales) {
+    if (locales != null) {
+      for (var locale in locales) {
+        Iterable<Locale> result = supportedLocales.where(
+                (element) =>
+            element == locale ||
+                element.languageCode == locale.languageCode &&
+                    element.countryCode == null);
+        if (result.isNotEmpty) {
+          return result.first;
+        }
+      }
+    }
+    return supportedLocales.first;
+  }
+
   /// You can register your state here to improve the screenshot experience.
   /// To get all string positions on your screen, applanga uses the latest
   /// registered state as top level widget. It's recommended to register your

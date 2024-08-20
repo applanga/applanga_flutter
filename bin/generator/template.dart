@@ -14,7 +14,9 @@ String generateAppLocalizationClass(
     List<String> ids,
     List<String> getters,
     List<ALIcuMethod> icuMethods,
-    bool useIntlImport) {
+    bool useIntlImport,
+    List<String> supportedLocalesDeclarations
+    ) {
   return """
 import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:flutter/widgets.dart';
@@ -24,6 +26,7 @@ import '$appLocalizationImport';
 
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: unused_local_variable
+// ignore_for_file: no_leading_underscores_for_local_identifiers
 class $className extends AppLocalizations {
   final AppLocalizations _original;
 
@@ -40,8 +43,13 @@ class $className extends AppLocalizations {
     GlobalCupertinoLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
   ];
-  static const List<Locale> supportedLocales =
-      AppLocalizations.supportedLocales;
+  static Locale localeListResolutionCallback(locales, supportedLocales) =>
+      ApplangaFlutter.localeListResolutionCallback(locales, supportedLocales);
+      
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('$baseLanguage'),
+    ${supportedLocalesDeclarations.where((e)=>e!="Locale('$baseLanguage')").join(",\n")}
+  ];
       
 ${getters.map((id) => """
   @override

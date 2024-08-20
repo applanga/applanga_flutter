@@ -42,6 +42,8 @@ class _MyAppState extends State<MyApp> {
               localizationsDelegates:
                   ApplangaLocalizations.localizationsDelegates,
               supportedLocales: ApplangaLocalizations.supportedLocales,
+              localeListResolutionCallback:
+                  ApplangaLocalizations.localeListResolutionCallback,
               theme: ThemeData(
                 primarySwatch: Colors.blue,
               ),

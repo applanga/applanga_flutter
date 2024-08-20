@@ -28,6 +28,15 @@ class ApplangaGenerator {
   }
 
   _generateLocalizationClass() {
+    final abstractVisitor = LocalizationClassVisitor();
+    final abstractFile = File(config.originAppLocalizationsClassPath);
+    final abstractParsedString =
+        parseString(content: abstractFile.readAsStringSync());
+
+    for (var element in abstractParsedString.unit.declarations) {
+      element.visitChildren(abstractVisitor);
+    }
+
     final visitor = LocalizationBaseLangVisitor();
     final file = File(config.originAppLocalizationsBaseLanguageClassPath);
     final parsedString = parseString(content: file.readAsStringSync());
@@ -39,18 +48,18 @@ class ApplangaGenerator {
     final generatedFile = File(config.destinationAppLocalizationsClassPath)
       ..createSync(recursive: true);
     final dartCode = generateAppLocalizationClass(
-      config.originAppLocalizationImport,
-      config.className,
-      config.baseLanguage,
-      config.branchId,
-      config.updateGroups,
-      config.updateLanguages,
-      config.customLanguageFallback,
-      visitor.ids,
-      visitor.getter,
-      visitor.formattingList,
-      visitor.useIntlImport,
-    );
+        config.originAppLocalizationImport,
+        config.className,
+        config.baseLanguage,
+        config.branchId,
+        config.updateGroups,
+        config.updateLanguages,
+        config.customLanguageFallback,
+        visitor.ids,
+        visitor.getter,
+        visitor.formattingList,
+        visitor.useIntlImport,
+        abstractVisitor.supportedLocalesDeclarations);
     final formatter = DartFormatter();
     generatedFile.writeAsStringSync(formatter.format(dartCode));
     Utils.successWriteLn("${generatedFile.absolute} generated successfully!");
@@ -140,20 +149,16 @@ class LocalizationBaseLangVisitor extends SimpleAstVisitor {
 }
 
 class LocalizationClassVisitor extends SimpleAstVisitor {
-  List<String> ids = [];
-  List<String> getter = [];
-  List<MethodDeclaration> methods = [];
+  final List<String> supportedLocalesDeclarations = [];
 
   @override
-  visitMethodDeclaration(MethodDeclaration node) {
-    // ast ist not resolved so we check the type by it's toString method
-    if (node.isAbstract && node.returnType?.toString() == "String") {
-      ids.add(node.name.toString());
-      if (node.isGetter) {
-        getter.add(node.name.toString());
-      } else {
-        methods.add(node);
+  visitFieldDeclaration(FieldDeclaration node) {
+    if (node.fields.variables.first.name.toString() == "supportedLocales") {
+      final list = node.fields.variables.first.initializer as ListLiteral;
+      for (final element in list.elements) {
+        supportedLocalesDeclarations.add(element.toString());
       }
     }
+    return super.visitFieldDeclaration(node);
   }
 }
