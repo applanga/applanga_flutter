@@ -25,7 +25,6 @@ class ApplangaCli {
 
   static Future<bool> _isApplangaCliInstalled() async {
     var process = await Process.start('applanga', [], runInShell: true);
-    Utils.forwardProcessOutput(process);
 
     final exitCode = await process.exitCode;
     if (exitCode != 0) {
