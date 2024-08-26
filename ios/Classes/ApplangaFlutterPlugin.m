@@ -47,6 +47,8 @@ static FlutterMethodChannel *channel = nil;
   } else if ([@"setLanguage" isEqualToString:call.method])  {
       NSString* lang = call.arguments[@"lang"];
       [Applanga setLanguage:lang persistent: YES];
+      [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"AppleLanguages"];
+      [[NSUserDefaults standardUserDefaults] synchronize];
       result(nil);
   } else if ([@"localizeMap" isEqualToString:call.method])  {
       result([Applanga localizeMap:call.arguments andUpdateMissingStrings: FALSE]);

@@ -42,9 +42,10 @@ void main() {
         "es-MX": ["es-MX", "es-US", "es"],
         "de-DE": ["de-AT", "en"],
       };
-      Locale l = const Locale.fromSubtags(
-          languageCode: "de", countryCode: "DE");
-      LocaleList localeList = LocaleList(l, "en", customLanguageFallback: customFallback);
+      Locale l =
+          const Locale.fromSubtags(languageCode: "de", countryCode: "DE");
+      LocaleList localeList =
+          LocaleList(l, "en", customLanguageFallback: customFallback);
       expect(localeList.list.length, 2);
       expect(localeList.list[0].toLanguageTag(), "de-AT");
       expect(localeList.list[1].toLanguageTag(), "en");
@@ -55,14 +56,98 @@ void main() {
         "es-MX": ["es-MX", "es-US", "es"],
         "de-DE": ["de-AT", "en"],
       };
-      Locale l = const Locale.fromSubtags(
-          languageCode: "es", countryCode: "MX");
-      LocaleList localeList = LocaleList(l, "en", customLanguageFallback: customFallback);
+      Locale l =
+          const Locale.fromSubtags(languageCode: "es", countryCode: "MX");
+      LocaleList localeList =
+          LocaleList(l, "en", customLanguageFallback: customFallback);
       expect(localeList.list.length, 4);
       expect(localeList.list[0].toLanguageTag(), "es-MX");
       expect(localeList.list[1].toLanguageTag(), "es-US");
       expect(localeList.list[2].toLanguageTag(), "es");
       expect(localeList.list[3].toLanguageTag(), "en");
+    });
+  });
+  group('locale list resolution callback', () {
+    Locale de = const Locale.fromSubtags(languageCode: "de");
+    Locale deAt =
+        const Locale.fromSubtags(languageCode: "de", countryCode: "AT");
+
+    Locale en = const Locale.fromSubtags(languageCode: "en");
+    Locale enUS =
+        const Locale.fromSubtags(languageCode: "en", countryCode: "US");
+
+    Locale es = const Locale.fromSubtags(languageCode: "es");
+    Locale esUS =
+        const Locale.fromSubtags(languageCode: "es", countryCode: "US");
+
+    test('Should return the exact locale if it is supported', () async {
+      List<Locale> deviceLocales = [esUS, enUS];
+      List<Locale> supportedLocales = [deAt, enUS, esUS];
+      Locale locale = LocaleList.localeListResolutionCallback(
+          deviceLocales, supportedLocales);
+
+      expect(locale.languageCode, "es");
+      expect(locale.countryCode, "US");
+    });
+
+    test('Should return the exact locale if it is supported2', () async {
+      List<Locale> deviceLocales = [enUS, esUS];
+      List<Locale> supportedLocales = [deAt, enUS, esUS];
+      Locale locale = LocaleList.localeListResolutionCallback(
+          deviceLocales, supportedLocales);
+
+      expect(locale.languageCode, "en");
+      expect(locale.countryCode, "US");
+    });
+
+    test('Should return the locale without country code if supported', () async {
+      List<Locale> deviceLocales = [esUS, enUS];
+      List<Locale> supportedLocales = [deAt, enUS, es];
+      Locale locale = LocaleList.localeListResolutionCallback(
+          deviceLocales, supportedLocales);
+
+      expect(locale.languageCode, "es");
+      expect(locale.countryCode, null);
+    });
+
+    test('Should return the locale without country code if supported2', () async {
+      List<Locale> deviceLocales = [esUS, enUS];
+      List<Locale> supportedLocales = [deAt, en];
+      Locale locale = LocaleList.localeListResolutionCallback(
+          deviceLocales, supportedLocales);
+
+      expect(locale.languageCode, "en");
+      expect(locale.countryCode, null);
+    });
+
+    test('Should return the locale without country code if supported3', () async {
+      List<Locale> deviceLocales = [esUS, enUS];
+      List<Locale> supportedLocales = [deAt, enUS, es];
+      Locale locale = LocaleList.localeListResolutionCallback(
+          deviceLocales, supportedLocales);
+
+      expect(locale.languageCode, "es");
+      expect(locale.countryCode, null);
+    });
+
+    test('Should return the first supported locale if no device language is supported', () async {
+      List<Locale> deviceLocales = [esUS];
+      List<Locale> supportedLocales = [deAt, en];
+      Locale locale = LocaleList.localeListResolutionCallback(
+          deviceLocales, supportedLocales);
+
+      expect(locale.languageCode, "de");
+      expect(locale.countryCode, "AT");
+    });
+
+    test('Should return the first supported locale if no device language is set', () async {
+      List<Locale> deviceLocales = [];
+      List<Locale> supportedLocales = [esUS, deAt, en];
+      Locale locale = LocaleList.localeListResolutionCallback(
+          deviceLocales, supportedLocales);
+
+      expect(locale.languageCode, "es");
+      expect(locale.countryCode, "US");
     });
   });
 }

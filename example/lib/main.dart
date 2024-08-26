@@ -21,13 +21,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late Locale _currentLocale;
+  late Locale? _currentLocale;
 
   @override
   void initState() {
     super.initState();
     _currentLocale =
-        widget.startupLocale ?? AppLocalizations.supportedLocales[0];
+        widget.startupLocale;
   }
 
   @override
@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           Expanded(
             child: MaterialApp(
               title: 'Flutter Demo',
-              // locale: _currentLocale,
+              locale: _currentLocale,
               localizationsDelegates:
                   ApplangaLocalizations.localizationsDelegates,
               supportedLocales: ApplangaLocalizations.supportedLocales,
