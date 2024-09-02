@@ -24,9 +24,11 @@ class ApplangaCli {
   }
 
   static Future<bool> _isApplangaCliInstalled() async {
-    var process = await Process.start('command', ['applanga']);
+    var process = await Process.start('applanga', [], runInShell: true);
+
     final exitCode = await process.exitCode;
     if (exitCode != 0) {
+      Utils.writeLn("\nError in _isApplangaCliInstalled, exit code: " + exitCode.toString());
       return false;
     }
     return true;
@@ -50,7 +52,7 @@ class ApplangaCli {
   void push(List<String> args) async {
     Utils.actionWriteLn("applanga_flutter:push");
     try {
-      var process = await Process.start('applanga', ['push', ...args]);
+      var process = await Process.start('applanga', ['push', ...args], runInShell: true);
       Utils.forwardProcessOutput(process);
       final exitCode = await process.exitCode;
       if (exitCode != 0) {
@@ -71,7 +73,7 @@ class ApplangaCli {
   void pull(List<String> args) async {
     Utils.actionWriteLn("applanga_flutter:pull");
     try {
-      var process = await Process.start('applanga', ['pull', ...args]);
+      var process = await Process.start('applanga', ['pull', ...args], runInShell: true);
       Utils.forwardProcessOutput(process);
       final exitCode = await process.exitCode;
       if (exitCode != 0) {
@@ -98,7 +100,7 @@ class ApplangaCli {
     Utils.actionWriteLn("applanga_flutter:updateSettingsfiles");
     try {
       var process = await Process.start(
-          'applanga', ['updateSettingsfiles', ...args ?? []]);
+          'applanga', ['updateSettingsfiles', ...args ?? []], runInShell: true);
       Utils.forwardProcessOutput(process);
       final exitCode = await process.exitCode;
       switch (exitCode) {
@@ -125,7 +127,7 @@ class ApplangaCli {
   }
 
   Future<String> _getCliVersion() async {
-    var versionProcess = await Process.start('applanga', ['--version']);
+    var versionProcess = await Process.start('applanga', ['--version'], runInShell: true);
     StringBuffer versionBuffer = StringBuffer();
     Utils.forwardProcessOutput(versionProcess);
     await versionProcess.exitCode;
