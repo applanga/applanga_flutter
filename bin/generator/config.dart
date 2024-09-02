@@ -14,7 +14,9 @@ class ApplangaConfig {
     'template-arb-file',
     'output-localization-file',
     'synthetic-package',
-    'output-dir'
+    'output-dir',
+    'nullable-getter',
+    'untranslated-messages-file'
   ];
 
   String get _rootDirPath => Directory.current.path;

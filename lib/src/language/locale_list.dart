@@ -32,10 +32,12 @@ class LocaleList {
   }
 
   List<Locale> get list => _localeList;
+
   List<String> get listAsLocaleStrings =>
       _localeList.map((e) => e.toLanguageTag()).toList();
 
   Locale get locale => _localeList.first;
+
   String get localeAsString => locale.toLanguageTag();
 
   bool hasCurrentLocale() {
@@ -92,5 +94,26 @@ class LocaleList {
         languageCode: locale.languageCode,
         scriptCode: locale.scriptCode,
         countryCode: locale.countryCode);
+  }
+
+  static Locale localeListResolutionCallback(locales, supportedLocales) {
+    Locale? deviceLanguage;
+    Locale? deviceLanguageLong;
+    if (locales != null) {
+      for (var locale in locales) {
+        if (deviceLanguageLong != null) break;
+        if (deviceLanguage != null) break;
+        for (Locale supportedLocale in supportedLocales) {
+          if (supportedLocale == locale) {
+            deviceLanguageLong = locale;
+            break;
+          } else if (supportedLocale.languageCode == locale.languageCode &&
+              supportedLocale.countryCode == null) {
+            deviceLanguage = Locale(supportedLocale.languageCode);
+          }
+        }
+      }
+    }
+    return deviceLanguageLong ?? deviceLanguage ?? supportedLocales.first;
   }
 }

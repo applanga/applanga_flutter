@@ -108,6 +108,10 @@ class ApplangaFlutter {
     });
   }
 
+  static Locale localeListResolutionCallback(locales, supportedLocales) {
+    return LocaleList.localeListResolutionCallback(locales, supportedLocales);
+  }
+
   /// You can register your state here to improve the screenshot experience.
   /// To get all string positions on your screen, applanga uses the latest
   /// registered state as top level widget. It's recommended to register your

@@ -91,6 +91,7 @@ Add the class to your MaterialApp and replace the old delegate & locales:
 const MaterialApp(
   localizationsDelegates: ApplangaLocalizations.localizationsDelegates,
   supportedLocales: ApplangaLocalizations.supportedLocales,
+  localeListResolutionCallback: ApplangaLocalizations.localeListResolutionCallback,
   home: MyApp(),
 ),
 ```
