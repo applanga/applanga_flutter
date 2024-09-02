@@ -5,6 +5,12 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.54 (2 Sep 2024) 
+* added ApplangaLocalizations.localeListResolutionCallback
+* moved Applanga base language to first position in ApplangaLocalizations.supportedLocales
+* fixed getting wrong device locale on iOS devices
+* pull, push etc. commands fixed to use shell on Windows
+
 ## Version 3.0.53 (27 Jun 2024) 
 * updated dependecies
 * updated android gradle files
