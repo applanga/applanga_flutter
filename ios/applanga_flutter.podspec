@@ -19,9 +19,9 @@ With ApplangaFlutter you can get all your translations over the air. It's also
   s.dependency 'Flutter'
   s.dependency 'Applanga', '2.0.215'
 
-  s.platform = :ios, '9.0'
+  s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64 i386' }
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
   s.swift_version = '5.0'
 end
