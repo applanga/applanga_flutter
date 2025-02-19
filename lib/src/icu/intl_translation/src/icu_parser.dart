@@ -5,7 +5,7 @@ import 'package:applanga_flutter/src/icu/icu_types.dart';
 import 'package:petitparser/petitparser.dart';
 
 /// This defines a grammar for ICU MessageFormat syntax. Usage is
-///       new IcuParser.message.parse(<string>).value;
+///       new IcuParser.message.parse().value;
 /// The "parse" method will return a Success or Failure object which responds
 /// to "value".
 class IcuParser {

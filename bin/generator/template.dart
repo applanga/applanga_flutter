@@ -15,8 +15,7 @@ String generateAppLocalizationClass(
     List<String> getters,
     List<ALIcuMethod> icuMethods,
     bool useIntlImport,
-    List<String> supportedLocalesDeclarations
-    ) {
+    List<String> supportedLocalesDeclarations) {
   return """
 import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:flutter/widgets.dart';
@@ -48,7 +47,7 @@ class $className extends AppLocalizations {
       
   static const List<Locale> supportedLocales = <Locale>[
     Locale('$baseLanguage'),
-    ${supportedLocalesDeclarations.where((e)=>e!="Locale('$baseLanguage')").join(",\n")}
+    ${supportedLocalesDeclarations.where((e) => e != "Locale('$baseLanguage')").join(",\n")}
   ];
       
 ${getters.map((id) => """

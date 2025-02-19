@@ -18,12 +18,14 @@ dependencies:
     sdk: flutter
   petitparser: ^6.0.2
   yaml: ^3.1.1
-  analyzer: ^6.4.1
-  dart_style: ^2.3.6
+  analyzer: ^7.0.0
+  dart_style: ^3.0.1
   synchronized: ^3.0.0+3
   intl: ^0.19.0
   path: ^1.8.0
   ansicolor: ^2.0.2
+  web: ^1.1.0
+  pub_semver: ^2.1.5
 
 dev_dependencies:
   flutter_lints: ^2.0.1

@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:applanga_flutter/src/applanga_exception.dart';
 import 'package:dart_style/dart_style.dart' show DartFormatter;
+import 'package:pub_semver/pub_semver.dart';
 
 import '../utils.dart';
 import 'config.dart';
@@ -60,7 +61,7 @@ class ApplangaGenerator {
         visitor.formattingList,
         visitor.useIntlImport,
         abstractVisitor.supportedLocalesDeclarations);
-    final formatter = DartFormatter();
+    final formatter = DartFormatter(languageVersion: Version(3, 6, 0));
     generatedFile.writeAsStringSync(formatter.format(dartCode));
     Utils.successWriteLn("${generatedFile.absolute} generated successfully!");
   }
