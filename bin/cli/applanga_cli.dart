@@ -28,7 +28,7 @@ class ApplangaCli {
 
     final exitCode = await process.exitCode;
     if (exitCode != 0) {
-      Utils.writeLn("\nError in _isApplangaCliInstalled, exit code: " + exitCode.toString());
+      Utils.writeLn("\nError in _isApplangaCliInstalled, exit code: ${exitCode.toString()}");
       return false;
     }
     return true;

@@ -68,7 +68,6 @@ void main() {
     });
   });
   group('locale list resolution callback', () {
-    Locale de = const Locale.fromSubtags(languageCode: "de");
     Locale deAt =
         const Locale.fromSubtags(languageCode: "de", countryCode: "AT");
 

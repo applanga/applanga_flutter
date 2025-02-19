@@ -9,31 +9,31 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
-  const _pumpSettleDuration = Duration(milliseconds: 3500);
+  const pumpSettleDuration = Duration(milliseconds: 3500);
 
   testWidgets('Take all screenshots with ApplangaWidget',
       (WidgetTester tester) async {
-    for (var _locale in AppLocalizations.supportedLocales) {
+    for (var locale in AppLocalizations.supportedLocales) {
       await tester.pumpWidget(
           MyApp(
-            key: ObjectKey(_locale),
-            startupLocale: _locale,
+            key: ObjectKey(locale),
+            startupLocale: locale,
           ),
-          duration: _pumpSettleDuration);
+          duration: pumpSettleDuration);
       await tester.pumpAndSettle();
 
       // do the screenshot
       await ApplangaFlutter.I.captureScreenshotWithTag("main");
 
-      await tester.pumpAndSettle(_pumpSettleDuration);
+      await tester.pumpAndSettle(pumpSettleDuration);
 
       // go to second page
       await tester.tap(find.byIcon(Icons.arrow_forward));
-      await tester.pumpAndSettle(_pumpSettleDuration);
+      await tester.pumpAndSettle(pumpSettleDuration);
 
       // do the screenshot
       await ApplangaFlutter.I.captureScreenshotWithTag("secondPage");
-      await tester.pumpAndSettle(_pumpSettleDuration);
+      await tester.pumpAndSettle(pumpSettleDuration);
     }
   });
 }

@@ -10,11 +10,11 @@ class SecondPage extends StatelessWidget {
     return ApplangaScreenshotScope(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.secondPageTitle),
+          title: Text(AppLocalizations.of(context).secondPageTitle),
         ),
         body: Center(
           child: Text(
-            AppLocalizations.of(context)!.helloFromSecondPage,
+            AppLocalizations.of(context).helloFromSecondPage,
             style: Theme.of(context).textTheme.headlineSmall,
             textAlign: TextAlign.center,
           ),

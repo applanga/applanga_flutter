@@ -26,8 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _currentLocale =
-        widget.startupLocale;
+    _currentLocale = widget.startupLocale;
   }
 
   @override
@@ -57,14 +56,13 @@ class _MyAppState extends State<MyApp> {
               children: ApplangaLocalizations.supportedLocales
                   .map(
                     (locale) => ElevatedButton(
-                      child: Text(
-                        locale.toString(),
-                        style: TextStyle(
-                            fontWeight: (_currentLocale == locale)
-                                ? FontWeight.bold
-                                : FontWeight.normal),
-                        textScaleFactor: (_currentLocale == locale) ? 1.3 : 1,
-                      ),
+                      child: Text(locale.toString(),
+                          style: TextStyle(
+                              fontWeight: (_currentLocale == locale)
+                                  ? FontWeight.bold
+                                  : FontWeight.normal),
+                          textScaler: TextScaler.linear(
+                              (_currentLocale == locale) ? 1.3 : 1)),
                       onPressed: () {
                         setState(() {
                           _currentLocale = locale;

@@ -149,7 +149,9 @@ class ApplangaFlutter {
 
     // if last element is already the context just skip everything
     if (_currentScreenContextList.isNotEmpty &&
-        _currentScreenContextList.last == context) return false;
+        _currentScreenContextList.last == context) {
+      return false;
+    }
 
     // if the context is already somewhere in the list, remove it and
     // add it as the last element
