@@ -5,6 +5,10 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.56 (19 Feb 2025) 
+* increased compile sdk version
+* bumped Gradle and AGP versions for example app
+
 ## Version 3.0.55 (2 Sep 2024) 
 * added ApplangaLocalizations.localeListResolutionCallback
 * moved Applanga base language to first position in ApplangaLocalizations.supportedLocales
