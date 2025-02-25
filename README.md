@@ -178,7 +178,8 @@ To trigger the [Draft Mode](https://www.applanga.com/docs/translation-management
 
 ### Screenshot Menu
 
-##### Note: Screenshot Menu is only available for Android and iOS - enable Draft Mode first
+> [!IMPORTANT]
+> Applanga screenshots are working only on iOS and Android devices with API level 24 and higher. Enable the Draft Mode first!
 
 
 Once in draft mode you can show or hide the screenshot menu by swiping down with 2 fingers or via code like this `ApplangaFlutter.setScreenShotMenuVisible(bool);`
