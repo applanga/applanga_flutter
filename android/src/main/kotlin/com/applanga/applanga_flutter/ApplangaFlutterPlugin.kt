@@ -2,11 +2,12 @@ package com.applanga.applanga_flutter
 
 import android.app.Activity
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Debug
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.applanga.android.`$InternalALPlugin`
 import com.applanga.android.Applanga
 import com.applanga.android.ApplangaScreenshotInterface
@@ -17,8 +18,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.view.FlutterView
-import java.util.*
+
 
 /** ApplangaFlutterPlugin */
 class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -60,23 +60,20 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun getTheScreenshot(): Bitmap? {
-        try {
-            val rootView: View? = theActivity?.window?.decorView?.rootView
-            val theGroup = rootView as ViewGroup
-            findTheFlutterView(theGroup)
-            var bitmap: Bitmap? = null
-            if (mainFlutterView is FlutterView) {
-                bitmap = (mainFlutterView as FlutterView).bitmap
-            } else if (mainFlutterView is io.flutter.embedding.android.FlutterView) {
-                val theView = mainFlutterView as io.flutter.embedding.android.FlutterView
-                theView.buildDrawingCache()
-                bitmap = theView.drawingCache
-            }
-            mainFlutterView = null
-            return bitmap
-        } catch (ex: Exception) {
-            Log.println(Log.ERROR, "APPLANGA", "Error taking screenshot: " + ex.message)
+        var msg =
+            "No screenshot support for api levels below 24. See applanga_flutter documentation."
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            msg = "Something went wrong with the screenshot. Please contact Applanga support."
         }
+        if (theActivity != null) {
+            Toast.makeText(
+                theActivity,
+                msg,
+                Toast.LENGTH_LONG
+            )
+                .show();
+        }
+
         return null
     }
 
@@ -97,14 +94,14 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onMethodCall(call: MethodCall, result: Result) {
         if (call.method == "init") {
             `$InternalALPlugin`.setScreenshotInterface(object : ApplangaScreenshotInterface {
-                override fun onCaptureScreenshotFromOverlay(screenTag: String){
+                override fun onCaptureScreenshotFromOverlay(screenTag: String) {
                     channel.invokeMethod("captureScreenshotFromOverlay", screenTag)
                 }
                 override fun getScreenshot(): Bitmap {
                     return getTheScreenshot()!!
                 }
             })
-        } else if(call.method == "setShowIdModeEnabled"){
+        } else if (call.method == "setShowIdModeEnabled") {
             val enabled = call.argument<Boolean>("enabled")
             Applanga.setShowIdModeEnabled(enabled!!);
             result.success(null)
@@ -113,12 +110,21 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val stringIds = call.argument<List<String>>("stringIds")!!
             val stringPos = call.argument<String>("stringPos")!!
             Applanga.captureScreenshot(tag, stringIds, stringPos) { aBoolean ->
-                theActivity!!.runOnUiThread(Runnable { result.success(aBoolean) })
+                var msg = "Screenshot captured."
+                if (!aBoolean) {
+                    msg = "Something went wrong with the screenshot."
+                }
+                theActivity!!.runOnUiThread(Runnable {
+                    Toast.makeText(theActivity!!, msg, Toast.LENGTH_SHORT)
+                        .show()
+                    result.success(aBoolean)
+                })
             }
-        }  else if (call.method == "update") {
+        } else if (call.method == "update") {
             val groups = call.argument<List<String>>("groups");
             val languages = call.argument<List<String>>("languages");
-            Applanga.update(groups, languages
+            Applanga.update(
+                groups, languages
             ) { b ->
                 theActivity?.runOnUiThread(Runnable { result.success(b) })
             }
@@ -145,7 +151,7 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         } else if (call.method == "hideScreenShotMenu") {
             Applanga.setScreenShotMenuVisible(false)
             result.success(null)
-        } else if (call.method == "getSettingsFileBranchId"){
+        } else if (call.method == "getSettingsFileBranchId") {
             val branchId = Applanga.getSettingsFileBranchId()
             result.success(branchId)
         } else {
