@@ -5,6 +5,9 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.57 (26 Feb 2025) 
+* upgraded AGP plugin version and fixed compilation errors for flutter 3.29.0
+
 ## Version 3.0.56 (19 Feb 2025) 
 * increased compile sdk version
 * bumped Gradle and AGP versions for example app
