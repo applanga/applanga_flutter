@@ -1,9 +1,9 @@
 import 'package:applanga_flutter/applanga_flutter.dart';
+import 'package:example/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:example/main.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

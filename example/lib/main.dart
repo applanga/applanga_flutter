@@ -2,7 +2,7 @@ import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:example/generated/applanga_localizations.dart';
 import 'package:example/second_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:example/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
