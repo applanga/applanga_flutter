@@ -56,6 +56,7 @@ class ApplangaGenerator {
         config.updateGroups,
         config.updateLanguages,
         config.customLanguageFallback,
+        config.getDynamicStrings,
         visitor.ids,
         visitor.getter,
         visitor.formattingList,

@@ -5,8 +5,6 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Debug
 import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import com.applanga.android.`$InternalALPlugin`
 import com.applanga.android.Applanga
@@ -25,7 +23,6 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
 
     private var theActivity: Activity? = null
-    private var mainFlutterView: Any? = null
 
     companion object {
         fun dispatchTouchEvent(ev: MotionEvent?, a: Activity?) {
@@ -71,24 +68,10 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 msg,
                 Toast.LENGTH_LONG
             )
-                .show();
+                .show()
         }
 
         return null
-    }
-
-    private fun findTheFlutterView(viewGroup: ViewGroup) {
-        for (i in 0 until viewGroup.childCount) {
-            val child = viewGroup.getChildAt(i) as View
-            //      Log.println(Log.INFO, "APPLANGA", "CLASSNAME: " + child.getClass().getSimpleName());
-            if (child.javaClass.simpleName == "FlutterView") {
-                mainFlutterView = child
-                break
-            }
-            if (child is ViewGroup) {
-                findTheFlutterView(child)
-            }
-        }
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
@@ -97,13 +80,14 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 override fun onCaptureScreenshotFromOverlay(screenTag: String) {
                     channel.invokeMethod("captureScreenshotFromOverlay", screenTag)
                 }
+
                 override fun getScreenshot(): Bitmap {
                     return getTheScreenshot()!!
                 }
             })
         } else if (call.method == "setShowIdModeEnabled") {
             val enabled = call.argument<Boolean>("enabled")
-            Applanga.setShowIdModeEnabled(enabled!!);
+            Applanga.setShowIdModeEnabled(enabled!!)
             result.success(null)
         } else if (call.method == "takeScreenshotWithTag") {
             val tag = call.argument<String>("tag")
@@ -114,24 +98,47 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 if (!aBoolean) {
                     msg = "Something went wrong with the screenshot."
                 }
-                theActivity!!.runOnUiThread(Runnable {
+                theActivity!!.runOnUiThread {
                     Toast.makeText(theActivity!!, msg, Toast.LENGTH_SHORT)
                         .show()
                     result.success(aBoolean)
-                })
+                }
             }
         } else if (call.method == "update") {
-            val groups = call.argument<List<String>>("groups");
-            val languages = call.argument<List<String>>("languages");
+            val groups = call.argument<List<String>>("groups")
+            val languages = call.argument<List<String>>("languages")
             Applanga.update(
                 groups, languages
             ) { b ->
-                theActivity?.runOnUiThread(Runnable { result.success(b) })
+                theActivity?.runOnUiThread { result.success(b) }
             }
         } else if (call.method == "localizeMap") {
-            val map: HashMap<String, HashMap<String, String>> =
-                if (call.arguments is HashMap<*, *>) call.arguments as HashMap<String, HashMap<String, String>> else HashMap()
+            val tmpMap = call.arguments as HashMap<*, *>
+            var map: HashMap<String, HashMap<String, String>> = HashMap()
+            if (
+                tmpMap.all {
+                    it.key is String && it.value is HashMap<*, *> && (it.value as HashMap<*, *>).all { inner ->
+                        inner.key is String && inner.value is String
+                    }
+                }
+            ) {
+                @Suppress("UNCHECKED_CAST")
+                map = tmpMap as HashMap<String, HashMap<String, String>>
+            }
             val applangaMap = Applanga.localizeMap(map, false)
+            result.success(applangaMap)
+        } else if (call.method == "localizedStringsForLanguages") {
+            val tmpLanguages = call.arguments as List<*>
+            var languages: List<String> = ArrayList()
+            if (
+                tmpLanguages.all {
+                    it is String
+                }
+            ) {
+                @Suppress("UNCHECKED_CAST")
+                languages = tmpLanguages as List<String>
+            }
+            val applangaMap = Applanga.localizedStringsForLanguages(languages)
             result.success(applangaMap)
         } else if (call.method == "isDebuggerConnected") {
             result.success(Debug.isDebuggerConnected())

@@ -49,6 +49,8 @@ class ApplangaFlutter {
   String? _branchId;
   late LocaleList _currentLocaleList;
 
+  bool _getDynamicStrings = false;
+
   LocaleList get currentLocaleList => _currentLocaleList;
 
   void setCurrentLocale(Locale locale) {
@@ -235,7 +237,8 @@ class ApplangaFlutter {
       Locale locale, String baseLanguage, String? branchId, List<String> keys,
       {List<String>? groups,
       List<String>? languages,
-      Map<String, List<String>>? customLanguageFallback}) async {
+      Map<String, List<String>>? customLanguageFallback,
+      bool getDynamicStrings = false}) async {
     if (!isInitialised) {
       if (groups != null) {
         _defaultGroups = groups;
@@ -255,6 +258,7 @@ class ApplangaFlutter {
       _currentLocaleList = LocaleList(locale, baseLanguage,
           customLanguageFallback: customLanguageFallback);
       _branchId = branchId;
+      _getDynamicStrings = getDynamicStrings;
       _keys = keys;
 
       // add current language if it's not set for default languages
@@ -298,20 +302,35 @@ class ApplangaFlutter {
       throw ApplangaFlutterException(
           "loading locale failed: No current Locale is set.");
     }
-    Map<String, String?> emptyStringKeyMap = {
-      for (final key in _keys) key: null
-    };
+    Map<dynamic, dynamic> localeMap;
 
-    // reset cache for this locale
-    _translationCache[_currentLocaleList.localeAsString] = {};
+    if (_getDynamicStrings) {
+      localeMap = await _channel!.invokeMethod("localizedStringsForLanguages",
+          currentLocaleList.listAsLocaleStrings);
+      // update keys here
+      _keys = localeMap.values
+          .expand((map) => map.keys.map((key) => key.toString()))
+          .toSet()
+          .toList()
+          .cast<String>();
+    } else {
+      Map<String, String?> emptyStringKeyMap = {
+        for (final key in _keys) key: null
+      };
 
-    Map<String, Map<String, String?>> map = {
-      for (var lang in currentLocaleList.listAsLocaleStrings)
-        lang: emptyStringKeyMap
-    };
+      Map<String, Map<String, String?>> map = {
+        for (var lang in currentLocaleList.listAsLocaleStrings)
+          lang: emptyStringKeyMap
+      };
 
-    Map<dynamic, dynamic> localeMap =
-        await _channel!.invokeMethod("localizeMap", map);
+      localeMap = await _channel!.invokeMethod("localizeMap", map);
+    }
+    // reset cache for all locales
+    for (var key in _translationCache.keys) {
+      _translationCache[key] = {};
+    }
+    // set the current locale
+    _translationCache[currentLocaleList.localeAsString] = {};
 
     for (var key in _keys) {
       String? localisedString;

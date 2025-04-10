@@ -11,6 +11,7 @@ String generateAppLocalizationClass(
     List<String>? baseGroups,
     List<String>? baseLanguages,
     Map<String, List<String>>? customLanguageFallback,
+    bool getDynamicStrings,
     List<String> ids,
     List<String> getters,
     List<ALIcuMethod> icuMethods,
@@ -89,7 +90,8 @@ class _${className}Delegate
     _keys,
       ${baseGroups == null ? '' : 'groups: _groups,'}
       ${baseLanguages == null ? '' : 'languages: _languages,'}
-      ${customLanguageFallback == null ? '' : 'customLanguageFallback: _customLanguageFallback'}
+      ${customLanguageFallback == null ? '' : 'customLanguageFallback: _customLanguageFallback,'}
+      getDynamicStrings: $getDynamicStrings
       );
     await ApplangaFlutter.instance.loadLocaleAndUpdate(locale);
     return result;
