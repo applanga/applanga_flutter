@@ -54,8 +54,8 @@ class $className extends AppLocalizations {
 ${getters.map((id) => """
   @override
   String get $id =>
-    ApplangaFlutter.instance.getIcuString(
-        '$id')?? _original.$id;
+    ApplangaFlutter.instance.getTranslation(
+        '$id', defaultValue: _original.$id)!;
   
 """).toList().join("\n")}
 
@@ -63,11 +63,12 @@ ${icuMethods.map((method) => """
   @override
   String ${method.nameWithParams} {
     ${method.body}
-    return ApplangaFlutter.instance.getIcuString(
+    return ApplangaFlutter.instance.getTranslation(
             '${method.name}', 
-            {${method.originalParams.entries.map((paramEntry) => '\'${paramEntry.key}\': ${paramEntry.value}').join(', ')}}
-${method.formattedParams != null ? ",{${method.formattedParams!.entries.map((paramEntry) => '\'${paramEntry.key}\': ${paramEntry.value}').join(', ')}}" : ""})
-            ?? _original.${method.name}(${method.originalParams.entries.map((paramEntry) => paramEntry.key).toList().join(", ")});
+            args: {${method.originalParams.entries.map((paramEntry) => '\'${paramEntry.key}\': ${paramEntry.value}').join(', ')}}
+${method.formattedParams != null ? ","
+              "formattedArgs: {${method.formattedParams!.entries.map((paramEntry) => '\'${paramEntry.key}\': ${paramEntry.value}').join(', ')}}" : ""},
+            defaultValue: _original.${method.name}(${method.originalParams.entries.map((paramEntry) => paramEntry.key).toList().join(", ")}))!;
   }
 """).toList().join("\n")} 
 

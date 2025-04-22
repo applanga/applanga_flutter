@@ -52,6 +52,8 @@ static FlutterMethodChannel *channel = nil;
       result(nil);
   } else if ([@"localizeMap" isEqualToString:call.method])  {
       result([Applanga localizeMap:call.arguments andUpdateMissingStrings: FALSE]);
+  } else if ([@"localizedStringsForLanguages" isEqualToString:call.method])  {
+      result([Applanga localizedStringsForLanguages:call.arguments]);
   } else if ([@"showDraftModeDialog" isEqualToString:call.method])  {
       [Applanga showDraftModeDialog];
       result(nil);

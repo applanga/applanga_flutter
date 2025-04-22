@@ -2,7 +2,7 @@ import 'package:applanga_flutter/applanga_flutter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:example/l10n/app_localizations.dart';
 
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: unused_local_variable
@@ -38,31 +38,32 @@ class ApplangaLocalizations extends AppLocalizations {
   ];
 
   @override
-  String get increment =>
-      ApplangaFlutter.instance.getIcuString('increment') ?? _original.increment;
+  String get increment => ApplangaFlutter.instance
+      .getTranslation('increment', defaultValue: _original.increment)!;
 
   @override
   String get goToSecondPage =>
-      ApplangaFlutter.instance.getIcuString('goToSecondPage') ??
-      _original.goToSecondPage;
+      ApplangaFlutter.instance.getTranslation('goToSecondPage',
+          defaultValue: _original.goToSecondPage)!;
 
   @override
   String get secondPageTitle =>
-      ApplangaFlutter.instance.getIcuString('secondPageTitle') ??
-      _original.secondPageTitle;
+      ApplangaFlutter.instance.getTranslation('secondPageTitle',
+          defaultValue: _original.secondPageTitle)!;
 
   @override
   String get helloFromSecondPage =>
-      ApplangaFlutter.instance.getIcuString('helloFromSecondPage') ??
-      _original.helloFromSecondPage;
+      ApplangaFlutter.instance.getTranslation('helloFromSecondPage',
+          defaultValue: _original.helloFromSecondPage)!;
 
   @override
   String homePageTitle(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
     final String dateString = dateDateFormat.format(date);
-    return ApplangaFlutter.instance.getIcuString(
-            'homePageTitle', {'date': date}, {'date': dateString}) ??
-        _original.homePageTitle(date);
+    return ApplangaFlutter.instance.getTranslation('homePageTitle',
+        args: {'date': date},
+        formattedArgs: {'date': dateString},
+        defaultValue: _original.homePageTitle(date))!;
   }
 
   @override
@@ -71,9 +72,10 @@ class ApplangaLocalizations extends AppLocalizations {
         locale: localeName,
         other: 'You have clicked the button with your $finger $count times.',
         zero: 'You have not clicked the button with your $finger yet.');
-    return ApplangaFlutter.instance.getIcuString('youHavePushedTheButtonXTimes',
-            {'count': count, 'finger': finger}) ??
-        _original.youHavePushedTheButtonXTimes(count, finger);
+    return ApplangaFlutter.instance.getTranslation(
+        'youHavePushedTheButtonXTimes',
+        args: {'count': count, 'finger': finger},
+        defaultValue: _original.youHavePushedTheButtonXTimes(count, finger))!;
   }
 }
 
@@ -94,11 +96,8 @@ class _ApplangaLocalizationsDelegate
   Future<AppLocalizations> load(Locale locale) async {
     var result = ApplangaLocalizations(locale);
     await ApplangaFlutter.instance.setMetaData(
-      locale,
-      'en',
-      null,
-      _keys,
-    );
+        locale, 'en', '6410524376a12116ad72d97e', _keys,
+        getDynamicStrings: false);
     await ApplangaFlutter.instance.loadLocaleAndUpdate(locale);
     return result;
   }

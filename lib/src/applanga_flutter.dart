@@ -308,11 +308,11 @@ class ApplangaFlutter {
       localeMap = await _channel!.invokeMethod("localizedStringsForLanguages",
           currentLocaleList.listAsLocaleStrings);
       // update keys here
-      _keys = localeMap.values
-          .expand((map) => map.keys.map((key) => key.toString()))
-          .toSet()
-          .toList()
-          .cast<String>();
+      _keys = {
+        ...localeMap.values
+            .expand((map) => map.keys.map((key) => key.toString())),
+        ..._keys
+      }.toSet().toList().cast<String>();
     } else {
       Map<String, String?> emptyStringKeyMap = {
         for (final key in _keys) key: null
@@ -335,8 +335,8 @@ class ApplangaFlutter {
     for (var key in _keys) {
       String? localisedString;
       for (final lang in currentLocaleList.listAsLocaleStrings) {
-        final translation = localeMap[lang][key];
-        if (translation != null) {
+        final String? translation = localeMap[lang][key];
+        if (translation != null && translation.isNotEmpty) {
           localisedString = translation;
           break;
         }
@@ -371,11 +371,22 @@ class ApplangaFlutter {
     });
   }
 
-  /// returns the most actual resolved by arguments icu string
-  /// [key] is the string key
-  /// [args] is a Map of arguments for that icu string
+  @Deprecated(
+      'Use [getTranslation] instead. Will be removed in next major update.')
   String? getIcuString(String key,
       [Map<String, Object>? args, Map<String, String>? formattedArgs]) {
+    return getTranslation(key, args: args, formattedArgs: formattedArgs);
+  }
+
+  /// returns the most actual resolved by arguments icu string
+  /// [defaultValue] is the default value if the key is not found on Applanga
+  /// [key] is the string key
+  /// [args] is a Map of arguments for that icu string
+  /// [result]
+  String? getTranslation(String key,
+      {String? defaultValue,
+      Map<String, Object>? args,
+      Map<String, String>? formattedArgs}) {
     String? result;
     if (!_isSupported) {
       result = null;
@@ -393,10 +404,20 @@ class ApplangaFlutter {
         result = icuString.getTranslation(args, formattedArgs);
       }
     }
+
+    result ??= defaultValue;
+
     //debugPrint(
     //    "getIcuString: $key, $result, ${_translationStream.hasListener}");
     if (_translationStream.hasListener) {
       _translationStream.sink.add(TranslationTuple(key, result));
+    }
+
+    if (result == null) {
+      debugPrint("ApplangaFlutter: Translation for key $key not found. "
+          "If you are using dynamic strings, make sure to add it to your "
+          "Applanga dashboard and turn on dynamic strings in your pubspec.yaml "
+          "file.");
     }
     return result;
   }

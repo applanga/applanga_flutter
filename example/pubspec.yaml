@@ -45,3 +45,4 @@ applanga_flutter:
 #  custom_language_fallback:
 #    es-CL: [fr, es-US, de, es]
 #    de-AT: [es, de-AT, de]
+#  get_dynamic_strings: true
