@@ -134,6 +134,8 @@ class _MyHomePageState extends State<MyHomePage>
               label: Text(AppLocalizations.of(context).goToSecondPage),
               icon: const Icon(Icons.arrow_forward),
             ),
+            Text(ApplangaFlutter.I.getTranslation("dynamic_string_test") ??
+                "dynamic string not loaded.")
           ],
         ),
       ),
