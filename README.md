@@ -16,6 +16,7 @@
     - [Automating screenshot upload](#automating-screenshot-upload)
     - [Automatic settings files update](#automatic-settings-files-update)
     - [Branching](#branching)
+    - [Dynamic Strings](#dynamic-strings)
 ***
 
 ## Basic Usage
@@ -96,7 +97,7 @@ const MaterialApp(
 ),
 ```
 
-You can get your translations as usual: `AppLocalizations.of(context)!.helloWorld)`
+You can get your translations as usual: `AppLocalizations.of(context).helloWorld)`
 
 ### ApplangaWidget
 It's recommended to place the ApplangaWidget as a top-level widget to your WidgetTree. It will notify all sub widgets if over-the-air translations have changed asynchronously. It is also recommended for a better screenshot experience.
@@ -301,3 +302,28 @@ Every screenshot you take is linked to the current branch.
 ### Production Apps
 
 Already published apps that still use settings files without branching and older SDKs will still work and they will use the default branch defined on the Applanga dashboard.
+
+## Dynamic Strings 
+
+Flutter's code generator is based on arb file(s) located in your project.
+The generator creates a getter method for each of your key/translation pair in the `AppLocalizations` class.
+With `AppLocalizations.of(context)` you can access all your strings from your ARB files.
+This can be a limitation if you want to access other strings from your Applanga dashboard which are not located in your ARB files.
+We call those strings *dynamic strings*.
+
+Dynamic strings are turned off by default.
+To turn it on, set `get_dynamic_strings` to `true` in your `pubspec.yaml`: 
+```yaml
+applanga_flutter:
+  get_dynamic_strings: true
+```
+
+After turning dynamic strings on, you need to regenerate your `ApplangaLocalization` class ([see here for more info](#generate-and-replace-applocalizationsclass-with-applangalocalizationsclass)).
+
+
+Dynamic strings can be accessed via the public `ApplangaFlutter` interface.
+If the string id does not exist in your Applanga project, `getTranslation` will return null.
+
+``` dart
+ApplangaFlutter.I.getTranslation("my_dynamic_string") ?? "dynamic string not loaded."
+```
