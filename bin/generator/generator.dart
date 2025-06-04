@@ -38,7 +38,8 @@ class ApplangaGenerator {
       element.visitChildren(abstractVisitor);
     }
 
-    final visitor = LocalizationBaseLangVisitor();
+    final visitor =
+        LocalizationBaseLangVisitor(config.appLocalizationsClassName);
     final file = File(config.originAppLocalizationsBaseLanguageClassPath);
     final parsedString = parseString(content: file.readAsStringSync());
 
@@ -51,6 +52,7 @@ class ApplangaGenerator {
     final dartCode = generateAppLocalizationClass(
         config.originAppLocalizationImport,
         config.className,
+        config.appLocalizationsClassName,
         config.baseLanguage,
         config.branchId,
         config.updateGroups,
@@ -91,8 +93,9 @@ class LocalizationBaseLangVisitor extends SimpleAstVisitor {
   List<String> getter = [];
   List<ALIcuMethod> formattingList = [];
   bool _useIntlImport = false;
+  final String _appLocalizationClassName;
 
-  LocalizationBaseLangVisitor();
+  LocalizationBaseLangVisitor(this._appLocalizationClassName);
 
   bool get useIntlImport => _useIntlImport;
 
@@ -100,7 +103,7 @@ class LocalizationBaseLangVisitor extends SimpleAstVisitor {
   visitMethodDeclaration(MethodDeclaration node) {
     final superClassName =
         (node.parent as ClassDeclaration).extendsClause?.superclass.toString();
-    if ("AppLocalizations" != superClassName) {
+    if (_appLocalizationClassName != superClassName) {
       return;
     }
     // ast ist not resolved so we check the type by it's toString method

@@ -1,0 +1,5 @@
+{
+  "@@locale": "en",
+  "welcome": "Welcome to Module B!",
+  "description": "This is a sample module demonstrating how to implement modular localizations in Flutter."
+}

@@ -11,3 +11,4 @@ packages
 .packages
 pubspec.lock
 *.iml
+.dart_tool

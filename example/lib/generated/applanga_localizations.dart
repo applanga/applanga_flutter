@@ -57,6 +57,14 @@ class ApplangaLocalizations extends AppLocalizations {
           defaultValue: _original.helloFromSecondPage)!;
 
   @override
+  String get goToModuleA => ApplangaFlutter.instance
+      .getTranslation('goToModuleA', defaultValue: _original.goToModuleA)!;
+
+  @override
+  String get goToModuleB => ApplangaFlutter.instance
+      .getTranslation('goToModuleB', defaultValue: _original.goToModuleB)!;
+
+  @override
   String homePageTitle(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMd(localeName);
     final String dateString = dateDateFormat.format(date);
@@ -89,7 +97,9 @@ class _ApplangaLocalizationsDelegate
     'increment',
     'goToSecondPage',
     'secondPageTitle',
-    'helloFromSecondPage'
+    'helloFromSecondPage',
+    'goToModuleA',
+    'goToModuleB'
   ];
 
   @override

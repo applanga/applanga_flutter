@@ -3,6 +3,12 @@ import 'package:example/generated/applanga_localizations.dart';
 import 'package:example/second_page.dart';
 import 'package:flutter/material.dart';
 import 'package:example/l10n/app_localizations.dart';
+import 'package:module_a/generated/applanga_module_a_localizations.dart';
+import 'package:module_a/l10n/gen/module_a_localizations.dart';
+import 'package:module_a/module_a.dart';
+import 'package:module_b/generated/applanga_module_b_localizations.dart';
+import 'package:module_b/l10n/gen/module_b_localizations.dart';
+import 'package:module_b/module_b.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,8 +44,11 @@ class _MyAppState extends State<MyApp> {
             child: MaterialApp(
               title: 'Flutter Demo',
               locale: _currentLocale,
-              localizationsDelegates:
-                  ApplangaLocalizations.localizationsDelegates,
+              localizationsDelegates: const [
+                ...ApplangaLocalizations.localizationsDelegates,
+                ...ApplangaModuleALocalizations.localizationsDelegates,
+                ...ApplangaModuleBLocalizations.localizationsDelegates
+              ],
               supportedLocales: ApplangaLocalizations.supportedLocales,
               localeListResolutionCallback:
                   ApplangaLocalizations.localeListResolutionCallback,
@@ -115,27 +124,54 @@ class _MyHomePageState extends State<MyHomePage>
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              AppLocalizations.of(context)
-                  .youHavePushedTheButtonXTimes(_counter, 'thumb'),
-              style: Theme.of(context).textTheme.headlineMedium,
-              textAlign: TextAlign.center,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ModuleAHomePage()));
+                  },
+                  child: Text(AppLocalizations.of(context).goToModuleA),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ModuleBHomePage()));
+                  },
+                  child: Text(AppLocalizations.of(context).goToModuleB),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const SecondPage(),
-                ));
-              },
-              label: Text(AppLocalizations.of(context).goToSecondPage),
-              icon: const Icon(Icons.arrow_forward),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    AppLocalizations.of(context)
+                        .youHavePushedTheButtonXTimes(_counter, 'thumb'),
+                    style: Theme.of(context).textTheme.headlineMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SecondPage(),
+                      ));
+                    },
+                    label: Text(AppLocalizations.of(context).goToSecondPage),
+                    icon: const Icon(Icons.arrow_forward),
+                  ),
+                  Text(
+                      ApplangaFlutter.I.getTranslation("dynamic_string_test") ??
+                          "dynamic string not loaded."),
+                ],
+              ),
             ),
-            Text(ApplangaFlutter.I.getTranslation("dynamic_string_test") ??
-                "dynamic string not loaded.")
           ],
         ),
       ),

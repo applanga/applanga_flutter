@@ -1,0 +1,26 @@
+{
+  "app": {
+    "access_token": "64104e000a865a16ef218463!957ac41f7a6b30823671ae7b8269d8fe",
+    "base_language": "en",
+    "branch_id": "6410524376a12116ad72d97e",
+    "pull": {
+      "target": [
+        {
+          "includeMetadata": false,
+          "exclude_languages": ["en"],
+          "file_format": "arb",
+          "path": "lib/l10n/app_<language>.arb"
+        }
+      ]
+    },
+    "push": {
+      "source": [
+        {
+          "file_format": "arb",
+          "language": "en",
+          "path": "lib/l10n/app_en.arb"
+        }
+      ]
+    }
+  }
+}

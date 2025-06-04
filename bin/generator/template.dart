@@ -6,6 +6,7 @@ import 'generator.dart';
 String generateAppLocalizationClass(
     String appLocalizationImport,
     String className,
+    String appLocalizationsClassName,
     String baseLanguage,
     String? branchId,
     List<String>? baseGroups,
@@ -27,14 +28,14 @@ import '$appLocalizationImport';
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: unused_local_variable
 // ignore_for_file: no_leading_underscores_for_local_identifiers
-class $className extends AppLocalizations {
-  final AppLocalizations _original;
+class $className extends $appLocalizationsClassName {
+  final $appLocalizationsClassName _original;
 
   $className(locale)
-      : _original = lookupAppLocalizations(locale),
+      : _original = lookup$appLocalizationsClassName(locale),
         super(locale.toString());
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
+  static const LocalizationsDelegate<$appLocalizationsClassName> delegate =
       _${className}Delegate();
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
@@ -75,7 +76,7 @@ ${method.formattedParams != null ? ","
 }
 
 class _${className}Delegate
-    extends LocalizationsDelegate<AppLocalizations> {
+    extends LocalizationsDelegate<$appLocalizationsClassName> {
   const _${className}Delegate();
   
   static const _keys = [${ids.map((id) => '\'$id\'').join(',\n')}];
@@ -84,7 +85,7 @@ class _${className}Delegate
   ${customLanguageFallback != null ? "static const _customLanguageFallback = {${customLanguageFallback.entries.map((entry) => '\'${entry.key}\': [${entry.value.map((lang) => '\'$lang\'').join(",")}]').join(",\n")}};" : ""}
 
   @override
-  Future<AppLocalizations> load(Locale locale) async {
+  Future<$appLocalizationsClassName> load(Locale locale) async {
     var result = $className(locale);
     await ApplangaFlutter.instance.setMetaData(locale,'$baseLanguage', 
     ${branchId != null ? "'$branchId'" : "null"},
@@ -100,7 +101,7 @@ class _${className}Delegate
 
   @override
   bool isSupported(Locale locale) =>
-      AppLocalizations.delegate.isSupported(locale);
+      $appLocalizationsClassName.delegate.isSupported(locale);
 
   @override
   bool shouldReload(_${className}Delegate old) => false;

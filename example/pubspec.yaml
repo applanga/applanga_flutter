@@ -21,7 +21,11 @@ dependencies:
     # the parent directory to use the current plugin's version.
     path: ../
   cupertino_icons: ^1.0.5
-  intl: ^0.19.0
+  intl: ^0.20.2
+  module_a:
+    path: ./module_a
+  module_b:
+    path: ./module_b
 
 dev_dependencies:
   flutter_test:

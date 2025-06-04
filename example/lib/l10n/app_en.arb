@@ -25,5 +25,7 @@
   "increment": "Increment",
   "goToSecondPage": "Go to Second Page",
   "secondPageTitle": "Second Page Title",
-  "helloFromSecondPage": "Hello!\nFrom the second page."
+  "helloFromSecondPage": "Hello!\nFrom the second page.",
+  "goToModuleA": "Go to Module A",
+  "goToModuleB": "Go to Module B"
 }
