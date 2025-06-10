@@ -5,6 +5,10 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.59 (10 Jun 2025) 
+* bumped intl version to 0.20.2
+* fixed translation is null cast in native bridge
+
 ## Version 3.0.58 (24 Apr 2025) 
 * upgraded AGP plugin version and fixed compilation errors for flutter 3.29.0
 
