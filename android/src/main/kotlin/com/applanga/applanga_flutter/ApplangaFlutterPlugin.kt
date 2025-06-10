@@ -118,7 +118,7 @@ class ApplangaFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             if (
                 tmpMap.all {
                     it.key is String && it.value is HashMap<*, *> && (it.value as HashMap<*, *>).all { inner ->
-                        inner.key is String && inner.value is String
+                        inner.key is String && inner.value is String?
                     }
                 }
             ) {
