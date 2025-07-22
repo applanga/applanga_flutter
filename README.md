@@ -1,4 +1,4 @@
-  <a href="https://pub.dev/packages/applanga_flutter/score"><img src="https://img.shields.io/pub/points/applanga_flutter" alt="pub points"></a>
+[![pub points](https://img.shields.io/pub/points/applanga_flutter)](https://pub.dev/packages/applanga_flutter/score)
 
 # Applanga SDK for Flutter 
 
