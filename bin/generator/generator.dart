@@ -14,7 +14,7 @@ import 'template.dart';
 class ApplangaGenerator {
   late final ApplangaConfig config = ApplangaConfig();
 
-  generate() {
+  void generate() {
     try {
       _generateLocalizationClass();
     } catch (e) {
@@ -28,7 +28,7 @@ class ApplangaGenerator {
     }
   }
 
-  _generateLocalizationClass() {
+  void _generateLocalizationClass() {
     final abstractVisitor = LocalizationClassVisitor();
     final abstractFile = File(config.originAppLocalizationsClassPath);
     final abstractParsedString =
