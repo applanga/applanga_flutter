@@ -5,6 +5,9 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.61 (9 Oct 2025) 
+* supports new default behavior for l10n.yaml: `synthetic-package` is set to false by default
+
 ## Version 3.0.60 (17 Jul 2025) 
 * bumped Applanga Android and iOS SDK version
 
