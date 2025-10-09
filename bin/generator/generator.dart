@@ -14,7 +14,7 @@ import 'template.dart';
 class ApplangaGenerator {
   late final ApplangaConfig config = ApplangaConfig();
 
-  generate() {
+  void generate() {
     try {
       _generateLocalizationClass();
     } catch (e) {
@@ -23,12 +23,12 @@ class ApplangaGenerator {
       } else {
         Utils.errorWriteLn(e.toString());
         Utils.errorWriteLn(
-            "Something went wrong! Please contact applanga support.");
+            "Something went wrong! Run `flutter gen-l10n` and try again, otherwise please get in touch with applanga support.");
       }
     }
   }
 
-  _generateLocalizationClass() {
+  void _generateLocalizationClass() {
     final abstractVisitor = LocalizationClassVisitor();
     final abstractFile = File(config.originAppLocalizationsClassPath);
     final abstractParsedString =

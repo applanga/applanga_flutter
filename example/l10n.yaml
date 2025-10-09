@@ -1,6 +1,6 @@
 arb-dir: lib/l10n
+output-dir: lib/generated
 template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
 nullable-getter: false
 untranslated-messages-file: l10n_errors.txt
-synthetic-package: false
