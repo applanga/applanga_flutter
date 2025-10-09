@@ -23,7 +23,7 @@ class ApplangaGenerator {
       } else {
         Utils.errorWriteLn(e.toString());
         Utils.errorWriteLn(
-            "Something went wrong! Please contact applanga support.");
+            "Something went wrong! Run `flutter gen-l10n` and try again, otherwise please get in touch with applanga support.");
       }
     }
   }
