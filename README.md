@@ -79,6 +79,12 @@ Over the air updates are optional and available for android and iOS.
 2. Add the *Applanga Settings File* to your Android modules resources res/raw directory
 3. Also Add the *Applanga Settings File* to your iOS modules main target. To do this open the iOS module in Xcode and drag the settings file into the project. Make sure to tick the target you want it applied to.
 
+> [!IMPORTANT]
+> The native iOS SDK performs an automatic `Applagna.update()` on app launch.
+Your Flutter code will be doing that part of the plugin.
+**To disable the automatic update:**
+in your project `Info.plist`, add the following key `ApplangaInitialUpdate` with `NO`.
+
 ### Generate and replace AppLocalizationsClass with ApplangaLocalizationsClass
 
 Generate the `ApplangaLocalizationsClass`
