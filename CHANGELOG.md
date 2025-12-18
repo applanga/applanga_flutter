@@ -5,6 +5,9 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
+## Version 3.0.62 (18 Dec 2025) 
+* skip native iOS SDK automatic Applanga.update() when the AppDelegate implements FlutterAppDelegate
+
 ## Version 3.0.61 (9 Oct 2025) 
 * supports new default behavior for l10n.yaml: `synthetic-package` is set to false by default
 
