@@ -17,7 +17,7 @@ class ApplangaGenerator {
 
   void generate() {
     try {
-      _warnIfBaseLocalesMissing();
+      if (_warnIfBaseLocalesMissing()) return;
       _generateLocalizationClass();
     } catch (e) {
       if (e is ApplangaConfigException) {
@@ -37,15 +37,18 @@ class ApplangaGenerator {
   /// ApplangaLocalizations. Warn the user so they can add the base language on
   /// the Applanga dashboard.
   /// See: https://api.flutter.dev/flutter/material/MaterialApp/supportedLocales.html
-  void _warnIfBaseLocalesMissing() {
+  /// Returns `true` if any warnings were issued (base locales are missing),
+  /// in which case [_generateLocalizationClass] should not be called because
+  /// the generated class would be incomplete.
+  bool _warnIfBaseLocalesMissing() {
     final template = config.arbTemplateFileName;
     final baseLanguage = config.baseLanguage;
     final baseSuffix = "_$baseLanguage.arb";
-    if (!template.endsWith(baseSuffix)) return;
+    if (!template.endsWith(baseSuffix)) return false;
     final prefix = template.substring(0, template.length - baseSuffix.length);
 
     final arbDir = Directory(path.dirname(config.arbTemplateFilePath));
-    if (!arbDir.existsSync()) return;
+    if (!arbDir.existsSync()) return false;
 
     final arbPrefix = "${prefix}_";
     final locales = <String>{};
@@ -75,6 +78,8 @@ class ApplangaGenerator {
           "`dart run applanga_flutter:pull` and `dart run applanga_flutter:generate`.\n"
           "See: https://api.flutter.dev/flutter/material/MaterialApp/supportedLocales.html");
     }
+
+    return missingBases.isNotEmpty;
   }
 
   void _generateLocalizationClass() {
