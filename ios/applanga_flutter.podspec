@@ -15,7 +15,8 @@ With ApplangaFlutter you can get all your translations over the air. It's also
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Applanga' => 'developer@applanga.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'applanga_flutter/Sources/applanga_flutter/**/*'
+  s.public_header_files = 'applanga_flutter/Sources/applanga_flutter/include/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'Applanga', '2.0.218'
 
