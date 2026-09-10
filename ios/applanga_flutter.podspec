@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'applanga_flutter'
-  s.version          = '3.0.62'
+  s.version          = '3.0.63'
   s.summary          = 'Enables over-the-air translations for Android and iOS.'
   s.description      = <<-DESC
 With ApplangaFlutter you can get all your translations over the air. It's also
@@ -18,7 +18,7 @@ With ApplangaFlutter you can get all your translations over the air. It's also
   s.source_files = 'applanga_flutter/Sources/applanga_flutter/**/*'
   s.public_header_files = 'applanga_flutter/Sources/applanga_flutter/include/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'Applanga', '2.0.218'
+  s.dependency 'Applanga', '2.0.235'
 
   s.platform = :ios, '12.0'
 

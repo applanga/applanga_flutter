@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "FlutterFramework", path: "../FlutterFramework"),
-        .package(url: "https://github.com/applanga/sdk-ios.git", exact: "2.0.218"),
+        .package(url: "https://github.com/applanga/sdk-ios.git", exact: "2.0.235"),
     ],
     targets: [
         .target(
