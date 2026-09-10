@@ -1,7 +1,7 @@
 // parts took out from flutter_tools/lib/src/localizations/gen_l10n_templates.dart
 // https://github.com/flutter/flutter/blob/5848a1620deaf00cfc31be9957a8388bd6894803/packages/flutter_tools/lib/src/localizations/gen_l10n_templates.dart
 
-import 'generator.dart';
+import 'package:applanga_flutter/src/generator/localization_visitors.dart';
 
 String generateAppLocalizationClass(
     String appLocalizationImport,
