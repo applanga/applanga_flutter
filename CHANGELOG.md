@@ -5,7 +5,7 @@
 *Applanga Flutter Documentation:* https://www.applanga.com/docs/integration-documentation/flutter
 ***
 
-## Version 3.0.63 (10 Sep 2026) 
+## Version 3.0.65 (10 Sep 2026) 
 * added support for Swift Package Manager on iOS
 * widened the analyzer dependency version range to avoid conflicts with other packages requiring newer major versions
 
