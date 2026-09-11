@@ -4,6 +4,7 @@ import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:applanga_flutter/src/applanga_exception.dart';
 import 'package:applanga_flutter/src/generator/localization_visitors.dart';
 import 'package:dart_style/dart_style.dart' show DartFormatter;
+import 'package:path/path.dart' as path;
 import 'package:pub_semver/pub_semver.dart';
 
 import '../utils.dart';
@@ -15,6 +16,7 @@ class ApplangaGenerator {
 
   void generate() {
     try {
+      if (_warnIfBaseLocalesMissing()) return;
       _generateLocalizationClass();
     } catch (e) {
       if (e is ApplangaConfigException) {
@@ -25,6 +27,58 @@ class ApplangaGenerator {
             "Something went wrong! Run `flutter gen-l10n` and try again, otherwise please get in touch with applanga support.");
       }
     }
+  }
+
+  /// Flutter's gen-l10n requires a base locale ARB (language-only) whenever a
+  /// variant with a script or country code is present. If the base is missing,
+  /// gen-l10n can silently produce an incomplete [AppLocalizations] (e.g. with
+  /// wrong `supportedLocales`), which then propagates into the generated
+  /// ApplangaLocalizations. Warn the user so they can add the base language on
+  /// the Applanga dashboard.
+  /// See: https://api.flutter.dev/flutter/material/MaterialApp/supportedLocales.html
+  /// Returns `true` if any warnings were issued (base locales are missing),
+  /// in which case [_generateLocalizationClass] should not be called because
+  /// the generated class would be incomplete.
+  bool _warnIfBaseLocalesMissing() {
+    final template = config.arbTemplateFileName;
+    final baseLanguage = config.baseLanguage;
+    final baseSuffix = "_$baseLanguage.arb";
+    if (!template.endsWith(baseSuffix)) return false;
+    final prefix = template.substring(0, template.length - baseSuffix.length);
+
+    final arbDir = Directory(path.dirname(config.arbTemplateFilePath));
+    if (!arbDir.existsSync()) return false;
+
+    final arbPrefix = "${prefix}_";
+    final locales = <String>{};
+    for (final entity in arbDir.listSync()) {
+      if (entity is! File) continue;
+      final name = path.basename(entity.path);
+      if (!name.startsWith(arbPrefix) || !name.endsWith(".arb")) continue;
+      locales.add(name.substring(arbPrefix.length, name.length - ".arb".length));
+    }
+
+    final missingBases = <String, List<String>>{};
+    for (final locale in locales) {
+      if (!locale.contains("_")) continue;
+      final base = locale.split("_").first;
+      if (locales.contains(base)) continue;
+      missingBases.putIfAbsent(base, () => []).add(locale);
+    }
+
+    for (final entry in missingBases.entries) {
+      final variants = (entry.value..sort()).join(", ");
+      Utils.warningWriteLn(
+          "Base locale '${entry.key}' is missing but variants exist: $variants.\n"
+          "Flutter requires a base locale ARB when script or country variants are used.\n"
+          "Without it, the generated AppLocalizations may be incomplete (e.g. supportedLocales),\n"
+          "and the resulting ${config.className} will silently miss values.\n"
+          "To fix: add '${entry.key}' as a language on the Applanga dashboard, then re-run\n"
+          "`dart run applanga_flutter:pull` and `dart run applanga_flutter:generate`.\n"
+          "See: https://api.flutter.dev/flutter/material/MaterialApp/supportedLocales.html");
+    }
+
+    return missingBases.isNotEmpty;
   }
 
   void _generateLocalizationClass() {
