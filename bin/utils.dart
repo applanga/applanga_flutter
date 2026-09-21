@@ -7,6 +7,7 @@ class Utils {
   static final _bluePen = AnsiPen()..blue(bold: true);
   static final _greenPen = AnsiPen()..green(bold: true);
   static final _redPen = AnsiPen()..red(bold: true);
+  static final _yellowPen = AnsiPen()..yellow(bold: true);
   static final _whitePen = AnsiPen()..white(bold: false);
 
   static void writeLn(String msg) {
@@ -19,6 +20,10 @@ class Utils {
 
   static void errorWriteLn(String msg) {
     stderr.writeln(_redPen("\n-> $msg"));
+  }
+
+  static void warningWriteLn(String msg) {
+    stderr.writeln(_yellowPen("\n-> $msg"));
   }
 
   static void successWriteLn(String msg) {
